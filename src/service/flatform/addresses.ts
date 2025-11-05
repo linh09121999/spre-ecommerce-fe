@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type  Address} from '../../interface/interfaceSendDataFlatform'
+import { type  Address} from '../../interface/sendData/interfaceFlatform'
 
 export const ReturnAListOfAddresses = (
     page?: number,

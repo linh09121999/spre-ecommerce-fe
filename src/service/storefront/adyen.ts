@@ -1,6 +1,6 @@
 import api from "../api/apiOrderToken";
 import { type AxiosResponse } from "axios";
-import { type PaymentSession } from '../../interface/interfaceSendDataStorefront'
+import { type PaymentSession } from '../../interface/sendData/interfaceStorefront'
 
 export const CreateAnAdyenPaymentSession = (
     data: { payment_session: PaymentSession }

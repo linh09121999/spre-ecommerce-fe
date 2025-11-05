@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type ShippingMethod } from '../../interface/interfaceSendDataFlatform'
+import { type ShippingMethod } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAShippingMethod = (data: { shipping_method: ShippingMethod }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

@@ -1,6 +1,6 @@
 import api from "../api/apiOrderToken";
 import { type AxiosResponse } from "axios";
-import { type LineItem, LineItemUpdate } from '../../interface/interfaceSendDataStorefront'
+import { type LineItem, LineItemUpdate } from '../../interface/sendData/interfaceStorefront'
 
 export const AddAnItemToCart = (
     data: LineItem,

@@ -1,6 +1,6 @@
 import api from "../api/apiOrderToken";
 import { type AxiosResponse } from "axios";
-import { type PaymentIntent, PaymentIntentUpdate } from '../../interface/interfaceSendDataStorefront'
+import { type PaymentIntent, PaymentIntentUpdate } from '../../interface/sendData/interfaceStorefront'
 
 export const ReturnAStripePaymentIntent = (id: number): Promise<AxiosResponse> => {
     return api.get(`/api/v2/storefront/stripe/payment_intents/${id}`)

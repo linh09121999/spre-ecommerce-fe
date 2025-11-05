@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type TaxRate } from '../../interface/interfaceSendDataFlatform'
+import { type TaxRate } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateATaxRate = (data: { tax_rate: TaxRate }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

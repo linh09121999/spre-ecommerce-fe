@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type PromotionActionRule, PromotionActionRuleUpdate } from '../../interface/interfaceSendDataFlatform'
+import { type PromotionActionRule, PromotionActionRuleUpdate } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAPromotionRule = (data: { promotion_rule: PromotionActionRule }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

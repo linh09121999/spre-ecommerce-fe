@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Subscriber } from '../../interface/interfaceSendDataFlatform'
+import { type Subscriber } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAWebhookSubscriber = (data: { subscriber: Subscriber }): Promise<AxiosResponse> => {
     return api.post(`/api/v2/platform/webhooks/subscribers`, data);

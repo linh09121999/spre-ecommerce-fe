@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type StoreCredit } from '../../interface/interfaceSendDataFlatform'
+import { type StoreCredit } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAStoreCredit = (
     data: { store_credit: StoreCredit },

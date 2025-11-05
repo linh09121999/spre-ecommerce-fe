@@ -2,7 +2,7 @@ import apiOrderToken from "../api/apiOrderToken";
 import apiAuthorization from "../api/apiAuthorization";
 import apiCreateAWishlist from "../api/apiCreateAWishlist"
 import { type AxiosResponse } from "axios";
-import { type WishlistCreate, WishlistCreateUpdate } from '../../interface/interfaceSendDataStorefront'
+import { type WishlistCreate, WishlistCreateUpdate } from '../../interface/sendData/interfaceStorefront'
 
 export const ListAllWishlists = (
     include?: string,

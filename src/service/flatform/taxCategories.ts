@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type TaxCategory } from '../../interface/interfaceSendDataFlatform'
+import { type TaxCategory } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateATaxCategory = (data: { tax_category: TaxCategory }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

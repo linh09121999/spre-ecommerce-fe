@@ -1,6 +1,6 @@
 import api from "../api/apiOrderToken";
 import { type AxiosResponse } from "axios";
-import { type Checkout } from '../../interface/interfaceSendDataStorefront'
+import { type Checkout } from '../../interface/sendData/interfaceStorefront'
 
 export const UpdateCheckOut = (
     data: { order: Checkout },

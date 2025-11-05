@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Name } from '../../interface/interfaceSendDataFlatform'
+import { type Name } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAShippingCategory = (data: { shipping_category: Name }): Promise<AxiosResponse> => {
     return api.post(`/api/v2/platform/shipping_categories`, data);

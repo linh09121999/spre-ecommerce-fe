@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type User } from '../../interface/interfaceSendDataFlatform'
+import { type User } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAUser = (data: { user: User }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

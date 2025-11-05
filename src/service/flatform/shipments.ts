@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Shipment, ShipmentUpdate, ShipmentItem } from '../../interface/interfaceSendDataFlatform'
+import { type Shipment, ShipmentUpdate, ShipmentItem } from '../../interface/sendData/interfaceFlatform'
 
 export const ReturnAListOfShipments = (
     page?: number,

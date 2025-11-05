@@ -1,6 +1,6 @@
 import api from "../api/apiOrderToken";
 import { type AxiosResponse } from "axios";
-import { type Cart } from '../../interface/interfaceSendDataStorefront'
+import { type Cart } from '../../interface/sendData/interfaceStorefront'
 
 // tao cart-> response co token với người dùng khách
 export const CreateACart = (

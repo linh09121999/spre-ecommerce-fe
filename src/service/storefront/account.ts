@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type User, UserUpdate } from '../../interface/interfaceSendDataStorefront'
+import { type User, UserUpdate } from '../../interface/sendData/interfaceStorefront'
 
 export const CreateAnAccount = (data: { user: User }): Promise<AxiosResponse> => {
     return api.post(`/return api/v2/storefront/account`, data);

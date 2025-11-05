@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Vendor } from '../../interface/interfaceSendDataFlatform'
+import { type Vendor } from '../../interface/sendData/interfaceFlatform'
 
 
 export const ReturnAListOfVendors = (

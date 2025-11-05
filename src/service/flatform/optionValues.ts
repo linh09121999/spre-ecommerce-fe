@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type  OptionType} from '../../interface/interfaceSendDataFlatform'
+import { type  OptionType} from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAnOptionValue = (data: { option_value: OptionType }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

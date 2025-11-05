@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type  Adjustment} from '../../interface/interfaceSendDataFlatform'
+import { type  Adjustment} from '../../interface/sendData/interfaceFlatform'
 
 export const ReturnAListOfAdjustments = (
     page?: number,

@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization"
 import { type AxiosResponse } from "axios";
-import { type WishedItem, WishedItemUpdate, WishedItemDelete } from '../../interface/interfaceSendDataStorefront'
+import { type WishedItem, WishedItemUpdate, WishedItemDelete } from '../../interface/sendData/interfaceStorefront'
 
 export const AddItemToWishlist = (data: WishedItem, token: string): Promise<AxiosResponse> => {
     return api.post(`/api/v2/storefront/wishlists/${token}/add_item`, data,

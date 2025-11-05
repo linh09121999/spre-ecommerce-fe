@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Zone } from '../../interface/interfaceSendDataFlatform'
+import { type Zone } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAZone = (data: { zone: Zone }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Taxon, TaxonReposition } from '../../interface/interfaceSendDataFlatform'
+import { type Taxon, TaxonReposition } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateATaxon = (data: { taxon: Taxon }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

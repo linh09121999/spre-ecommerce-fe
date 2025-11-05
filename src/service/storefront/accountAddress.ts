@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Address } from '../../interface/interfaceSendDataStorefront'
+import { type Address } from '../../interface/sendData/interfaceStorefront'
 
 export const ListAccountAddress = (
     fields_address?: string,

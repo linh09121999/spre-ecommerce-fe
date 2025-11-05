@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type PromotionCategory } from '../../interface/interfaceSendDataFlatform'
+import { type PromotionCategory } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAPromotionCategory = (data: { promotion_category: PromotionCategory }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

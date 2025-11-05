@@ -1,6 +1,6 @@
 import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type PaymentMethod } from '../../interface/interfaceSendDataFlatform'
+import { type PaymentMethod } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAPaymentMethod = (data: { payment_method: PaymentMethod }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
