@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Order } from '../../interface/interfaceSendData'
+import { type Order } from '../../interface/interfaceSendDataFlatform'
 
 export const AdvancesAnOrder = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

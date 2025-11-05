@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Wishlist } from '../../interface/interfaceSendData'
+import { type Wishlist } from '../../interface/interfaceSendDataFlatform'
 
 export const CreateAWishlist = (data: { wishlist: Wishlist }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

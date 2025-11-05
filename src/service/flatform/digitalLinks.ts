@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type  DigitalLink} from '../../interface/interfaceSendData'
+import { type  DigitalLink} from '../../interface/interfaceSendDataFlatform'
 
 export const CreateADigitalLink = (
     data: { digital_link: DigitalLink }

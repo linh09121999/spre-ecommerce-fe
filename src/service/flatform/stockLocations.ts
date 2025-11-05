@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type StockLocation } from '../../interface/interfaceSendData'
+import { type StockLocation } from '../../interface/interfaceSendDataFlatform'
 
 export const CreateAStockLocation = (
     data: { stock_location: StockLocation },

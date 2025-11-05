@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type  DataFeed} from '../../interface/interfaceSendData'
+import { type  DataFeed} from '../../interface/interfaceSendDataFlatform'
 
 
 export const CreateADataFeed = (data: { data_feed: DataFeed }): Promise<AxiosResponse> => {

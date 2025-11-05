@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type Name } from '../../interface/interfaceSendData'
+import { type Name } from '../../interface/interfaceSendDataFlatform'
 
 export const CreateAStoreCreditCategory = (data: { store_credit_category: Name }): Promise<AxiosResponse> => {
     return api.post(`/api/v2/platform/store_credit_categories`, data);

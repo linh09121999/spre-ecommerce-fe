@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type  OptionType} from '../../interface/interfaceSendData'
+import { type  OptionType} from '../../interface/interfaceSendDataFlatform'
 
 export const CreateAnOptionType = (data: { option_type: OptionType }): Promise<AxiosResponse> => {
     return api.post(`/api/v2/platform/option_types`, data);

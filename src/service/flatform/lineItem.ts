@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type LineItem, LineItemPost } from '../../interface/interfaceSendData'
+import { type LineItem, LineItemPost } from '../../interface/interfaceSendDataFlatform'
 
 export const CreateALineItem = (data: { line_item: LineItemPost }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();

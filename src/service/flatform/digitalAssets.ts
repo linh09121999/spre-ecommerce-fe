@@ -1,4 +1,4 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 
 export const CreateADigitalAsset = (

@@ -1,6 +1,6 @@
-import api from "../api";
+import api from "../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type  Classification} from '../../interface/interfaceSendData'
+import { type  Classification} from '../../interface/interfaceSendDataFlatform'
 
 export const ReturnAListOfClassifications = (
     page?: number,
