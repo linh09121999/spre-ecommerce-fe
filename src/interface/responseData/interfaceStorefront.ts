@@ -1,40 +1,10 @@
-interface PaginationMeta {
-    count: number;
-    total_count: number;
-    total_pages: number;
-}
-
-interface PaginationMetaProduct_OptionType_OptionValue {
-    id: number;
-    name: string;
-    presentation: string;
-    position: number;
-}
-
-interface PaginationMetaProduct_OptionType {
-    id: number;
-    name: string;
-    presentation: string;
-    option_values: PaginationMetaProduct_OptionType_OptionValue[];
-}
-
-interface PaginationLinks {
-    self: string;
-    next: string;
-    prev: string;
-    last: string;
-    first: string;
-}
-
-interface Type {
-    id: string;
-    type: string;
-}
-
-interface Included {
-    abbr: string;
-    name: string;
-}
+import {
+    Type,
+    PaginationMeta,
+    Included,
+    PaginationLinks,
+    PaginationMetaProduct_OptionType
+} from "./interface";
 
 // Account
 interface Account_Attributes {

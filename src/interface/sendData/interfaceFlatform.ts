@@ -1,14 +1,3 @@
-interface PublicMetadata {
-    distance_from_nearest_city_in_km?: number;
-    location_type?: string;
-    ability_to_recycle?: string
-}
-
-interface PrivateMetadata {
-    close_to_shop?: boolean;
-    profitability?: number
-}
-
 export interface Address {
     country_id: string;
     state_id: string;
@@ -23,8 +12,13 @@ export interface Address {
     label: string;
     company: string;
     user_id: string;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: {
+        distance_from_nearest_city_in_km: number;
+        location_type: string
+    };
+    private_metadata: {
+        close_to_shop: boolean;
+    }
 }
 
 export interface Adjustment {
@@ -67,15 +61,15 @@ export interface LineItem {
 
 export interface LineItemPost extends LineItem {
     order_id: string;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>
 }
 
 export interface OptionType {
     name: string;
     presentation: string;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>
 }
 
 interface AddressOrder extends Address {
@@ -125,8 +119,8 @@ export interface Order {
     bill_address_attributes: AddressAttributes;
     ship_address_attributes: AddressAttributes;
     line_items_attributes: LineItemAttributes[];
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>
 }
 
 export interface PaymentMethod {
@@ -137,8 +131,8 @@ export interface PaymentMethod {
     type: string;
     display_on: string;
     store_ids: string[];
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>
 }
 
 export interface Product {
@@ -165,8 +159,8 @@ export interface Product {
     compare_at_price: string;
     option_type_ids: string;
     taxon_ids: string;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>
 }
 
 export interface PromotionActionRuleUpdate {
@@ -224,8 +218,8 @@ export interface ShippingMethod {
     calculator_attributes: {
         type: string;
     };
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>
 }
 
 export interface StockItem {
@@ -270,8 +264,8 @@ export interface StoreCredit {
     originator_type: string;
     type_id: string;
     store_id: string;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>
 }
 
 export interface TaxCategory {
@@ -300,16 +294,24 @@ export interface TaxRate {
 export interface Taxonomy {
     name: string;
     position: number;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: {
+        ability_to_recycle: string
+    };
+    private_metadata: {
+        profitability: number
+    }
 }
 
 export interface Taxon {
     taxonomy_id: string;
     parent_id: string;
     name: string;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: {
+        ability_to_recycle?: string
+    };
+    private_metadata: {
+        profitability?: number
+    }
 }
 
 export interface TaxonReposition {
@@ -326,15 +328,15 @@ export interface User {
     selected_locale: string;
     ship_address_id: string;
     bill_address_id: string;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>
 }
 
 export interface Vendor {
     name: string;
     invitation_message: string;
-    public_metadata: PublicMetadata;
-    private_metadata: PrivateMetadata;
+    public_metadata: Record<string, any>;
+    private_metadata: Record<string, any>;
     platform_fee: number;
     state: string;
     contact_person_email: string;
