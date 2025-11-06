@@ -8,7 +8,13 @@ export const UpdateCheckOut = (
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/storefront/checkout?${params.toString()}`, data)
+    return api.patch(`/api/v2/storefront/checkout?${params.toString()}`, data,
+        {
+            headers: {
+                "Content-Type": "application/vnd.api+json"
+            },
+        }
+    )
 }
 
 export const ValidateOrderPayment = (

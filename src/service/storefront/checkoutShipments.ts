@@ -14,7 +14,13 @@ export const SelectShippingMethodForShipments = (
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
 
-    return api.patch(`/api/v2/storefront/checkout/select_shipping_method?${params.toString()}`, data)
+    return api.patch(`/api/v2/storefront/checkout/select_shipping_method?${params.toString()}`, data,
+        {
+            headers: {
+                "Content-Type": "application/vnd.api+json"
+            },
+        }
+    )
 }
 
 

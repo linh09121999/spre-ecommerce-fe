@@ -41,3 +41,9 @@ export interface Time_Attributes {
     created_at: string;
     updated_at: string;
 }
+
+export interface Pages {
+    id: number;
+    title: string;
+    path: string
+}

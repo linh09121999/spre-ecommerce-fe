@@ -10,7 +10,12 @@ export const AddAnItemToCart = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.post(`/api/v2/storefront/cart/add_item?${params.toString()}`, data)
+    return api.post(`/api/v2/storefront/cart/add_item?${params.toString()}`, data,
+        {
+            headers: {
+                "Content-Type": "application/vnd.api+json"
+            },
+        })
 }
 export const RemoveAnItemToCart = (id: number): Promise<AxiosResponse> => {
     return api.delete(`/api/v2/storefront/cart/remove_line_item/${id}`)
@@ -23,5 +28,11 @@ export const SetLineItemQuantity = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.patch(`/api/v2/storefront/cart/set_quantity?${params.toString()}`, data)
+    return api.patch(`/api/v2/storefront/cart/set_quantity?${params.toString()}`, data,
+        {
+            headers: {
+                "Content-Type": "application/vnd.api+json"
+            },
+        }
+    )
 }

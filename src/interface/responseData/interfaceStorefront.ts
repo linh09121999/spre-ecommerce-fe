@@ -4,7 +4,7 @@ import {
     Included,
     PaginationLinks,
     PaginationMetaProduct_OptionType
-} from "./interface";
+} from "../interface";
 
 // Account
 interface Account_Attributes {
@@ -72,7 +72,7 @@ export interface ResAccountAddress_ListAll {
     links: PaginationLinks;
 }
 
-export interface ResAccountAddress_Create_Update {
+export interface ResAccountAddress {
     data: AccountAddress
 }
 
@@ -329,7 +329,7 @@ interface CartOther_Relationships {
     };
 }
 
-interface ResCartOther {
+interface CartOther {
     id: string | null;
     type: string;
     attributes: CartOther_Attributes;
@@ -337,7 +337,11 @@ interface ResCartOther {
 }
 
 export interface ResCartOther_List {
-    data: ResCartOther[];
+    data: CartOther[];
+}
+
+export interface ResCartOther {
+    data: CartOther
 }
 
 // Checkout / Shipments
@@ -423,8 +427,12 @@ interface CheckoutPayments {
     attributes: CheckoutPayments_Attributes;
 }
 
-interface ResCheckoutPayments {
+export interface ResCheckoutPayments_ListAll {
     data: CheckoutPayments[];
+}
+
+export interface ResCheckoutPayments {
+    data: CheckoutPayments
 }
 
 // Stripe

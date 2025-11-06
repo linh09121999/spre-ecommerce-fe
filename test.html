@@ -1,1509 +1,263 @@
-<!-- https://demo.spreecommerce.org/settings -->
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 
 <head>
-    <meta charset="utf-8">
-    <title>Spree Commerce DEMO</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://demo.spreecommerce.org/settings" rel="canonical" />
-    <meta name="csrf-param" content="authenticity_token" />
-    <meta name="csrf-token"
-        content="yu5ysQx2vOVGtsWec0zYG6B2J_UytoBvB-V5-9aYlX4QHUUOplHD9G9B6qZxSUuJMWfkPcCVAWGnU8lsZwQHBg" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueOcean - Thương mại điện tử</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
+        }
 
+        .sale-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
 
-    <meta name="robots" content="noindex, nofollow">
+        .category-card:hover .category-icon {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
 
+        .gradient-bg {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8, #6366f1);
+        }
 
+        .gradient-header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+        }
 
-    <meta name="description"
-        content="This is a Spree Commerce demo - an open-source eCommerce platform that you can customize, self-host and fully control. The Enterprise Edition features multi-vendor marketplace, multi-tenant and B2B eCommerce capabilities. ">
+        .gradient-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
 
-    <meta property="og:site_name" content="Spree Commerce DEMO">
-    <meta property="og:url" content="https://demo.spreecommerce.org/settings">
-    <meta property="og:title" content="Spree Commerce DEMO">
-    <meta property="og:type" content="website">
-    <meta property="og:description"
-        content="This is a Spree Commerce demo - an open-source eCommerce platform that you can customize, self-host and fully control. The Enterprise Edition features multi-vendor marketplace, multi-tenant and B2B eCommerce capabilities. ">
-
-
-
-    <meta name="twitter:site" content="@https://x.com/spreecommerce">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Spree Commerce DEMO">
-    <meta name="twitter:description"
-        content="This is a Spree Commerce demo - an open-source eCommerce platform that you can customize, self-host and fully control. The Enterprise Edition features multi-vendor marketplace, multi-tenant and B2B eCommerce capabilities. ">
-
-    <style data-turbo-track="reload">
-        :root {
-            --primary: #000000;
-            --accent: #F0EFE9;
-            --danger: #C73528;
-            --success: #00C773;
-            --neutral: #999999;
-
-            --background: #FFFFFF;
-            --text: #000000;
-
-            --border-default-color: #E9E7DC;
-            --border-default-width: 1px;
-            --border-default-radius: 6px;
-
-            /* --border-default-shadow: 0px 4px 5px rgba(0, 0, 0, 0); */
-            --button: #000000;
-            --button-rgb: 0, 0, 0;
-            --button-text: #ffffff;
-            --button-border-radius: 100px;
-            --button-border-width: 1px;
-            --button-border-color: ;
-
-            --button-hover: #000000;
-            --button-hover-text: #ffffff;
-
-            --secondary-button: #FFFFFF;
-            --secondary-button-text: #000000;
-            --secondary-button-hover: #000000;
-            --secondary-button-hover-text: #FFFFFF;
-
-            --input: #E9E7DC;
-            --input-bg: #ffffff;
-            --input-text: #6b7280;
-            --input-focus-bg: #ffffff;
-            --input-border-radius: 8px;
-
-            --neutral-50: #F3F3F3;
-            --neutral-100: #EAEAEA;
-            --neutral-200: #D4D4D4;
-            --neutral-300: #B3B3B3;
-            --neutral-400: #999999;
-            --neutral-500: #808080;
-            --neutral-600: #666666;
-            --neutral-700: #4D4D4D;
-            --neutral-800: #333333;
-            --neutral-900: #1A1A1A;
-            --accent-100: #FBFAF8;
+        .gradient-button:hover {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
         }
     </style>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&amp;display=swap" />
-
-    <style type="text/css">
-        :root {
-            --font-body: Inter;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            font-size: 1.0rem;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-
-
-
-    <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.2/dist/es-module-shims.js"
-        data-turbo-track="reload"></script>
-
-    <script type="importmap" data-turbo-track="reload">{
-  "imports": {
-    "@rails/request.js": "https://cdn.vendo.dev/assets/@rails--request.js-528359fdf2dfff77ae7c1fee032869e7befca029c4c3c39634f80e9ea2efa8b7.js",
-    "tailwindcss-stimulus-components": "https://cdn.vendo.dev/assets/tailwindcss-stimulus-components-7e4645d1f254444bbc9b23b6efb78b844babed4a90f263670a79d11a91898885.js",
-    "stimulus-reveal-controller": "https://cdn.vendo.dev/assets/stimulus-reveal-controller-13ceddac45987eb6957f0d0a196278d52ce95a6f7bdf9c6b386cfcaecd489e60.js",
-    "@stimulus-components/auto-submit": "https://cdn.vendo.dev/assets/@stimulus-components--auto-submit-8ac14cd18677a111b34df92823c3bbd422f0cb64a2ad018f1669476b7b0ce7bd.js",
-    "stimulus-textarea-autogrow": "https://cdn.vendo.dev/assets/stimulus-textarea-autogrow-fe1d80819ab3ffe52d127c36444802c847dbd3b90a3169520bd2344f41455d57.js",
-    "application-spree-storefront": "https://cdn.vendo.dev/assets/spree/storefront/application-2d3bafce5196dcba128d97182a5aed0452ca37a39e84300768b58f3304bd3824.js",
-    "stimulus-scroll-to": "https://cdn.vendo.dev/assets/stimulus-scroll-to-0ad819a568b0a9373229717ecd1e504acd49853daf27967c7d4a6cdaec1d1aa9.js",
-    "stimulus-read-more": "https://cdn.vendo.dev/assets/stimulus-read-more-578f951cfc74098242e3776e578602a4c7f376227fbb1c5d7234057e6eced88a.js",
-    "@kanety/stimulus-accordion": "https://cdn.vendo.dev/assets/@kanety--stimulus-accordion-691f00bf61853ed73f73499158dd5b953fca863ad72307ec051ea39f71eaa493.js",
-    "headroom.js": "https://cdn.vendo.dev/assets/headroom.js-02e20b908ac64ee6cf840d8f49d23a43126cd43aa6615a6b5020b08ed7a3138e.js",
-    "photoswipe/lightbox": "https://cdn.vendo.dev/assets/photoswipe--dist--photoswipe-lightbox.esm.js-19203cd60eff0d230ee36ef8d8015d8636bd0cba95d27b3880412e5aeff0e10d.js",
-    "nouislider": "https://cdn.vendo.dev/assets/nouislider-4fcc172d36915c20a960e15aa86eb9071c061cf5054648decb91e5ab02222090.js",
-    "swiper/bundle": "https://ga.jspm.io/npm:swiper@11.2.2/swiper-bundle.mjs",
-    "@stimulus-components/carousel": "https://cdn.vendo.dev/assets/@stimulus-components--carousel-a5b15443c52650ebdb320677097da789e5eac15e5d59f3091bd5d017391de8de.js",
-    "photoswipe": "https://cdn.vendo.dev/assets/photoswipe-ce4c0c838cf8121803610f66fa14dc5d87fa22bba73ff29708d6dcddb6e3731f.js",
-    "card-validator": "https://cdn.vendo.dev/assets/card-validator-22bb52403e53a68b0269f901add60d5c49548b43abef147153d9b4a68c8886a1.js",
-    "credit-card-type": "https://cdn.vendo.dev/assets/credit-card-type-0a5a2d52ca7e2f58e2b9161921bcac0e9929b36162ab6fc2ca6fd060f3696e57.js",
-    "application-spree-stripe": "https://cdn.vendo.dev/assets/spree_stripe/application-95fa9f9bdf4de2f04e924d5c43a518e885c19c0faec9abb861f082b1bb0ff149.js",
-    "@stripe/stripe-js/pure": "https://cdn.vendo.dev/assets/@stripe--stripe-js--dist--pure.esm.js-3edfe62927360e8e6698e32b1253ba1c817edb4876388f61d5d657d17633a25d.js",
-    "application-spree_google_analytics": "https://cdn.vendo.dev/assets/spree_google_analytics/application-71d19dd75a897786802dc3c82644e8341234492e969db444620a0b7926ae99d1.js",
-    "application-spree-paypal-checkout": "https://cdn.vendo.dev/assets/spree_paypal_checkout/application-517db0bcd0ca0658b0d5510aae64af5b921a6adb5f54a9ad816cd7f68f13665f.js",
-    "application-spree-adyen": "https://cdn.vendo.dev/assets/spree_adyen/application-198630683e22226dcf7a2a7596d59e4a334797055ae9144c5277b3f2ac7e472f.js",
-    "@adyen/adyen-web/auto": "https://cdn.vendo.dev/assets/@adyen--adyen-web-f932fc51616a268c03aa72a43968f91f2d88e718c949ed96f64048a188a29938.js",
-    "application": "https://cdn.vendo.dev/assets/application-9309b0c7004f98bed205238cd69e56d4052344cbc9a2a7db3aeba12fa47a7160.js",
-    "@hotwired/turbo-rails": "https://cdn.vendo.dev/assets/turbo.min-5e344e6560136ac1d3d29962e3c3bd7629c3e2857cc0d7e86231b55586bf8922.js",
-    "@hotwired/stimulus": "https://cdn.vendo.dev/assets/stimulus.min-019a3e3b6f6b31eda68c1f8519bcd4650491dea206bbec8246233f880419a018.js",
-    "@hotwired/stimulus-loading": "https://cdn.vendo.dev/assets/stimulus-loading-d80f0feea68692981b568bbfef0ed4370b56927ae5c663421e8461a466f0618f.js",
-    "spree/core/controllers/address_autocomplete_controller": "https://cdn.vendo.dev/assets/spree/core/controllers/address_autocomplete_controller-c1890f9cd68a9dd67f87e473fe1a19bc687a13f93e9c1d3979b3b02511f643fc.js",
-    "spree/core/controllers/address_form_controller": "https://cdn.vendo.dev/assets/spree/core/controllers/address_form_controller-a2f3940de8332bb7177575c443831a25d71a0c5c3a5d89d0158b995f6559fb95.js",
-    "spree/core/controllers/disable_submit_button_controller": "https://cdn.vendo.dev/assets/spree/core/controllers/disable_submit_button_controller-7873a476960c30fa7e187da956709c46ba92165a564ab05b4dcb4eb41327a4a7.js",
-    "spree/core/controllers/enable_button_controller": "https://cdn.vendo.dev/assets/spree/core/controllers/enable_button_controller-9a44e53b917f7d939cee1c03ad8880bb4a5dcae8502198142fd2357882812a31.js",
-    "spree/core/helpers/address_autocomplete/google_places_suggestions_provider": "https://cdn.vendo.dev/assets/spree/core/helpers/address_autocomplete/google_places_suggestions_provider-b08639469381aa6b2ae7bc89959f43f6d4beb4c0b8eb91671bd96f6bed6595d9.js",
-    "spree/core/helpers/debounce": "https://cdn.vendo.dev/assets/spree/core/helpers/debounce-ca0a3594ccf3838984a4c3a5759b0651c36770c2f243e9d9a10fce6f8764f866.js",
-    "spree/core/helpers/scroll_lock": "https://cdn.vendo.dev/assets/spree/core/helpers/scroll_lock-c172c2bfdbbb429ed52e17c0db491fcb219c2dacdeabfbf05ee5d4e17818e5c1.js",
-    "spree/storefront/controllers/accordion_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/accordion_controller-cfe5df9282858274afbd734e2917bbb07a7a500e937f19a15b06127d22023ddc.js",
-    "spree/storefront/controllers/account_nav_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/account_nav_controller-c07e454f087efa0d2cee2c95528232b8fff0cdf047488d9880505a88ce78f4a1.js",
-    "spree/storefront/controllers/card_validation_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/card_validation_controller-de3ec6cc838d4bfea4106093209fad4ca5e3ef50a53bfa1a9b6951497bedabf1.js",
-    "spree/storefront/controllers/carousel_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/carousel_controller-ca4850a5865ff0863a852950e81b1bc671c24f1d1897c5512dae6096e22106b3.js",
-    "spree/storefront/controllers/cart_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/cart_controller-341463c4bc5140c37ee58e8adfad18cf411f173f63ace63f1b52100aa68b6035.js",
-    "spree/storefront/controllers/checkout_address_book_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/checkout_address_book_controller-ed887662deb42ab54ac9c48af51a9613c7108e3e91fa2bddd856e7f3d6935302.js",
-    "spree/storefront/controllers/checkout_delivery_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/checkout_delivery_controller-47b9bbfe59fe9b5394eb8a6b669baba50db9e289da00588565a3607512abbd85.js",
-    "spree/storefront/controllers/checkout_promotions_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/checkout_promotions_controller-29e29b54e98338be58cc417229f4e9ea0c4ff8db9f96766bc55e61d1ec6b71ec.js",
-    "spree/storefront/controllers/checkout_summary_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/checkout_summary_controller-976db76d05ab8e3f67c7b6d7065d8253bf50d5620249d284a84be459d031413e.js",
-    "spree/storefront/controllers/clear_input_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/clear_input_controller-5664273b4930ca54437a0e930cf13ae5dbe1f6c48d7bfd01a51aad1cebb1a6f0.js",
-    "spree/storefront/controllers/copy_input_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/copy_input_controller-5f5b60a52fb5574bd9643bda8d2e1ab34ba1c0f99261f0be86306133bf1b013d.js",
-    "spree/storefront/controllers/dropdown_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/dropdown_controller-762e6fdab508599defe3fca4313c8131c680d21902fb87cd779ccdde7718303d.js",
-    "spree/storefront/controllers/header_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/header_controller-b789b7cb617c6072697d0266363235568f7d144d1805a5f240bbd52818a51c06.js",
-    "spree/storefront/controllers/infinite_scroll_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/infinite_scroll_controller-a84e43eb5b9cf1171513dc187dc3cce1102915288fc726cd3ea36c5dd085e93f.js",
-    "spree/storefront/controllers/lightbox_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/lightbox_controller-66b3583aded719843c914185cebe397b3a917059654834343111edaaf7fd6e1f.js",
-    "spree/storefront/controllers/mobile_nav_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/mobile_nav_controller-71268d49960bc0f1d02765455fb52fd7b7120990e320c0a3935e33736c2d8ea4.js",
-    "spree/storefront/controllers/modal_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/modal_controller-d6b261f948ccf0ced104f15d3b902b367bfe14ff994b10384d5e74eff892007b.js",
-    "spree/storefront/controllers/no_ui_slider_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/no_ui_slider_controller-0c59c05d13fb80c044c5c7e9ceb6f17496145f1a418343f53c941acc534b76fd.js",
-    "spree/storefront/controllers/pdp_desktop_gallery_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/pdp_desktop_gallery_controller-4172967a97a9556d970ee6263fbfa4fe440792f29c70b0399a9360aac555d059.js",
-    "spree/storefront/controllers/plp_variant_picker_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/plp_variant_picker_controller-7fdbd3be0bd3923d0db334c9c6755e63af9312619d9fc995dac582f6c8473d1a.js",
-    "spree/storefront/controllers/prefetch_lazy_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/prefetch_lazy_controller-d6139321cda8f07018119840f5438da4628d60a0e87fe63e823612886be490b7.js",
-    "spree/storefront/controllers/product_form_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/product_form_controller-cbee648d77ed0ce3e7192beb995c4e69b5901b2454f528a818f7a5132ca57903.js",
-    "spree/storefront/controllers/quantity_picker_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/quantity_picker_controller-8c7a4cafdaff1be9f43f3b2d979846cc20968e95b80f49c0b158796174a7127a.js",
-    "spree/storefront/controllers/search_suggestions_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/search_suggestions_controller-a5752dd4b522ad27c96e208d8b03984e8550c8c43202f217e4121f768227332d.js",
-    "spree/storefront/controllers/searchable_list_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/searchable_list_controller-b20ba94a9cc3dc9cc5c323f6f632aa2c7b1a32d15585ead24fbbb1a3e52a5c69.js",
-    "spree/storefront/controllers/slideover_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/slideover_controller-1f5e3f711a4245531fb4926f32ae1265471a6c9c77b23e66281a733eb330498b.js",
-    "spree/storefront/controllers/sticky_button_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/sticky_button_controller-0f8b0b1da7add081e196a6f86d8f68fe50806cbebbb22dc0c7c5c5c2b5dcbb48.js",
-    "spree/storefront/controllers/toggle_menu_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/toggle_menu_controller-7c1f72fa7247b4395bfdf1807b6e9cccd4e5d248b8ba2d885437a419e7a99a87.js",
-    "spree/storefront/controllers/turbo_stream_form_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/turbo_stream_form_controller-f197827efeb1241b07a888871f530c1c82b22875b275837db7e4d3e94f345c49.js",
-    "spree/storefront/controllers/wished_item_controller": "https://cdn.vendo.dev/assets/spree/storefront/controllers/wished_item_controller-17c158b8dfb84ec663364487597d62ab3348846ae0ea058573771f31c0915e7a.js",
-    "spree/storefront/helpers/lazy_load_controllers_with_manifest": "https://cdn.vendo.dev/assets/spree/storefront/helpers/lazy_load_controllers_with_manifest-adb1e29edf023a3d6acebfa160876e0cdb26f2fba9036e4cb4094a68ecf7dd85.js",
-    "spree/storefront/helpers/show_flash_message": "https://cdn.vendo.dev/assets/spree/storefront/helpers/show_flash_message-513ed399bf23e3ca7ef4c662c316a071ade0d3c5e41672d4ffe3f8070287bb15.js",
-    "spree_stripe/controllers/stripe_button_controller": "https://cdn.vendo.dev/assets/spree_stripe/controllers/stripe_button_controller-1309d9e40d4d69531ccb23958dddd8e3d5425ace6bcd005688b170e42f1a5cae.js",
-    "spree_stripe/controllers/stripe_controller": "https://cdn.vendo.dev/assets/spree_stripe/controllers/stripe_controller-b566bfa177e6d76c288845f713e12d2ad7dc5c62d502a8a58b6125903fdc5a1a.js",
-    "spree_google_analytics/controllers/spree_google_analytics_controller": "https://cdn.vendo.dev/assets/spree_google_analytics/controllers/spree_google_analytics_controller-f463576f77936d3d11a5c27ed76d706a080ca90a229e2aa13dab7fc254d57dd3.js",
-    "spree_paypal_checkout/controllers/checkout_paypal_controller": "https://cdn.vendo.dev/assets/spree_paypal_checkout/controllers/checkout_paypal_controller-67cf9569ef02ca29628bfcb6ec1d2f21dc1df957f4b980bbffc7bd236e50154c.js",
-    "spree_adyen/controllers/checkout_adyen_controller": "https://cdn.vendo.dev/assets/spree_adyen/controllers/checkout_adyen_controller-6f8aa1b4391b261eb71ba8664c1fdcfb2a5d6cd4c72a868ae0bbe9711f7c4c31.js",
-    "spree_adyen/controllers/redirect_adyen_controller": "https://cdn.vendo.dev/assets/spree_adyen/controllers/redirect_adyen_controller-36a0f798d531c74d9acb96242979cde10f6c711b715d05104a1fca8329c808ca.js",
-    "controllers/application": "https://cdn.vendo.dev/assets/controllers/application-f72b4b4dc43a99ef6a247d3de06025f15a3b4c6f37d35327ae42c5ac7c00cd08.js",
-    "controllers": "https://cdn.vendo.dev/assets/controllers/index-248457f421c2ac75ba304921a4b9352d7cce55edfd33304c3d2de8f4b959352c.js",
-    "controllers/recaptcha_form_controller": "https://cdn.vendo.dev/assets/controllers/recaptcha_form_controller-f3bb6ae78404f615bfa160d29961528f12d19b2564bcaaa7ca30db1ac1b1fb0e.js"
-  }
-}</script>
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/@stripe--stripe-js--dist--pure.esm.js-3edfe62927360e8e6698e32b1253ba1c817edb4876388f61d5d657d17633a25d.js">
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/@adyen--adyen-web-f932fc51616a268c03aa72a43968f91f2d88e718c949ed96f64048a188a29938.js">
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/application-9309b0c7004f98bed205238cd69e56d4052344cbc9a2a7db3aeba12fa47a7160.js">
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/turbo.min-5e344e6560136ac1d3d29962e3c3bd7629c3e2857cc0d7e86231b55586bf8922.js">
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/stimulus.min-019a3e3b6f6b31eda68c1f8519bcd4650491dea206bbec8246233f880419a018.js">
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/stimulus-loading-d80f0feea68692981b568bbfef0ed4370b56927ae5c663421e8461a466f0618f.js">
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/controllers/application-f72b4b4dc43a99ef6a247d3de06025f15a3b4c6f37d35327ae42c5ac7c00cd08.js">
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/controllers/index-248457f421c2ac75ba304921a4b9352d7cce55edfd33304c3d2de8f4b959352c.js">
-    <link rel="modulepreload"
-        href="https://cdn.vendo.dev/assets/controllers/recaptcha_form_controller-f3bb6ae78404f615bfa160d29961528f12d19b2564bcaaa7ca30db1ac1b1fb0e.js">
-    <script type="module">import "application"</script>
-    <script type="module">import "application-spree-storefront"</script>
-
-    <script>
-        //<![CDATA[
-        wishedVariantIds = [];
-        //]]>
-    </script>
-
-    <link rel="stylesheet"
-        href="https://cdn.vendo.dev/assets/tailwind-a9879c7dd7ba51dff1d72d23dd3ac4d2696855b775d562c48fa815a27330e098.css"
-        defer="defer" data-turbo-track="reload" />
-
-
-
-
-    <script src="https://js.stripe.com/v3/" defer="defer"></script>
-    <script type="module">import "application-spree-stripe"</script>
-    <script type="module">import "application-spree-adyen"</script>
-    <link rel="stylesheet"
-        href="https://cdn.vendo.dev/assets/adyen-67ff2f1945c805aae1517cd9f2e88e81990d2b235658bbb3246e485be7acc7a9.css"
-        media="all" />
-
-
-    <script>
-        (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
-            key: "AIzaSyCY-f86VAWkaWYc4DMzJcmYEzUBA6TQIdA",
-        });
-    </script>
-
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "url": "https://demo.spreecommerce.org",
-      "sameAs": ["https://x.com/spreecommerce","https://www.youtube.com/@SpreecommerceInc"],
-      "logo": "https://cdn.vendo.dev/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTI2NCwicHVyIjoiYmxvYl9pZCJ9fQ==--133a57d5dc6efc574d8cb63a7129b2d2c406dbcb/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwic2F2ZXIiOnsic3RyaXAiOnRydWUsInF1YWxpdHkiOjc1LCJsb3NzbGVzcyI6ZmFsc2UsImFscGhhX3EiOjg1LCJyZWR1Y3Rpb25fZWZmb3J0Ijo2LCJzbWFydF9zdWJzYW1wbGUiOnRydWV9LCJyZXNpemVfdG9fZmlsbCI6WzUwMCw1MDBdfSwicHVyIjoidmFyaWF0aW9uIn19--52d5a827098ef878103517fee8760f786ea7a129/spreeicon.jpg",
-      "name": "Spree Commerce DEMO",
-      "email": "example@spree.com"
-    }
-  </script>
-
-
-
 </head>
 
-<body class="theme-default bg-background w-full text-text -page ">
+<body class="bg-gradient-to-b from-blue-50 to-white font-sans text-blue-900">
 
-
-
-    <div id="section-21054" class="section-announcement-bar">
-        <div class='w-full justify-center items-center flex announcement-bar'
-            style='background-color: #F5F5F4;--section-background: #F5F5F4;color: #000000;--section-color: #000000;border-color: #E9E7DC;padding-top: 8px;padding-bottom: 8px;border-top-width: 0px;border-bottom-width: 0px;--section--border-bottom-width: 0px'>
-            <div class='text-sm tracking-widest'>
-                <div class="trix-content">
-                    <div>Welcome to the Spree Commerce Demo!</div>
+    <!-- Header -->
+    <header class="backdrop-blur-md bg-white/60 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between py-4 px-6">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <div
+                    class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center shadow-md">
+                    <span class="text-white font-bold text-lg">BO</span>
                 </div>
+                <span class="text-xl font-bold text-blue-700">BlueOcean</span>
             </div>
-        </div>
-    </div>
-    <div id="section-21057" class="section-header">
-        <header class='header-logo-centered' data-controller='header toggle-menu slideover slideover-account'
-            data-toggle-menu-class='hamburger-visible' data-slideover-invisible-class='translate-x-full,opacity-0'
-            data-slideover-visible-class='translate-x-0,opacity-100' data-slideover-active-target='#slideover-cart'
-            data-slideover-account-invisible-class='translate-x-full,opacity-0'
-            data-slideover-account-visible-class='translate-x-0,opacity-100'
-            data-slideover-account-active-target='#slideover-account'>
-            <nav aria-label='Top'
-                style="background-color: #FFFFFF;--section-background: #FFFFFF;color: #000000;--section-color: #000000;border-color: #E9E7DC;padding-top: 15px;padding-bottom: 15px;border-top-width: 0px;border-bottom-width: 0px;--section--border-bottom-width: 0px"
-                class="relative transition-transform duration-300">
-                <div class='page-container'>
-                    <div class='flex items-center lg:items-end  justify-between '>
-                        <div class='flex -order-1 flex-1 '>
-                            <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
-                            <button type='button' data-action='click->toggle-menu#toggle touch->toggle-menu#toggle'
-                                class='relative w-6 lg:hidden' data-toggle-menu-target='button'>
-                                <span class='sr-only'>Toggle menu</span>
-                                <div class='absolute top-0'>
-                                    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'
-                                        fill='none'>
-                                        <path d="M0 6H24" stroke="currentColor" stroke-width="1.5" />
-                                        <path d="M0 18H24" stroke="currentColor" stroke-width="1.5" />
-                                    </svg>
 
-                                </div>
-                                <div class='absolute top-0 opacity-0'>
-                                    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'
-                                        fill='none'>
-                                        <path d="M3.00029 3L21 20.9688M3 21L20.9997 3.03115" stroke="currentColor"
-                                            stroke-width="1.5" />
-                                    </svg>
-
-                                </div>
-                            </button>
-                            <!-- Search button -->
-                            <div class=' flex'>
-                                <button class='flex items-center ml-4 lg:ml-0' id='open-search'
-                                    data-action='click->toggle-menu#hide touch->toggle-menu#hide'>
-                                    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'
-                                        fill='none'>
-                                        <circle cx="10.5" cy="10.5" r="8.75" stroke="currentColor" stroke-width="1.5" />
-                                        <path d="M23 23L17 17" stroke="currentColor" stroke-width="1.5" />
-                                    </svg>
-
-                                    <span class='hidden lg:block ml-2 text-sm !leading-6 uppercase'>Search</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class='flex items-center flex-col header-nav-container'>
-                            <!-- Logo -->
-                            <div class='flex lg:pb-4' id='header-logo'>
-                                <a id="site-logo" href="/">
-                                    <img class="w-auto h-[32px] custom-desktop-height " alt="Spree Commerce DEMO logo"
-                                        style="aspect-ratio: 2.0;--desktop-height: 50px;" height="50"
-                                        src="https://cdn.vendo.dev/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTY3NSwicHVyIjoiYmxvYl9pZCJ9fQ==--3b686490197b777cca9f3e2c5bb59362804d8d03/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwic2F2ZXIiOnsic3RyaXAiOnRydWUsInF1YWxpdHkiOjc1LCJsb3NzbGVzcyI6ZmFsc2UsImFscGhhX3EiOjg1LCJyZWR1Y3Rpb25fZWZmb3J0Ijo2LCJzbWFydF9zdWJzYW1wbGUiOnRydWV9LCJyZXNpemVfdG9fZml0IjpbbnVsbCwxNTBdfSwicHVyIjoidmFyaWF0aW9uIn19--ead1b544a9c9c37c2d72fa3306cc5b9ec5ac78f3/Logo%20Full%20Black.png" />
-                                </a>
-                            </div>
-                            <!-- Desktop Menu -->
-                            <div class='hidden lg:flex'>
-                                <div class='flex flex-wrap justify-center mx-4 h-full'>
-                                    <div class="header--nav-item group" data-editor-id="block-37886"
-                                        data-editor-name="Shop All" data-editor-parent-id="section-21057"
-                                        data-editor-link="/admin/page_sections/21057/blocks/37886/edit" id="block-37886"
-                                        class="block-link" style="padding-top: 0px;padding-bottom: 0px"
-                                        width_desktop="width-desktop=&#39;true&#39;">
-                                        <a data-title="shop all" class="shrink-0 menu-item header--nav-link px-4 py-1"
-                                            href="https://demo.spreecommerce.org/products">
-                                            <span class="group-hover:border-b-[1.5px] group-hover:border-b-accent">Shop
-                                                All</span>
-                                        </a>
-                                    </div>
-                                    <div class="header--nav-item group" data-editor-id="block-37887"
-                                        data-editor-name="Fashion" data-editor-parent-id="section-21057"
-                                        data-editor-link="/admin/page_sections/21057/blocks/37887/edit" id="block-37887"
-                                        class="block-mega-nav-with-subcategories"
-                                        style="padding-top: 0px;padding-bottom: 0px"
-                                        width_desktop="width-desktop=&#39;true&#39;">
-                                        <a data-title="fashion" class="shrink-0 menu-item header--nav-link px-4 py-1"
-                                            href="https://demo.spreecommerce.org/t/categories/fashion">
-                                            <span
-                                                class="group-hover:border-b-[1.5px] group-hover:border-b-accent">Fashion</span>
-                                        </a>
-                                        <div class="w-full bg-transparent invisible absolute translate-y-[10%] group-hover:translate-y-0 left-0 group-hover:opacity-100 opacity-0 group-hover:visible transition-none border-default border-b duration-150 ease-in block pointer-events-none group-hover:pointer-events-auto z-10 header--mega-nav-container"
-                                            style="--bottom-padding: 15px; --top-without-bottom-padding: calc(100% - var(--bottom-padding)); padding-top: calc(var(--bottom-padding) + var(--section--border-bottom-width)); top: var(--top-without-bottom-padding);">
-                                            <div class="bg-section-background">
-                                                <div class="page-container py-6 grid grid-cols-4 gap-5">
-                                                    <div class="flex flex-col">
-                                                        <h6
-                                                            class="uppercase text-sm tracking-widest px-2 font-semibold mb-5">
-                                                            Women</h6>
-                                                        <div class="p-2">
-                                                            <a data-title="tops"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/women/tops">
-                                                                <span>Tops</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="knitwear"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/women/knitwear">
-                                                                <span>Knitwear</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="sweatshirts"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/women/sweatshirts">
-                                                                <span>Sweatshirts</span>
-                                                            </a>
-                                                        </div>
-                                                        <a class="py-3 px-2 uppercase text-sm inline-block tracking-widest font-semibold"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/women">View
-                                                            all</a>
-                                                    </div>
-                                                    <div class="flex flex-col">
-                                                        <h6
-                                                            class="uppercase text-sm tracking-widest px-2 font-semibold mb-5">
-                                                            Men</h6>
-                                                        <div class="p-2">
-                                                            <a data-title="t-shirts"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/men/t-shirts">
-                                                                <span>T-Shirts</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="shirts"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/men/shirts">
-                                                                <span>Shirts</span>
-                                                            </a>
-                                                        </div>
-                                                        <a class="py-3 px-2 uppercase text-sm inline-block tracking-widest font-semibold"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/men">View
-                                                            all</a>
-                                                    </div>
-                                                    <div class="flex flex-col">
-                                                        <h6
-                                                            class="uppercase text-sm tracking-widest px-2 font-semibold mb-5">
-                                                            Accessories</h6>
-                                                        <div class="p-2">
-                                                            <a data-title="sunglasses"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/accessories/sunglasses">
-                                                                <span>Sunglasses</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="watches"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/accessories/watches">
-                                                                <span>Watches</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="scarves"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/accessories/scarves">
-                                                                <span>Scarves</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="bags"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/accessories/bags">
-                                                                <span>Bags</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="jewelry"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/fashion/accessories/jewelry">
-                                                                <span>Jewelry</span>
-                                                            </a>
-                                                        </div>
-                                                        <a class="py-3 px-2 uppercase text-sm inline-block tracking-widest font-semibold"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/accessories">View
-                                                            all</a>
-                                                    </div>
-                                                    <a class="flex flex-col col-start-4"
-                                                        href="https://demo.spreecommerce.org/t/categories/fashion">
-                                                        <img width="360" height="360" class="w-full h-auto aspect-1"
-                                                            loading="lazy" alt="Fashion"
-                                                            src="https://cdn.vendo.dev/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MjQ4MSwicHVyIjoiYmxvYl9pZCJ9fQ==--13fa4e17e17c2c25d81d99674e6999e6f0507fda/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwic2F2ZXIiOnsic3RyaXAiOnRydWUsInF1YWxpdHkiOjc1LCJsb3NzbGVzcyI6ZmFsc2UsImFscGhhX3EiOjg1LCJyZWR1Y3Rpb25fZWZmb3J0Ijo2LCJzbWFydF9zdWJzYW1wbGUiOnRydWV9LCJyZXNpemVfdG9fZmlsbCI6WzcyMCw3MjBdfSwicHVyIjoidmFyaWF0aW9uIn19--5f35b9c7dbc4bc57f632e8038f626603ce6c02c1/Image%20(3).png" />
-                                                        <span
-                                                            class="py-3 px-2 bg-accent block uppercase text-sm tracking-widest font-semibold header--mega-nav-featured-taxon-title">Explore
-                                                            Fashion</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="header--nav-item group" data-editor-id="block-37888"
-                                        data-editor-name="Wellness" data-editor-parent-id="section-21057"
-                                        data-editor-link="/admin/page_sections/21057/blocks/37888/edit" id="block-37888"
-                                        class="block-mega-nav-with-subcategories"
-                                        style="padding-top: 0px;padding-bottom: 0px"
-                                        width_desktop="width-desktop=&#39;true&#39;">
-                                        <a data-title="wellness" class="shrink-0 menu-item header--nav-link px-4 py-1"
-                                            href="https://demo.spreecommerce.org/t/categories/wellness">
-                                            <span
-                                                class="group-hover:border-b-[1.5px] group-hover:border-b-accent">Wellness</span>
-                                        </a>
-                                        <div class="w-full bg-transparent invisible absolute translate-y-[10%] group-hover:translate-y-0 left-0 group-hover:opacity-100 opacity-0 group-hover:visible transition-none border-default border-b duration-150 ease-in block pointer-events-none group-hover:pointer-events-auto z-10 header--mega-nav-container"
-                                            style="--bottom-padding: 15px; --top-without-bottom-padding: calc(100% - var(--bottom-padding)); padding-top: calc(var(--bottom-padding) + var(--section--border-bottom-width)); top: var(--top-without-bottom-padding);">
-                                            <div class="bg-section-background">
-                                                <div class="page-container py-6 grid grid-cols-4 gap-5">
-                                                    <div class="flex flex-col">
-                                                        <h6
-                                                            class="uppercase text-sm tracking-widest px-2 font-semibold mb-5">
-                                                            Fitness</h6>
-                                                        <div class="p-2">
-                                                            <a data-title="sportswear"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/wellness/fitness/sportswear">
-                                                                <span>Sportswear</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="yoga"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/wellness/fitness/yoga">
-                                                                <span>Yoga</span>
-                                                            </a>
-                                                        </div>
-                                                        <a class="py-3 px-2 uppercase text-sm inline-block tracking-widest font-semibold"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/fitness">View
-                                                            all</a>
-                                                    </div>
-                                                    <div class="flex flex-col">
-                                                        <h6
-                                                            class="uppercase text-sm tracking-widest px-2 font-semibold mb-5">
-                                                            Relaxation</h6>
-                                                        <div class="p-2">
-                                                            <a data-title="aroma diffusers"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/wellness/relaxation/aroma-diffusers">
-                                                                <span>Aroma Diffusers</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="scented candles"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/wellness/relaxation/scented-candles">
-                                                                <span>Scented Candles</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="massage"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/wellness/relaxation/massage">
-                                                                <span>Massage</span>
-                                                            </a>
-                                                        </div>
-                                                        <a class="py-3 px-2 uppercase text-sm inline-block tracking-widest font-semibold"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/relaxation">View
-                                                            all</a>
-                                                    </div>
-                                                    <div class="flex flex-col">
-                                                        <h6
-                                                            class="uppercase text-sm tracking-widest px-2 font-semibold mb-5">
-                                                            Mental Stimulation</h6>
-                                                        <div class="p-2">
-                                                            <a data-title="puzzles"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/wellness/mental-stimulation/puzzles">
-                                                                <span>Puzzles</span>
-                                                            </a>
-                                                        </div>
-                                                        <a class="py-3 px-2 uppercase text-sm inline-block tracking-widest font-semibold"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/mental-stimulation">View
-                                                            all</a>
-                                                    </div>
-                                                    <div class="flex flex-col">
-                                                        <h6
-                                                            class="uppercase text-sm tracking-widest px-2 font-semibold mb-5">
-                                                            Nutrition</h6>
-                                                        <div class="p-2">
-                                                            <a data-title="protein"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/wellness/nutrition/protein">
-                                                                <span>Protein</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <a data-title="vitamins"
-                                                                class="shrink-0 menu-item !normal-case header--nav-link"
-                                                                href="https://demo.spreecommerce.org/t/categories/wellness/nutrition/vitamins">
-                                                                <span>Vitamins</span>
-                                                            </a>
-                                                        </div>
-                                                        <a class="py-3 px-2 uppercase text-sm inline-block tracking-widest font-semibold"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/nutrition">View
-                                                            all</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="header--nav-item group" data-editor-id="block-37889"
-                                        data-editor-name="New Arrivals" data-editor-parent-id="section-21057"
-                                        data-editor-link="/admin/page_sections/21057/blocks/37889/edit" id="block-37889"
-                                        class="block-link" style="padding-top: 0px;padding-bottom: 0px"
-                                        width_desktop="width-desktop=&#39;true&#39;">
-                                        <a data-title="new arrivals"
-                                            class="shrink-0 menu-item header--nav-link px-4 py-1"
-                                            href="https://demo.spreecommerce.org/t/collections/new-arrivals">
-                                            <span class="group-hover:border-b-[1.5px] group-hover:border-b-accent">New
-                                                Arrivals</span>
-                                        </a>
-                                    </div>
-                                    <div class="header--nav-item group" data-editor-id="block-37890"
-                                        data-editor-name="Sale" data-editor-parent-id="section-21057"
-                                        data-editor-link="/admin/page_sections/21057/blocks/37890/edit" id="block-37890"
-                                        class="block-link" style="padding-top: 0px;padding-bottom: 0px"
-                                        width_desktop="width-desktop=&#39;true&#39;">
-                                        <a data-title="sale" class="shrink-0 menu-item header--nav-link px-4 py-1"
-                                            href="https://demo.spreecommerce.org/t/collections/on-sale">
-                                            <span
-                                                class="group-hover:border-b-[1.5px] group-hover:border-b-accent">Sale</span>
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class='flex items-center gap-4 flex-1 justify-end'>
-                            <div data-controller="modal" data-modal-disable-backdrop="true" class="hidden lg:flex">
-                                <button name="button" type="submit" class="flex gap-2 items-center"
-                                    data-action="modal#open">
-                                    <span>
-                                        USD ($)
-                                    </span>
-                                    <span class="uppercase border-l pl-2 flex items-center gap-1">
-                                        <span class="fi fi-us"></span>
-                                        <span>en</span>
-                                    </span>
-                                </button> <turbo-frame loading="lazy" id="settings_modal" src="/settings"></turbo-frame>
-                            </div>
-                            <!-- Desktop Account -->
-                            <div class='hidden lg:flex'>
-                                <button
-                                    data-action='click->slideover-account#toggle click@window->slideover-account#hide click->toggle-menu#hide touch->toggle-menu#hide'>
-                                    <svg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24'
-                                        fill='none'>
-                                        <g clip-path="url(#clip0_440_247)">
-                                            <circle cx="12.5" cy="5" r="4.25" stroke="currentColor"
-                                                stroke-width="1.5" />
-                                            <path
-                                                d="M23.5 23C23.5 16.9249 18.5751 12 12.5 12C6.42487 12 1.5 16.9249 1.5 23"
-                                                stroke="currentColor" stroke-width="1.5" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_440_247">
-                                                <rect width="24" height="24" fill="white" transform="translate(0.5)" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg>
-
-                                </button>
-                            </div>
-                            <form data-turbo-stream="true" action="/account/wishlist" accept-charset="UTF-8"
-                                method="get">
-                                <button type="submit" id="wishlist-icon" class="flex items-end">
-                                    <div class="relative">
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M13.7601 3.46195L13.7602 3.46182C14.2788 2.91653 14.8925 2.48607 15.5652 2.19312C16.2378 1.90021 16.9574 1.75 17.6831 1.75C18.4087 1.75 19.1283 1.90021 19.8009 2.19312C20.4736 2.48607 21.0873 2.91653 21.6059 3.46182L21.6062 3.46208C22.1251 4.00718 22.5386 4.6564 22.8213 5.37354C23.104 6.09072 23.25 6.86062 23.25 7.63895C23.25 8.41727 23.104 9.18717 22.8213 9.90436C22.5386 10.6215 22.1251 11.2707 21.6062 11.8158L21.606 11.8159L20.389 13.095L11.9997 21.912L3.6104 13.095L2.39335 11.8159C1.34505 10.7142 0.75 9.21232 0.75 7.63895C0.75 6.06557 1.34505 4.56369 2.39335 3.46195C3.44045 2.36148 4.85242 1.75065 6.31633 1.75065C7.78024 1.75065 9.19221 2.36148 10.2393 3.46195L11.4564 4.74103L11.9997 5.31207L12.543 4.74103L13.7601 3.46195Z"
-                                                stroke="currentColor" stroke-width="1.5" />
-                                        </svg>
-
-                                    </div>
-
-                                </button>
-                            </form> <!-- Cart -->
-                            <div data-action='click->toggle-menu#hide touch->toggle-menu#hide'>
-
-                                <turbo-frame id="cart-icon-" target="_top">
-                                    <a class="relative block w-6" id="cart-pane-link"
-                                        data-action="click-&gt;slideover#toggle click@window-&gt;slideover#hide"
-                                        onclick="event.preventDefault()" href="/cart">
-                                        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'
-                                            viewBox='0 0 24 24' fill='none'>
-                                            <path d="M1.84725 22.25L3.49725 8.75H20.5028L22.1528 22.25H12H1.84725Z"
-                                                stroke="currentColor" stroke-width="1.5" />
-                                            <path d="M16 11V5C16 2.79086 14.2091 1 12 1V1C9.79086 1 8 2.79086 8 5V11"
-                                                stroke="currentColor" stroke-width="1.5" />
-                                        </svg>
-
-                                        <span
-                                            class='cart-counter w-full text-[8px] font-extrabold absolute top-[10px] text-center'>
-
-                                        </span>
-                                        <span class='sr-only'>Items in cart, View bag</span>
-                                    </a></turbo-frame>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Navigation -->
+            <nav class="hidden md:flex space-x-6 font-medium">
+                <a href="#" class="text-blue-800 hover:text-blue-500 transition">All</a>
+                <a href="#" class="text-blue-800/70 hover:text-blue-600 transition">Fashion</a>
+                <a href="#" class="text-blue-800/70 hover:text-blue-600 transition">Wellness</a>
+                <a href="#" class="text-blue-800/70 hover:text-blue-600 transition">New Arrivals</a>
+                <a href="#" class="text-red-500 hover:text-red-600 transition">Sale</a>
             </nav>
-            <div class='h-0 opacity-0 pointer-events-none hide-on-load' data-toggle-menu-target='toggleable'
-                role='dialog' aria-modal='true'>
-                <div class='flex justify-between flex-col lg:hidden w-full transition-transform translate-x-[-50%] has-[.currency-and-locale-modal:not(.hidden)]:transform-none body header--mobile-menu'
-                    data-toggle-menu-target='content' style='background-color: ; height: calc(100dvh - 58px - 36px);'>
-                    <div
-                        class="bg-background border-default border-t overflow-x-hidden h-full w-screen overflow-y-hidden">
-                        <div class="h-full flex transform has-[.currency-and-locale-modal:not(.hidden)]:transform-none relative transition-transform duration-300"
-                            data-controller="mobile-nav">
-                            <div class="w-screen shrink-0 flex flex-col h-full flex-grow-0">
-                                <div class="flex-grow overflow-y-scroll">
-                                    <a data-title="shop all"
-                                        class="block text-base tracking-widest p-4 w-full uppercase border-default border-b header--nav-link"
-                                        href="https://demo.spreecommerce.org/products">
-                                        <span>Shop All</span>
-                                    </a> <button
-                                        data-action="click->mobile-nav#openSubmenu touch->mobile-nav#openSubmenu"
-                                        data-title="fashion"
-                                        class='text-base text-left tracking-widest p-4 w-full uppercase border-default border-b flex justify-between items-center header--nav-link'>
-                                        Fashion
 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none"
-                                            viewBox="0 0 24 24">
-                                            <path fill="#000000" fill-rule="evenodd"
-                                                d="M8.53 3.47 7.47 4.53 14.94 12l-7.47 7.47 1.06 1.06L17.06 12 8.53 3.47Z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-
-                                        <template>
-                                            <button
-                                                data-action="click->mobile-nav#closeSubmenu touch->mobile-nav#closeSubmenu"
-                                                class='flex gap-2 items-center text-base font-medium text-left tracking-widest p-4 w-full uppercase border-default border-b header--mega-nav-close-submenu bg-background sticky top-0'>
-
-                                                <svg xmlns='http://www.w3.org/2000/svg' width='12' height='12'
-                                                    viewBox='0 0 24 24' fill='none'>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                        d="M15.4696 20.5303L16.5303 19.4697L9.0606 12L16.5303 4.53033L15.4696 3.46967L6.93928 12L15.4696 20.5303Z"
-                                                        fill="#000000" />
-                                                </svg>
-
-                                                Fashion
-                                            </button>
-                                            <div class="p-4 pt-0 w-full gap-2 flex flex-col">
-                                                <a class="flex w-full pt-4"
-                                                    href="https://demo.spreecommerce.org/t/categories/fashion">
-                                                    <img width="140" height="140"
-                                                        class="h-auto aspect-1 w-2/5 max-w-[140px]" loading="lazy"
-                                                        alt="Fashion"
-                                                        src="https://cdn.vendo.dev/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MjQ4MSwicHVyIjoiYmxvYl9pZCJ9fQ==--13fa4e17e17c2c25d81d99674e6999e6f0507fda/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwic2F2ZXIiOnsic3RyaXAiOnRydWUsInF1YWxpdHkiOjc1LCJsb3NzbGVzcyI6ZmFsc2UsImFscGhhX3EiOjg1LCJyZWR1Y3Rpb25fZWZmb3J0Ijo2LCJzbWFydF9zdWJzYW1wbGUiOnRydWV9LCJyZXNpemVfdG9fZmlsbCI6WzI4MCwyODBdfSwicHVyIjoidmFyaWF0aW9uIn19--f8d9ae88510dbc93bdf797cfc62c9da27b70841e/Image%20(3).png" />
-                                                    <span
-                                                        class="bg-accent w-full flex items-center justify-center header--mega-nav-featured-taxon-title text-sm tracking-widest font-semibold uppercase">
-                                                        Explore Fashion
-                                                    </span>
-                                                </a>
-                                                <div data-controller='toggle' data-toggle-class='hidden'
-                                                    class="w-full flex flex-col gap-2">
-                                                    <button type="button"
-                                                        class="text-base font-semibold tracking-widest uppercase w-full inline-flex justify-between py-3"
-                                                        data-action='click->toggle#toggle touch->toggle#toggle'>
-                                                        Women
-                                                        <span data-toggle-target='toggleable'>
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                        <span data-toggle-target='toggleable' class="hidden rotate-180">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                    </button>
-                                                    <div class="hidden" data-toggle-target='toggleable'>
-                                                        <a data-title="tops"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/women/tops">
-                                                            <span>Tops</span>
-                                                        </a> <a data-title="knitwear"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/women/knitwear">
-                                                            <span>Knitwear</span>
-                                                        </a> <a data-title="sweatshirts"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/women/sweatshirts">
-                                                            <span>Sweatshirts</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div data-controller='toggle' data-toggle-class='hidden'
-                                                    class="w-full flex flex-col gap-2">
-                                                    <button type="button"
-                                                        class="text-base font-semibold tracking-widest uppercase w-full inline-flex justify-between py-3"
-                                                        data-action='click->toggle#toggle touch->toggle#toggle'>
-                                                        Men
-                                                        <span data-toggle-target='toggleable'>
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                        <span data-toggle-target='toggleable' class="hidden rotate-180">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                    </button>
-                                                    <div class="hidden" data-toggle-target='toggleable'>
-                                                        <a data-title="t-shirts"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/men/t-shirts">
-                                                            <span>T-Shirts</span>
-                                                        </a> <a data-title="shirts"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/men/shirts">
-                                                            <span>Shirts</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div data-controller='toggle' data-toggle-class='hidden'
-                                                    class="w-full flex flex-col gap-2">
-                                                    <button type="button"
-                                                        class="text-base font-semibold tracking-widest uppercase w-full inline-flex justify-between py-3"
-                                                        data-action='click->toggle#toggle touch->toggle#toggle'>
-                                                        Accessories
-                                                        <span data-toggle-target='toggleable'>
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                        <span data-toggle-target='toggleable' class="hidden rotate-180">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                    </button>
-                                                    <div class="hidden" data-toggle-target='toggleable'>
-                                                        <a data-title="sunglasses"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/accessories/sunglasses">
-                                                            <span>Sunglasses</span>
-                                                        </a> <a data-title="watches"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/accessories/watches">
-                                                            <span>Watches</span>
-                                                        </a> <a data-title="scarves"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/accessories/scarves">
-                                                            <span>Scarves</span>
-                                                        </a> <a data-title="bags"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/accessories/bags">
-                                                            <span>Bags</span>
-                                                        </a> <a data-title="jewelry"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/fashion/accessories/jewelry">
-                                                            <span>Jewelry</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </button>
-                                    <button data-action="click->mobile-nav#openSubmenu touch->mobile-nav#openSubmenu"
-                                        data-title="wellness"
-                                        class='text-base text-left tracking-widest p-4 w-full uppercase border-default border-b flex justify-between items-center header--nav-link'>
-                                        Wellness
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none"
-                                            viewBox="0 0 24 24">
-                                            <path fill="#000000" fill-rule="evenodd"
-                                                d="M8.53 3.47 7.47 4.53 14.94 12l-7.47 7.47 1.06 1.06L17.06 12 8.53 3.47Z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-
-                                        <template>
-                                            <button
-                                                data-action="click->mobile-nav#closeSubmenu touch->mobile-nav#closeSubmenu"
-                                                class='flex gap-2 items-center text-base font-medium text-left tracking-widest p-4 w-full uppercase border-default border-b header--mega-nav-close-submenu bg-background sticky top-0'>
-
-                                                <svg xmlns='http://www.w3.org/2000/svg' width='12' height='12'
-                                                    viewBox='0 0 24 24' fill='none'>
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                        d="M15.4696 20.5303L16.5303 19.4697L9.0606 12L16.5303 4.53033L15.4696 3.46967L6.93928 12L15.4696 20.5303Z"
-                                                        fill="#000000" />
-                                                </svg>
-
-                                                Wellness
-                                            </button>
-                                            <div class="p-4 pt-0 w-full gap-2 flex flex-col">
-                                                <div data-controller='toggle' data-toggle-class='hidden'
-                                                    class="w-full flex flex-col gap-2">
-                                                    <button type="button"
-                                                        class="text-base font-semibold tracking-widest uppercase w-full inline-flex justify-between py-3"
-                                                        data-action='click->toggle#toggle touch->toggle#toggle'>
-                                                        Fitness
-                                                        <span data-toggle-target='toggleable'>
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                        <span data-toggle-target='toggleable' class="hidden rotate-180">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                    </button>
-                                                    <div class="hidden" data-toggle-target='toggleable'>
-                                                        <a data-title="sportswear"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/fitness/sportswear">
-                                                            <span>Sportswear</span>
-                                                        </a> <a data-title="yoga"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/fitness/yoga">
-                                                            <span>Yoga</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div data-controller='toggle' data-toggle-class='hidden'
-                                                    class="w-full flex flex-col gap-2">
-                                                    <button type="button"
-                                                        class="text-base font-semibold tracking-widest uppercase w-full inline-flex justify-between py-3"
-                                                        data-action='click->toggle#toggle touch->toggle#toggle'>
-                                                        Relaxation
-                                                        <span data-toggle-target='toggleable'>
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                        <span data-toggle-target='toggleable' class="hidden rotate-180">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                    </button>
-                                                    <div class="hidden" data-toggle-target='toggleable'>
-                                                        <a data-title="aroma diffusers"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/relaxation/aroma-diffusers">
-                                                            <span>Aroma Diffusers</span>
-                                                        </a> <a data-title="scented candles"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/relaxation/scented-candles">
-                                                            <span>Scented Candles</span>
-                                                        </a> <a data-title="massage"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/relaxation/massage">
-                                                            <span>Massage</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div data-controller='toggle' data-toggle-class='hidden'
-                                                    class="w-full flex flex-col gap-2">
-                                                    <button type="button"
-                                                        class="text-base font-semibold tracking-widest uppercase w-full inline-flex justify-between py-3"
-                                                        data-action='click->toggle#toggle touch->toggle#toggle'>
-                                                        Mental Stimulation
-                                                        <span data-toggle-target='toggleable'>
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                        <span data-toggle-target='toggleable' class="hidden rotate-180">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                    </button>
-                                                    <div class="hidden" data-toggle-target='toggleable'>
-                                                        <a data-title="puzzles"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/mental-stimulation/puzzles">
-                                                            <span>Puzzles</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div data-controller='toggle' data-toggle-class='hidden'
-                                                    class="w-full flex flex-col gap-2">
-                                                    <button type="button"
-                                                        class="text-base font-semibold tracking-widest uppercase w-full inline-flex justify-between py-3"
-                                                        data-action='click->toggle#toggle touch->toggle#toggle'>
-                                                        Nutrition
-                                                        <span data-toggle-target='toggleable'>
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                        <span data-toggle-target='toggleable' class="hidden rotate-180">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="Side=Down">
-                                                                    <path id="Vector 517" d="M4 8L12 16L20 8"
-                                                                        stroke="currentColor" stroke-width="1.5" />
-                                                                </g>
-                                                            </svg>
-
-                                                        </span>
-                                                    </button>
-                                                    <div class="hidden" data-toggle-target='toggleable'>
-                                                        <a data-title="protein"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/nutrition/protein">
-                                                            <span>Protein</span>
-                                                        </a> <a data-title="vitamins"
-                                                            class="block text-base py-3 w-full uppercase header--nav-link"
-                                                            href="https://demo.spreecommerce.org/t/categories/wellness/nutrition/vitamins">
-                                                            <span>Vitamins</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </button>
-                                    <a data-title="new arrivals"
-                                        class="block text-base tracking-widest p-4 w-full uppercase border-default border-b header--nav-link"
-                                        href="https://demo.spreecommerce.org/t/collections/new-arrivals">
-                                        <span>New Arrivals</span>
-                                    </a> <a data-title="sale"
-                                        class="block text-base tracking-widest p-4 w-full uppercase border-default border-b header--nav-link"
-                                        href="https://demo.spreecommerce.org/t/collections/on-sale">
-                                        <span>Sale</span>
-                                    </a>
-                                </div>
-                                <div class='p-4 bg-accent'>
-                                    <button id='mobile-menu'
-                                        data-action='click->slideover-account#toggle click@window->slideover-account#hide click->toggle-menu#hide touch->toggle-menu#hide'
-                                        class='btn-secondary gap-2 flex justify-center items-center w-full'>
-                                        <span>My Account</span>
-                                        <svg xmlns='http://www.w3.org/2000/svg' width='25' height='24'
-                                            viewBox='0 0 25 24' fill='none'>
-                                            <g clip-path="url(#clip0_440_247)">
-                                                <circle cx="12.5" cy="5" r="4.25" stroke="currentColor"
-                                                    stroke-width="1.5" />
-                                                <path
-                                                    d="M23.5 23C23.5 16.9249 18.5751 12 12.5 12C6.42487 12 1.5 16.9249 1.5 23"
-                                                    stroke="currentColor" stroke-width="1.5" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_440_247">
-                                                    <rect width="24" height="24" fill="white"
-                                                        transform="translate(0.5)" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-
-                                    </button>
-
-                                    <div class="flex mt-4 justify-end">
-                                        <div data-controller="modal" data-modal-disable-backdrop="true">
-                                            <button name="button" type="submit" class="flex gap-2 items-center"
-                                                data-action="modal#open">
-                                                <span>
-                                                    USD ($)
-                                                </span>
-                                                <span class="uppercase border-l pl-2 flex items-center gap-1">
-                                                    <span class="fi fi-us"></span>
-                                                    <span>en</span>
-                                                </span>
-                                            </button> <turbo-frame loading="lazy" id="settings_modal"
-                                                src="/settings"></turbo-frame>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-screen shrink-0 relative overflow-y-scroll"
-                                data-mobile-nav-target="submenuContainer"></div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-            <!-- begin sidebar/slideover -->
-            <div id="cart-pane" data-slideover-target='overlay'
-                class='fixed inset-0 flex flex-row-reverse z-50 transition-opacity hidden'>
-                <div class='fixed inset-0'>
-                    <div data-action='click->slideover#toggle' class='absolute inset-0 bg-background opacity-75'></div>
-                </div>
-                <div id='slideover-cart' data-slideover-target='menu'
-                    class='relative sidebar-pane flex-1 !flex flex-col w-full bg-background text-text md:border-l border-default transition ease-in-out duration-300 translate-x-full'>
-                    <div class='p-4 gap-4 flex-shrink-0 flex items-center justify-between border-b border-default z-50'>
-                        <button name="button" type="button" data-action="slideover#toggle"
-                            class="flex items-center justify-center rounded-full focus:outline-none focus:bg-background"
-                            aria-label="Close sidebar">
-                            <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'
-                                fill='none'>
-                                <path d="M3.00029 3L21 20.9688M3 21L20.9997 3.03115" stroke="currentColor"
-                                    stroke-width="1.5" />
-                            </svg>
-
-                        </button> <span class='text-xl font-medium uppercase leading-none'>Cart</span>
-                        <span class='relative block w-6'>
-                            <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'
-                                fill='none'>
-                                <path d="M1.84725 22.25L3.49725 8.75H20.5028L22.1528 22.25H12H1.84725Z"
-                                    stroke="currentColor" stroke-width="1.5" />
-                                <path d="M16 11V5C16 2.79086 14.2091 1 12 1V1C9.79086 1 8 2.79086 8 5V11"
-                                    stroke="currentColor" stroke-width="1.5" />
-                            </svg>
-
-                            <span class='cart-counter w-full text-[8px] font-extrabold absolute top-[10px] text-center'>
-
-                            </span>
-                            <span class='sr-only'>Items in cart, View bag</span>
-                        </span>
-                    </div>
-                    <div class='flex-1 h-0 overflow-y-auto' id="cart-pane-container" data-turbo-permanent>
-                        <turbo-frame class="cart-contents" loading="lazy" id="cart_contents" src="/cart"></turbo-frame>
-                    </div>
-                </div>
-            </div>
-            <!-- end sidebar/slideover -->
-
-            <div id='account-pane' data-turbo-permanent data-slideover-account-target='overlay'
-                class='fixed inset-0 flex flex-row-reverse z-50 transition-opacity hidden'>
-                <div class='fixed inset-0'>
-                    <div data-action='click->slideover-account#toggle'
-                        class='absolute inset-0 bg-background opacity-75'></div>
-                </div>
-                <div id='slideover-account' data-slideover-account-target='menu'
-                    class='relative sidebar-pane flex-1 !flex flex-col w-full bg-background text-text md:border-l border-default transition ease-in-out duration-300 translate-x-full'>
-                    <div class='p-4 gap-4 flex-shrink-0 flex items-center justify-between border-b border-default z-50'>
-                        <button data-action='slideover-account#toggle'
-                            class='flex items-center justify-center rounded-full focus:outline-none focus:bg-background'
-                            aria-label='Close account sidebar'>
-
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <g id="24px/Cross">
-                                    <path id="Vector" d="M3.00029 3L21 20.9688M3 21L20.9997 3.03115"
-                                        stroke="currentColor" stroke-width="1.5" />
-                                </g>
-                            </svg>
-
-                        </button>
-                        <span class='text-xl font-medium uppercase leading-none'>Account</span>
-                        <span></span>
-                    </div>
-                    <turbo-frame loading="lazy" id="login" src="/user/sign_in"></turbo-frame>
-                </div>
-            </div>
-
-            <div id="search-suggestions" role="dialog" aria-modal="true">
-                <div class='w-full flex flex-col border-b border-default' data-controller="search-suggestions"
-                    data-show-class="h-screen min-h-screen" data-search-suggestions-url-value="/search/suggestions">
-                    <div class='hidden lg:flex justify-center w-full mt-4 mb-3' id="header-logo">
-                        <a id="site-logo" href="/">
-                            <img class="w-auto h-[32px] custom-desktop-height " alt="Spree Commerce DEMO logo"
-                                style="aspect-ratio: 2.0;--desktop-height: 50px;" height="50"
-                                src="https://cdn.vendo.dev/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTY3NSwicHVyIjoiYmxvYl9pZCJ9fQ==--3b686490197b777cca9f3e2c5bb59362804d8d03/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwic2F2ZXIiOnsic3RyaXAiOnRydWUsInF1YWxpdHkiOjc1LCJsb3NzbGVzcyI6ZmFsc2UsImFscGhhX3EiOjg1LCJyZWR1Y3Rpb25fZWZmb3J0Ijo2LCJzbWFydF9zdWJzYW1wbGUiOnRydWV9LCJyZXNpemVfdG9fZml0IjpbbnVsbCwxNTBdfSwicHVyIjoidmFyaWF0aW9uIn19--ead1b544a9c9c37c2d72fa3306cc5b9ec5ac78f3/Logo%20Full%20Black.png" />
-                        </a>
-                    </div>
-                    <form action="/search" accept-charset="UTF-8" method="get">
-                        <div class='page-container bg-background flex w-full my-2 lg:mb-3 animate-fadeIn'>
-                            <button name="button" type="button" class="items-center justify-center pr-4"
-                                data-action="click-&gt;search-suggestions#hide touch-&gt;search-suggestions#hide">
-                                <span class='sr-only'>Close</span>
-                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'
-                                    fill='none'>
-                                    <path d="M3.00029 3L21 20.9688M3 21L20.9997 3.03115" stroke="currentColor"
-                                        stroke-width="1.5" />
-                                </svg>
-
-                            </button>
-                            <div class='relative mx-auto w-full md:w-1/2' data-controller='clear-input'>
-                                <button name="button" type="submit" class="absolute left-2 top-2">
-                                    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'
-                                        fill='none'>
-                                        <circle cx="10.5" cy="10.5" r="8.75" stroke="currentColor" stroke-width="1.5" />
-                                        <path d="M23 23L17 17" stroke="currentColor" stroke-width="1.5" />
-                                    </svg>
-
-                                </button>
-                                <input type="text" name="q" id="q"
-                                    class="p-2 lg:text-sm !leading-6 pl-10 !h-auto bg-accent w-full uppercase pr-14 focus:outline-none text-input"
-                                    placeholder="Search" data-search-suggestions-target="input"
-                                    data-clear-input-target="input" />
-                                <button name="button" type="submit"
-                                    class="hidden text-sm font-semibold absolute top-2 right-2 uppercase h-6 tracking-widest"
-                                    data-clear-input-target="button"
-                                    data-action="click-&gt;clear-input#clear touch-&gt;clear-input#clear click-&gt;search-suggestions#clear touch-&gt;search-suggestions#clear">
-                                    Clear
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <div id="search-suggestions-content" class="flex-grow hidden" data-show-class="animate-fadeIn">
-                    </div>
-                </div>
-
-                <!-- rendering search flyover skeleton -->
-                <template id="loading">
-
-                    <div class="bg-background w-full h-full flex flex-col">
-                        <div
-                            class="uppercase block py-4 lg:py-6 border-b border-default w-full font-semibold text-sm tracking-widest">
-                            <h3 class="page-container">Top suggestions</h3>
-                        </div>
-                        <div
-                            class="flex flex-col md:grid md:grid-cols-4 grid-rows-[1fr_min-content] w-full page-container h-full">
-                            <div class="flex flex-col p-4 md:border-r1 border-default pl-4 gap-2 md:h-full w-full">
-                                <div class="block w-full animate-pulse bg-accent h-6"></div>
-                                <div class="block w-full animate-pulse bg-accent h-6"></div>
-                                <div class="block w-full animate-pulse bg-accent h-6"></div>
-                                <div class="block w-full animate-pulse bg-accent h-6"></div>
-                                <div class="block w-full animate-pulse bg-accent h-6"></div>
-                            </div>
-                            <div
-                                class='grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 px-4 md:px-[3.75rem] py-6 w-full h-full md:col-span-3 animate-pulse'>
-                                <div class='lg:col-span-12 flex justify-between flex-col overflow-hidden'>
-                                    <div class='grid gap-4 lg:gap-6 grid-cols-8 lg:grid-cols-12'>
-                                        <div class='col-span-6 lg:col-span-4'>
-                                            <div class='aspect-1 bg-accent w-full'></div>
-                                            <div class='h-6 mt-2 w-32 bg-accent rounded'></div>
-                                            <div class='h-8 mt-2 w-16 bg-accent rounded'></div>
-                                        </div>
-                                        <div class='col-span-2 lg:col-span-4 flex flex-col h-full overflow-hidden'>
-                                            <div class='h-full lg:aspect-1 bg-accent w-full'></div>
-                                            <div class='h-6 mt-2 w-32 bg-accent rounded shrink-0'></div>
-                                            <div class='h-8 mt-2 w-16 bg-accent rounded shrink-0'></div>
-                                        </div>
-                                        <div
-                                            class='hidden col-span-2 lg:col-span-4 lg:flex flex-col h-full overflow-hidden'>
-                                            <div class='h-full lg:aspect-1 bg-accent w-full'></div>
-                                            <div class='h-6 mt-2 w-32 bg-accent rounded shrink-0'></div>
-                                            <div class='h-8 mt-2 w-16 bg-accent rounded shrink-0'></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </template>
-            </div>
-
-        </header>
-    </div>
-    <turbo-frame id="flash">
-        <template id="flashMessage">
-            <div class="pointer-events-none w-full">
-                <div data-controller="alert" data-alert-hide-class="translate-x-[500px] opacity-0"
-                    class="ease-in-out duration-500 w-full relative pointer-events-auto ">
-                    <div class="p-2">
-                        <p class="text-sm lg:text-base font-medium text-center uppercase text-text flash-message">
-
-                        </p>
-                        <button data-action="alert#close" class="absolute top-2 right-2 h-[22px] lg:h-6">
-                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </template>
-        <div id="flashes" class="fixed z-[9999] w-full top-0">
-        </div>
-
-    </turbo-frame> <turbo-frame id="settings_modal">
-        <div data-modal-target="container"
-            data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard"
-            class="currency-and-locale-modal hidden fixed inset-0 overflow-y-auto flex items-end md:items-start justify-center z-[9999] h-dvh w-full"
-            style="animation-duration: 150ms;">
-            <div
-                class="w-full lg:w-[600px] relative h-auto lg:max-h-screen flex justify-center flex-col gap-4 bg-background p-5 border border-default mt-12">
-                <button type="button" data-action="modal#close" class="absolute top-5 right-5">
-                    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
-                        <path d="M3.00029 3L21 20.9688M3 21L20.9997 3.03115" stroke="currentColor" stroke-width="1.5" />
-                    </svg>
-
+            <!-- Actions -->
+            <div class="flex items-center space-x-4">
+                <button class="relative hover:text-blue-600 transition">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span
+                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">3</span>
                 </button>
-                <h3 class="text-lg font-bold">Localization Settings</h3>
-                <form class="flex flex-col gap-4" data-turbo="false" action="/settings" accept-charset="UTF-8"
-                    method="post"><input type="hidden" name="_method" value="put" autocomplete="off" /><input
-                        type="hidden" name="authenticity_token"
-                        value="FzGt0nNSkEuewGfyPJ67x_C38gVRRJHLqDN6M94WGzK296obAVLX30XEqGUHiN7fOLZVxgAUOlEyh_nITakqnA"
-                        autocomplete="off" />
-                    <div class="flex flex-col gap-2">
-                        <label class="text-xs text-neutral-600" for="switch_to_currency">Currency</label>
-                        <select name="switch_to_currency" id="switch_to_currency">
-                            <option selected="selected" value="USD">United States Dollar (USD)</option>
-                            <option value="EUR">Euro (EUR)</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-xs text-neutral-600" for="switch_to_locale">Language</label>
-                        <select name="switch_to_locale" id="switch_to_locale">
-                            <option value="de">Deutsch (DE)</option>
-                            <option selected="selected" value="en">English (US)</option>
-                        </select>
-                    </div>
-                    <input type="submit" name="commit" value="Save" class="btn-primary" data-disable-with="Save" />
-                </form>
+                <button class="hover:text-blue-600 transition">
+                    <i class="fas fa-heart text-xl"></i>
+                </button>
+                <button class="hover:text-blue-600 transition">
+                    <i class="fas fa-user text-xl"></i>
+                </button>
             </div>
         </div>
-    </turbo-frame>
-    <turbo-frame loading="lazy" class="section-newsletter" data-controller="prefetch-lazy" data-turbo-permanent="true"
-        id="section-21055" src="/en/page_sections/21055">
-        <div class="w-full flex justify-center items-center relative min-h-[200px]"
-            style="background-color: #E9E7DC;--section-background: #E9E7DC;color: #000000;--section-color: #000000;border-color: #E9E7DC;padding-top: 40px;padding-bottom: 40px;border-top-width: 1px;border-bottom-width: 0px;--section--border-bottom-width: 0px">
+    </header>
+
+    <!-- Hero -->
+    <section class="relative bg-cover bg-center py-28"
+        style="background-image: url('https://images.unsplash.com/photo-1520975698519-59afc4b3214b?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/70 to-blue-800/60"></div>
+        <div class="relative z-10 text-center text-white px-6">
+            <h1 class="text-5xl font-bold mb-4 animate-fadeIn">Mùa hè rực rỡ - Sale đến 50%</h1>
+            <p class="text-xl mb-8 max-w-xl mx-auto opacity-90 animate-fadeIn delay-100">Khám phá bộ sưu tập mới với ưu
+                đãi đặc biệt và trải nghiệm mua sắm tuyệt vời.</p>
+            <button
+                class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
+                Mua ngay <i class="fas fa-arrow-right ml-2"></i>
+            </button>
         </div>
-    </turbo-frame>
-    <div id="section-21056" class="section-footer">
-        <footer id='footer' data-turbo-permanent>
+    </section>
+
+    <!-- Featured Products -->
+    <main class="container mx-auto px-6 py-16">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-blue-900">Sản phẩm nổi bật</h2>
+            <a href="#" class="text-blue-600 hover:text-blue-800 transition flex items-center">Xem tất cả <i
+                    class="fas fa-arrow-right ml-2"></i></a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- Product Card -->
             <div
-                style='background-color: #F5F5F4;--section-background: #F5F5F4;color: #000000;--section-color: #000000;border-color: #E9E7DC;padding-top: 32px;padding-bottom: 32px;border-top-width: 0px;border-bottom-width: 0px;--section--border-bottom-width: 0px'>
-                <div class="page-container">
-                    <div class="flex gap-0 md:gap-6 md:flex-row flex-col">
-                        <div class="flex justify-center flex-grow py-2 md:py-0 border-b md:border-none lg:w-60">
-                            <a id="site-logo" href="/">
-                                <img class="w-auto h-[32px] custom-desktop-height " alt="Spree Commerce DEMO logo"
-                                    style="aspect-ratio: 2.0;--desktop-height: 64px;" height="64"
-                                    src="https://cdn.vendo.dev/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTY3OCwicHVyIjoiYmxvYl9pZCJ9fQ==--35d8314a7f079604196bf5d29f05368df9b05649/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwic2F2ZXIiOnsic3RyaXAiOnRydWUsInF1YWxpdHkiOjc1LCJsb3NzbGVzcyI6ZmFsc2UsImFscGhhX3EiOjg1LCJyZWR1Y3Rpb25fZWZmb3J0Ijo2LCJzbWFydF9zdWJzYW1wbGUiOnRydWV9LCJyZXNpemVfdG9fZml0IjpbbnVsbCwxOTJdfSwicHVyIjoidmFyaWF0aW9uIn19--2f2d1aac63ca2d455cd4829bc5daa82461df49e2/Logo%20Full%20Black.png" />
-                            </a>
+                class="group bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100 hover:-translate-y-1 transition transform">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/300x300/3b82f6/ffffff?text=Áo+Thun"
+                        class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-110">
+                    <span
+                        class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 text-xs rounded-md shadow">-20%</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-semibold text-lg mb-1 text-blue-900">Áo Thun Cotton</h3>
+                    <p class="text-blue-600 text-sm mb-3">Thoáng mát, thấm hút mồ hôi</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="font-bold text-lg text-blue-800">299.000₫</span>
+                            <span class="text-sm line-through text-blue-400 ml-1">375.000₫</span>
                         </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-4 grow w-full">
-                            <div
-                                class="flex-grow gap-1 flex flex-col py-6 md:py-0 border-b md:border-none border-default lg:mb-6">
-                                <div data-editor-id="block-37882" data-editor-name="Shop"
-                                    data-editor-parent-id="section-21056"
-                                    data-editor-link="/admin/page_sections/21056/blocks/37882/edit" id="block-37882"
-                                    class="block-nav"
-                                    style="text-align: left;width: 100%;margin: 0 auto 0 0;color: var(--section-color);padding-top: 0px;padding-bottom: 0px;background-color: var(--section-background)"
-                                    width_desktop="width-desktop=&#39;true&#39;">
-                                    <h3 class="text-sm py-2">Shop</h3>
-                                    <ul class="uppercase text-sm tracking-wider !leading-4 flex flex-col gap-1">
-                                        <li class='py-2'>
-                                            <a href="https://demo.spreecommerce.org/products">
-                                                Shop All
-                                            </a>
-                                        </li>
-                                        <li class='py-2'>
-                                            <a href="https://demo.spreecommerce.org/t/collections/on-sale">
-                                                On sale
-                                            </a>
-                                        </li>
-                                        <li class='py-2'>
-                                            <a href="https://demo.spreecommerce.org/t/collections/new-arrivals">
-                                                New arrivals
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div
-                                class="flex-grow gap-1 flex flex-col py-6 md:py-0 border-b md:border-none border-default lg:mb-6">
-                                <div data-editor-id="block-37883" data-editor-name="Account"
-                                    data-editor-parent-id="section-21056"
-                                    data-editor-link="/admin/page_sections/21056/blocks/37883/edit" id="block-37883"
-                                    class="block-nav"
-                                    style="text-align: left;width: 100%;margin: 0 auto 0 0;color: var(--section-color);padding-top: 0px;padding-bottom: 0px;background-color: var(--section-background)"
-                                    width_desktop="width-desktop=&#39;true&#39;">
-                                    <h3 class="text-sm py-2">Account</h3>
-                                    <ul class="uppercase text-sm tracking-wider !leading-4 flex flex-col gap-1">
-                                        <li class='py-2'>
-                                            <a href="https://demo.spreecommerce.org/account">
-                                                My Account
-                                            </a>
-                                        </li>
-                                        <li class='py-2'>
-                                            <a href="https://demo.spreecommerce.org/account/wishlist">
-                                                Favorites
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div
-                                class="flex-grow gap-1 flex flex-col py-6 md:py-0 border-b md:border-none border-default lg:mb-6">
-                                <div data-editor-id="block-37884" data-editor-name="Company"
-                                    data-editor-parent-id="section-21056"
-                                    data-editor-link="/admin/page_sections/21056/blocks/37884/edit" id="block-37884"
-                                    class="block-nav"
-                                    style="text-align: left;width: 100%;margin: 0 auto 0 0;color: var(--section-color);padding-top: 0px;padding-bottom: 0px;background-color: var(--section-background)"
-                                    width_desktop="width-desktop=&#39;true&#39;">
-                                    <h3 class="text-sm py-2">Company</h3>
-                                    <ul class="uppercase text-sm tracking-wider !leading-4 flex flex-col gap-1">
-                                        <li class='py-2'>
-                                            <a target="_blank" rel="noopener noreferrer"
-                                                href="https://spreecommerce.org/">
-                                                Spree Commerce
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div
-                                class="flex-grow gap-1 flex flex-col py-6 md:py-0 border-b md:border-none border-default lg:mb-6">
-                                <div data-editor-id="block-37885" data-editor-name="Info"
-                                    data-editor-parent-id="section-21056"
-                                    data-editor-link="/admin/page_sections/21056/blocks/37885/edit" id="block-37885"
-                                    class="block-nav"
-                                    style="text-align: left;width: 100%;margin: 0 auto 0 0;color: var(--section-color);padding-top: 0px;padding-bottom: 0px;background-color: var(--section-background)"
-                                    width_desktop="width-desktop=&#39;true&#39;">
-                                    <h3 class="text-sm py-2">Info</h3>
-                                    <ul class="uppercase text-sm tracking-wider !leading-4 flex flex-col gap-1">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-grow gap-4 flex flex-col justify-between lg:w-60">
-                            <div class="gap-1 flex flex-col py-6 md:py-0">
-                                <h3 class="text-sm py-2">Follow Us</h3>
-                                <div class="flex flex-wrap gap-2 max-w-48 py-2">
-                                    <a href="https://x.com/spreecommerce">
-                                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'
-                                            viewBox='0 0 16 16' fill='currentColor'>
-                                            <g clip-path="url(#clip0_193_2267)">
-                                                <path
-                                                    d="M5.03344 14.5C11.0697 14.5 14.3722 9.4978 14.3722 5.16124C14.3722 5.02062 14.3691 4.87687 14.3628 4.73624C15.0052 4.27164 15.5597 3.69617 16 3.03687C15.4017 3.30307 14.7664 3.47692 14.1159 3.55249C14.8009 3.14194 15.3137 2.49698 15.5594 1.73718C14.915 2.11904 14.2104 2.38841 13.4756 2.53374C12.9806 2.00771 12.326 1.65941 11.6131 1.5427C10.9003 1.42599 10.1688 1.54737 9.53183 1.88806C8.89486 2.22876 8.38787 2.7698 8.08923 3.42754C7.7906 4.08528 7.71695 4.82308 7.87969 5.52687C6.575 5.46139 5.29862 5.12247 4.13332 4.53207C2.96802 3.94166 1.9398 3.11296 1.11531 2.09968C0.696266 2.82216 0.568038 3.6771 0.756687 4.49073C0.945337 5.30436 1.43671 6.01563 2.13094 6.47999C1.60975 6.46344 1.09998 6.32312 0.64375 6.07061V6.11124C0.643283 6.86943 0.905399 7.60439 1.38554 8.19118C1.86568 8.77797 2.53422 9.18037 3.2775 9.32999C2.7947 9.46209 2.28799 9.48133 1.79656 9.38624C2.0063 10.0383 2.41438 10.6086 2.96385 11.0176C3.51331 11.4265 4.17675 11.6537 4.86156 11.6675C3.69895 12.5807 2.26278 13.0761 0.784375 13.0737C0.522191 13.0733 0.260266 13.0573 0 13.0256C1.5019 13.9892 3.24902 14.5009 5.03344 14.5Z" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_193_2267">
-                                                    <rect width="16" height="16" fill="white" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-
-                                        <span class='hidden'>spreecommerce</span>
-                                    </a> <a href="https://www.youtube.com/@SpreecommerceInc">
-                                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'
-                                            viewBox='0 0 16 16' fill='currentColor'>
-                                            <path
-                                                d="M15.8406 4.8002C15.8406 4.8002 15.6844 3.69707 15.2031 3.2127C14.5938 2.5752 13.9125 2.57207 13.6 2.53457C11.3625 2.37207 8.00313 2.37207 8.00313 2.37207H7.99687C7.99687 2.37207 4.6375 2.37207 2.4 2.53457C2.0875 2.57207 1.40625 2.5752 0.796875 3.2127C0.315625 3.69707 0.1625 4.8002 0.1625 4.8002C0.1625 4.8002 0 6.09707 0 7.39082V8.60332C0 9.89707 0.159375 11.1939 0.159375 11.1939C0.159375 11.1939 0.315625 12.2971 0.79375 12.7814C1.40313 13.4189 2.20313 13.3971 2.55938 13.4658C3.84063 13.5877 8 13.6252 8 13.6252C8 13.6252 11.3625 13.6189 13.6 13.4596C13.9125 13.4221 14.5938 13.4189 15.2031 12.7814C15.6844 12.2971 15.8406 11.1939 15.8406 11.1939C15.8406 11.1939 16 9.90019 16 8.60332V7.39082C16 6.09707 15.8406 4.8002 15.8406 4.8002ZM6.34688 10.0752V5.57832L10.6687 7.83457L6.34688 10.0752Z" />
-                                        </svg>
-
-                                        <span class='hidden'>SpreecommerceInc</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <button
+                            class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
                     </div>
-                    <div class="flex justify-end w-full"></div>
                 </div>
             </div>
-            <div class="text-sm" style="color: #FFFFFF; background-color: #000000">
-                <div class='page-container py-2 flex justify-center gap-2'>
-                    <span>© 2025
-                        <a href='/'>Spree Commerce DEMO</a>. All Rights Reserved..</span>
-                    <span>
-                        Powered by <a href='https://spreecommerce.org' target="_blank" rel="follow"
-                            class="underline">Spree Commerce</a>
-                    </span>
+            <!-- ... các thẻ khác giống mẫu này -->
+        </div>
+    </main>
+
+    <!-- Categories -->
+    <section class="container mx-auto px-6 pb-16">
+        <h2 class="text-3xl font-bold text-blue-900 mb-10 text-center">Danh mục sản phẩm</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div
+                class="bg-white rounded-2xl shadow-md p-6 text-center border border-blue-100 hover:shadow-xl transition transform hover:-translate-y-1">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-tshirt text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-lg">Thời trang</h3>
+                <p class="text-blue-500 text-sm mt-1">Áo quần, phụ kiện</p>
+            </div>
+            <!-- ... tương tự các category khác -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-12 mt-8">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div>
+                <div class="flex items-center mb-3">
+                    <div class="w-9 h-9 bg-white rounded-full flex items-center justify-center mr-2">
+                        <span class="text-blue-600 font-bold">BO</span>
+                    </div>
+                    <span class="text-xl font-semibold">BlueOcean</span>
+                </div>
+                <p class="text-blue-200 text-sm mb-4">Sản phẩm chất lượng, giá hợp lý, trải nghiệm tuyệt vời.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-white text-blue-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-white text-blue-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white text-blue-300"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-        </footer>
-    </div>
+            <div>
+                <h3 class="font-semibold mb-4">Liên kết nhanh</h3>
+                <ul class="space-y-2 text-sm text-blue-300">
+                    <li><a href="#" class="hover:text-white">Trang chủ</a></li>
+                    <li><a href="#" class="hover:text-white">Về chúng tôi</a></li>
+                    <li><a href="#" class="hover:text-white">Sản phẩm</a></li>
+                    <li><a href="#" class="hover:text-white">Khuyến mãi</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold mb-4">Hỗ trợ khách hàng</h3>
+                <ul class="space-y-2 text-sm text-blue-300">
+                    <li><a href="#" class="hover:text-white">Trung tâm trợ giúp</a></li>
+                    <li><a href="#" class="hover:text-white">Chính sách đổi trả</a></li>
+                    <li><a href="#" class="hover:text-white">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold mb-4">Đăng ký nhận tin</h3>
+                <div class="flex">
+                    <input type="email" placeholder="Email của bạn"
+                        class="bg-blue-800 text-white py-2 px-4 rounded-l-lg placeholder-blue-300 focus:outline-none">
+                    <button class="bg-gradient-to-r from-blue-500 to-blue-600 px-4 rounded-r-lg"><i
+                            class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="mt-10 text-center text-blue-300 text-sm border-t border-blue-800 pt-6">
+            © 2025 BlueOcean. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Animation -->
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .delay-100 {
+            animation-delay: 0.2s;
+        }
+    </style>
+</body>
 
 
+<script>
+    // Simple script for currency change
+    document.querySelector('select').addEventListener('change', function () {
+        const currency = this.value;
+        const prices = document.querySelectorAll('.text-blue-700.font-bold.text-lg');
 
+        // This is just a demo - in a real app you would fetch conversion rates
+        prices.forEach(price => {
+            let currentPrice = price.textContent;
+            if (currency === 'USD') {
+                // Simple conversion for demo
+                price.textContent = currentPrice.replace('₫', '$').replace(/\d+/g, match => {
+                    return Math.round(parseInt(match) / 23000);
+                });
+            } else if (currency === 'EUR') {
+                price.textContent = currentPrice.replace('₫', '€').replace(/\d+/g, match => {
+                    return Math.round(parseInt(match) / 25000);
+                });
+            } else {
+                // Reset to VND
+                price.textContent = currentPrice.replace('$', '₫').replace('€', '₫').replace(/\d+/g, match => {
+                    return Math.round(parseInt(match) * 23000);
+                });
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
-
-<template id="csrf_meta_tags">
-    <meta name="csrf-param" content="authenticity_token" />
-    <meta name="csrf-token"
-        content="VqL3Yk9NE3z5n95AqSFwmG-h5RGXzS4Jr1wmIRpajpeMUcDd5WpsbdBo8XirJOMK_rAm2WXurwcP6pa2q8Yc7w" />
-</template>

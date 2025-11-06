@@ -11,7 +11,13 @@ export const CreateNewPayment = (
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
 
-    return api.post(`/api/v2/storefront/checkout/create_payment?${params.toString()}`, data)
+    return api.post(`/api/v2/storefront/checkout/create_payment?${params.toString()}`, data,
+        {
+            headers: {
+                "Content-Type": "application/vnd.api+json"
+            },
+        }
+    )
 }
 export const ListPaymentMethods = (): Promise<AxiosResponse> => {
     return api.get(`/api/v2/storefront/checkout/payment_methods`)

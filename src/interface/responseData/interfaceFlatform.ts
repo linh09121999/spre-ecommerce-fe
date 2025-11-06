@@ -5,7 +5,7 @@ import {
     PaginationLinks,
     PaginationMetaProduct_OptionType,
     Time_Attributes
-} from "./interface";
+} from "../interface";
 
 // Addresses
 interface Address_Attributes {

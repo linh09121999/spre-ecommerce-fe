@@ -15,7 +15,13 @@ export const ListAccountAddress = (
 export const CreateAccountAddress = (data: { address: Address }, fields_address?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (fields_address) params.append("fields[address]", fields_address);
-    return api.post(`/api/v2/storefront/account/addresses?${params.toString()}`, data);
+    return api.post(`/api/v2/storefront/account/addresses?${params.toString()}`, data,
+        {
+            headers: {
+                "Content-Type": "application/vnd.api+json"
+            },
+        }
+    );
 }
 export const RemoveAnAddress = (id: number): Promise<AxiosResponse> => {
     return api.delete(`/api/v2/storefront/account/addresses/${id}`);
@@ -23,5 +29,11 @@ export const RemoveAnAddress = (id: number): Promise<AxiosResponse> => {
 export const UpdateAnAddress = (data: { address: Address }, id: number, fields_address?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (fields_address) params.append("fields[address]", fields_address);
-    return api.patch(`/api/v2/storefront/account/addresses/${id}?${params.toString()}`, data);
+    return api.patch(`/api/v2/storefront/account/addresses/${id}?${params.toString()}`, data,
+        {
+            headers: {
+                "Content-Type": "application/vnd.api+json"
+            },
+        }
+    );
 }

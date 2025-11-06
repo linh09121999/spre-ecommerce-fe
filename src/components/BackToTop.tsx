@@ -5,6 +5,7 @@ import { CircularProgress, Box } from '@mui/material';
 import { FaAngleDoubleUp } from "react-icons/fa";
 
 const BackToTop: React.FC = () => {
+
     const [isVisible, setIsVisible] = useState<boolean>(false);
 
     const [scrollPercent, setScrollPercent] = useState<number>(0);
