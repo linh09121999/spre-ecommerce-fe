@@ -8,16 +8,16 @@ type navProps = {
     classNameUl?: string;
     classNameA?: string;
     classNameAActive?: string;
-    classNameTitle?: string
+    classNameTitle?: string;
 }
 
 const Nav: React.FC<navProps> = ({
     classNameUl,
     classNameA,
     classNameAActive,
-    classNameTitle
+    classNameTitle,
 }) => {
-    const { pages, selectNav, setSelectNav } = useStateGeneral();
+    const { pages, selectNav, setSelectNav, setHoveredNav } = useStateGeneral();
     const router = useRouter();
 
     return (
@@ -29,6 +29,7 @@ const Nav: React.FC<navProps> = ({
                             setSelectNav(index)
                             router.push(page.path)
                         }}
+                        onMouseEnter={() => setHoveredNav(index)}
                         className={`${classNameA} ${selectNav === index ? `${classNameAActive}` : "text-black "}`}
                     >
                         <div className={classNameTitle}>{page.title}</div>

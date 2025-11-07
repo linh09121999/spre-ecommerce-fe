@@ -13,6 +13,16 @@ interface State {
     setLoading: (isCheck: boolean) => void;
     yourMail: string;
     setYourMail: (mail: string) => void;
+    ordersNumber: number;
+    setOrdersNumber: (order: number) => void;
+    heartNumber: number;
+    setHeartNumber: (order: number) => void;
+    isSearch: boolean;
+    setIsSearch: (isCheck: boolean) => void;
+    isCurrency: string;
+    setIsCurrency: (isCheck: string) => void;
+    hoveredNav: number | null;
+    setHoveredNav: (hover: number | null) => void;
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -50,5 +60,15 @@ export const useStateGeneral = create<State>((set) => ({
     loading: true,
     setLoading: (isCheck) => set({ loading: isCheck }),
     yourMail: '',
-    setYourMail: (mail) => ({ yourMail: mail })
+    setYourMail: (mail) => ({ yourMail: mail }),
+    ordersNumber: 0,
+    setOrdersNumber: (order) => ({ ordersNumber: order }),
+    heartNumber: 0,
+    setHeartNumber: (heart) => ({ heartNumber: heart }),
+    isSearch: false,
+    setIsSearch: (isCheck) => set({ isSearch: isCheck }),
+    isCurrency: 'USD',
+    setIsCurrency: (isCheck) => set({ isCurrency: isCheck }),
+    hoveredNav: null,
+    setHoveredNav: (hover) => set({ hoveredNav: hover })
 }))
