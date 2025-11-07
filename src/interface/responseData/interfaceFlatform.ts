@@ -1,9 +1,7 @@
 import {
     Type,
     PaginationMeta,
-    Included,
     PaginationLinks,
-    PaginationMetaProduct_OptionType,
     Time_Attributes
 } from "../interface";
 
@@ -46,13 +44,13 @@ interface Address {
     relationships: Address_Relationships;
 }
 
-export interface ResAddresses_ListAll {
+export interface ResAddress_ListAll {
     data: Address[];
     meta: PaginationMeta;
     links: PaginationLinks;
 }
 
-export interface ResAddresses {
+export interface ResAddress {
     data: Address
 }
 

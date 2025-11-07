@@ -1,0 +1,32 @@
+"use client";
+
+import { ReactNode } from "react";
+import { useStateGeneral } from "@/useState/useStateGeneral";
+import FooterWeb from "./Web/Footer";
+import FooterAdmin from "./Admin/Footer";
+
+interface ContentWrapperProps {
+    children: ReactNode;
+}
+
+const ContentWrapper = ({ children }: ContentWrapperProps) => {
+    const { isDashboard } = useStateGeneral();
+
+    return (
+        <>
+            {isDashboard ?
+                <>
+                    <main>{children}</main>
+                    <FooterAdmin />
+                </>
+                :
+                <>
+                    <main>{children}</main>
+                    <FooterWeb />
+                </>
+            }
+        </>
+    );
+};
+
+export default ContentWrapper;

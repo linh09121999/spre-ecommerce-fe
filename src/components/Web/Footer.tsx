@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Footer: React.FC = () => {
+const FooterWeb: React.FC = () => {
     const year = new Date().getFullYear()
     return (
         <footer className='p-5 flex flex-col gap-5'>
@@ -25,4 +25,4 @@ const Footer: React.FC = () => {
     )
 }
 
-export default Footer;
+export default FooterWeb;

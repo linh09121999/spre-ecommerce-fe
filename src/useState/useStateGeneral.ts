@@ -6,6 +6,8 @@ import { FaAngleDoubleUp } from "react-icons/fa";
 
 interface State {
     pages: Pages[];
+    isDashboard: boolean;
+    setIsDashboard: (isCheck: boolean) => void
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -36,4 +38,6 @@ export const useStateGeneral = create<State>((set) => ({
             path: "/sale"
         }
     ],
+    isDashboard: false,
+    setIsDashboard: (isCheck) => set({ isDashboard: isCheck })
 }))
