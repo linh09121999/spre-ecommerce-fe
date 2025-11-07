@@ -1,8 +1,6 @@
 import { create } from 'zustand'
 import { Pages } from '@/interface/interface'
 
-import { FaAngleDoubleUp } from "react-icons/fa";
-import { LargeNumberLike } from 'crypto';
 // import { JSX } from 'react';
 
 interface State {
@@ -13,6 +11,8 @@ interface State {
     setSelectNav: (select: number) => void;
     loading: boolean;
     setLoading: (isCheck: boolean) => void;
+    yourMail: string;
+    setYourMail: (mail: string) => void;
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -48,5 +48,7 @@ export const useStateGeneral = create<State>((set) => ({
     selectNav: 0,
     setSelectNav: (select) => set({ selectNav: select }),
     loading: true,
-    setLoading: (isCheck) => set({ loading: isCheck })
+    setLoading: (isCheck) => set({ loading: isCheck }),
+    yourMail: '',
+    setYourMail: (mail) => ({ yourMail: mail })
 }))
