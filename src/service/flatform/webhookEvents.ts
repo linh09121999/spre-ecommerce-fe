@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 
 export const ReturnAListOfWebhookEvents = (
@@ -22,5 +22,5 @@ export const ReturnAListOfWebhookEvents = (
     if (filter_success_eq) params.append("filter[success_eq]", filter_success_eq);
     if (filter_url_cont) params.append("filter[url_cont]", filter_url_cont);
 
-    return api.get(`/api/v2/platform/webhooks/events?${params.toString()}`);
+    return api.get(`/platform/webhooks/events?${params.toString()}`);
 }

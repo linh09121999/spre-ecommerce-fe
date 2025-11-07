@@ -1,14 +1,14 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type  OptionType} from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAnOptionValue = (data: { option_value: OptionType }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/option_values?${params.toString()}`, data);
+    return api.post(`/platform/option_values?${params.toString()}`, data);
 }
 export const DeleteAnOptionValue = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/option_values/${id}`);
+    return api.delete(`/platform/option_values/${id}`);
 }
 export const ReturnAListOfOptionValues = (
     page?: number,
@@ -24,15 +24,15 @@ export const ReturnAListOfOptionValues = (
     if (include) params.append("include", include);
     if (filter_option_type_id_eq) params.append("filter[option_type_id_eq]", filter_option_type_id_eq);
     if (filter_name_cont) params.append("filter[name_cont]", filter_name_cont);
-    return api.get(`/api/v2/platform/option_values?${params.toString()}`);
+    return api.get(`/platform/option_values?${params.toString()}`);
 }
 export const ReturnAnOptionValue = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/option_values/${id}?${params.toString()}`);
+    return api.get(`/platform/option_values/${id}?${params.toString()}`);
 }
 export const UpdateAnOptionValue = (data: { option_value: OptionType }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/option_values/${id}?${params.toString()}`,data);
+    return api.patch(`/platform/option_values/${id}?${params.toString()}`,data);
 }

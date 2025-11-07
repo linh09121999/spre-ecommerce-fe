@@ -1,9 +1,9 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type User, UserUpdate } from '../../interface/sendData/interfaceStorefront'
 
 export const CreateAnAccount = (data: { user: User }) => {
-    return api.post(`/return api/v2/storefront/account`, data,
+    return api.post(`/storefront/account`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"
@@ -19,10 +19,10 @@ export const RetrieveAnAccount = (
     if (include) params.append("include", include);
     if (fields_user) params.append("fields[user]", fields_user);
 
-    return api.get(`/return api/v2/storefront/account?${params.toString()}`);
+    return api.get(`/storefront/account?${params.toString()}`);
 }
 export const UpdateAnAccount = (data: { user: UserUpdate }): Promise<AxiosResponse> => {
-    return api.patch(`/return api/v2/storefront/account`, data,
+    return api.patch(`/storefront/account`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"

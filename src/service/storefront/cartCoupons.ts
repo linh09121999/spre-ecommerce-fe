@@ -1,4 +1,4 @@
-import api from "../api/apiOrderToken";
+import api from "../../api/apiOrderToken";
 import { type AxiosResponse } from "axios";
 
 export const ApplyACouponCode = (
@@ -9,7 +9,7 @@ export const ApplyACouponCode = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.patch(`/api/v2/storefront/cart/apply_coupon_code?${params.toString()}`, data,
+    return api.patch(`/storefront/cart/apply_coupon_code?${params.toString()}`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"
@@ -18,7 +18,7 @@ export const ApplyACouponCode = (
     )
 }
 export const RemoveACoupon = (coupon_code: number): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/storefront/cart/remove_coupon_code/${coupon_code}`)
+    return api.delete(`/storefront/cart/remove_coupon_code/${coupon_code}`)
 }
 export const RemoveAllCoupon = (
     include?: string,
@@ -27,5 +27,5 @@ export const RemoveAllCoupon = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.delete(`/api/v2/storefront/cart/remove_coupon_code?${params.toString()}`)
+    return api.delete(`/storefront/cart/remove_coupon_code?${params.toString()}`)
 }

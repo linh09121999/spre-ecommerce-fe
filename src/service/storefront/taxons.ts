@@ -1,4 +1,4 @@
-import api from "../api/apiOrderToken";
+import api from "../../api/apiOrderToken";
 
 export const ListAllTaxons = (
     filter_ids?: string,
@@ -26,7 +26,7 @@ export const ListAllTaxons = (
     if (include) params.append("include", include);
     if (fields_taxon) params.append("fields[taxon]", fields_taxon);
 
-    return api.get(`/api/v2/storefront/taxons?${params.toString()}`)
+    return api.get(`/storefront/taxons?${params.toString()}`)
 }
 export const RetrieveATaxon = (
     taxon_permalink: string,
@@ -37,5 +37,5 @@ export const RetrieveATaxon = (
     if (include) params.append("include", include);
     if (fields_taxon) params.append("fields[taxon]", fields_taxon);
 
-    return api.get(`/api/v2/storefront/taxons/${taxon_permalink}?${params.toString()}`)
+    return api.get(`/storefront/taxons/${taxon_permalink}?${params.toString()}`)
 }

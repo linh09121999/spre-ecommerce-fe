@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type StockLocation } from '../../interface/sendData/interfaceFlatform'
 
@@ -8,10 +8,10 @@ export const CreateAStockLocation = (
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/stock_locations?${params.toString()}`, data);
+    return api.post(`/platform/stock_locations?${params.toString()}`, data);
 }
 export const DeleteAStockLocation = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/stock_locations/${id}`);
+    return api.delete(`/platform/stock_locations/${id}`);
 }
 export const ReturnAListOfStockLocations = (
     page?: number,
@@ -24,14 +24,14 @@ export const ReturnAListOfStockLocations = (
     if (per_page) params.append("per_page", String(per_page));
     if (include) params.append("include", include);
 
-    return api.get(`/api/v2/platform/stock_locations?${params.toString()}`);
+    return api.get(`/platform/stock_locations?${params.toString()}`);
 }
 export const ReturnAStockLocation = (
     id: string,
     include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/stock_locations/${id}?${params.toString()}`);
+    return api.get(`/platform/stock_locations/${id}?${params.toString()}`);
 }
 export const UpdateAStockLocation = (
     data: { stock_location: StockLocation },
@@ -39,5 +39,5 @@ export const UpdateAStockLocation = (
     include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/stock_locations/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/stock_locations/${id}?${params.toString()}`, data);
 }

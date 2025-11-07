@@ -1,4 +1,4 @@
-import api from "../api/apiOrderToken";
+import api from "../../api/apiOrderToken";
 import { type AxiosResponse } from "axios";
 import { type Cart } from '../../interface/sendData/interfaceStorefront'
 
@@ -11,7 +11,7 @@ export const CreateACart = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.post(`/api/v2/storefront/cart?${params.toString()}`, data,
+    return api.post(`/storefront/cart?${params.toString()}`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"
@@ -20,7 +20,7 @@ export const CreateACart = (
     )
 }
 export const DeleteACart = (): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/storefront/cart`)
+    return api.delete(`/storefront/cart`)
 }
 export const RetrieveACart = (
     include?: string,
@@ -32,5 +32,5 @@ export const RetrieveACart = (
     if (fields_cart) params.append("fields[cart]", fields_cart);
     if (currency) params.append("currency", currency);
 
-    return api.get(`/api/v2/storefront/cart?${params.toString()}`)
+    return api.get(`/storefront/cart?${params.toString()}`)
 }

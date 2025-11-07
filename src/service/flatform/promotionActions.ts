@@ -1,15 +1,15 @@
 
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type PromotionActionRule, PromotionActionRuleUpdate } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAPromotionAction = (data: { promotion_action: PromotionActionRule }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/promotion_actions?${params.toString()}`, data);
+    return api.post(`/platform/promotion_actions?${params.toString()}`, data);
 }
 export const DeleteAPromotionAction = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/promotion_actions/${id}`);
+    return api.delete(`/platform/promotion_actions/${id}`);
 }
 export const ReturnAListOfPromotionActions = (
     page?: number,
@@ -24,16 +24,16 @@ export const ReturnAListOfPromotionActions = (
     if (include) params.append("include", include);
     if (filter_type_eq) params.append("filter[type_eq]", filter_type_eq);
 
-    return api.get(`/api/v2/platform/promotion_actions?${params.toString()}`);
+    return api.get(`/platform/promotion_actions?${params.toString()}`);
 }
 export const ReturnAPromotionAction = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/promotion_actions/${id}?${params.toString()}`);
+    return api.get(`/platform/promotion_actions/${id}?${params.toString()}`);
 }
 
 export const UpdateAPromotionAction = (data: { promotion_action: PromotionActionRuleUpdate }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/promotion_actions/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/promotion_actions/${id}?${params.toString()}`, data);
 }

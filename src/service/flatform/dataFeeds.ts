@@ -1,16 +1,16 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type  DataFeed} from '../../interface/sendData/interfaceFlatform'
 
 
 export const CreateADataFeed = (data: { data_feed: DataFeed }): Promise<AxiosResponse> => {
-    return api.post(`/api/v2/platform/data_feeds`, data);
+    return api.post(`/platform/data_feeds`, data);
 }
 export const DeleteADataFeed = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/data_feeds/${id}`);
+    return api.delete(`/platform/data_feeds/${id}`);
 }
 export const ReturnADataFeed = (id: string): Promise<AxiosResponse> => {
-    return api.get(`/api/v2/platform/data_feeds/${id}`);
+    return api.get(`/platform/data_feeds/${id}`);
 }
 export const ReturnAListOfDataFeeds = (
     page?: number,
@@ -20,8 +20,8 @@ export const ReturnAListOfDataFeeds = (
 
     if (page) params.append("page", String(page));
     if (per_page) params.append("per_page", String(per_page));
-    return api.get(`/api/v2/platform/data_feeds?${params.toString()}`);
+    return api.get(`/platform/data_feeds?${params.toString()}`);
 }
 export const UpdateADataFeed = (data: { data_feed: DataFeed }, id: string): Promise<AxiosResponse> => {
-    return api.patch(`/api/v2/platform/data_feeds/${id}`, data);
+    return api.patch(`/platform/data_feeds/${id}`, data);
 }

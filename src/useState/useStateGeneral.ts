@@ -2,12 +2,15 @@ import { create } from 'zustand'
 import { Pages } from '@/interface/interface'
 
 import { FaAngleDoubleUp } from "react-icons/fa";
+import { LargeNumberLike } from 'crypto';
 // import { JSX } from 'react';
 
 interface State {
     pages: Pages[];
     isDashboard: boolean;
-    setIsDashboard: (isCheck: boolean) => void
+    setIsDashboard: (isCheck: boolean) => void;
+    selectNav: number;
+    setSelectNav: (select: number) => void;
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -39,5 +42,7 @@ export const useStateGeneral = create<State>((set) => ({
         }
     ],
     isDashboard: false,
-    setIsDashboard: (isCheck) => set({ isDashboard: isCheck })
+    setIsDashboard: (isCheck) => set({ isDashboard: isCheck }),
+    selectNav: 0,
+    setSelectNav: (select) => set({ selectNav: select })
 }))

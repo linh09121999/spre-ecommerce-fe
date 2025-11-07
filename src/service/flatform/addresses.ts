@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type  Address} from '../../interface/sendData/interfaceFlatform'
 
@@ -17,7 +17,7 @@ export const ReturnAListOfAddresses = (
     if (filter_user_id_eq) params.append("filter[user_id_eq]", filter_user_id_eq);
     if (filter_firstname_cont) params.append("filter[firstname_cont]", filter_firstname_cont);
 
-    return api.get(`/api/v2/platform/addresses?${params.toString()}`);
+    return api.get(`/platform/addresses?${params.toString()}`);
 }
 
 export const CreateAnAddress = (
@@ -26,19 +26,19 @@ export const CreateAnAddress = (
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/addresses?${params.toString()}`, data);
+    return api.post(`/platform/addresses?${params.toString()}`, data);
 };
 
 export const ReturnAnAddress = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/addresses/${id}?${params.toString()}`)
+    return api.get(`/platform/addresses/${id}?${params.toString()}`)
 }
 
-export const DeleteAnAddress = (id: string): Promise<AxiosResponse> => api.delete(`/api/v2/platform/addresses/${id}`)
+export const DeleteAnAddress = (id: string): Promise<AxiosResponse> => api.delete(`/platform/addresses/${id}`)
 
 export const UpdateAnAddress = (data: { address: Address }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/addresses/${id}?${params.toString()}`, data)
+    return api.patch(`/platform/addresses/${id}?${params.toString()}`, data)
 }

@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type Shipment, ShipmentUpdate, ShipmentItem } from '../../interface/sendData/interfaceFlatform'
 
@@ -15,70 +15,70 @@ export const ReturnAListOfShipments = (
     if (include) params.append("include", include);
     if (filter_state_eq) params.append("filter[state_eq]", filter_state_eq);
 
-    return api.get(`/api/v2/platform/shipments?${params.toString()}`);
+    return api.get(`/platform/shipments?${params.toString()}`);
 }
 
 export const CreateAShipment = (data: { shipment: Shipment }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/shipments?${params.toString()}`, data);
+    return api.post(`/platform/shipments?${params.toString()}`, data);
 }
 
 export const ReturnAShipment = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/shipments/${id}?${params.toString()}`);
+    return api.get(`/platform/shipments/${id}?${params.toString()}`);
 }
 
 export const DeleteAShipment = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/shipments/${id}`);
+    return api.delete(`/platform/shipments/${id}`);
 }
 
 export const UpdateAShipment = (data: { shipment: ShipmentUpdate }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/shipments/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/shipments/${id}?${params.toString()}`, data);
 }
 
 export const AddsItemVariantToAnExistingShipment = (data: { shipment: ShipmentItem }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/shipments/${id}/add_item?${params.toString()}`, data);
+    return api.patch(`/platform/shipments/${id}/add_item?${params.toString()}`, data);
 }
 
 export const AarkShipmentAsReadyToBeShipped = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/shipments/${id}/ready?${params.toString()}`);
+    return api.patch(`/platform/shipments/${id}/ready?${params.toString()}`);
 }
 
 export const RemovesItemWariantFromShipment = (data: { shipment: ShipmentItem }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/shipments/${id}/remove_item?${params.toString()}`, data);
+    return api.patch(`/platform/shipments/${id}/remove_item?${params.toString()}`, data);
 }
 
 export const CancelsTheShipment = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/shipments/${id}/cancel?${params.toString()}`);
+    return api.patch(`/platform/shipments/${id}/cancel?${params.toString()}`);
 }
 
 export const AarkShipmentAsShipped = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/shipments/${id}/ship?${params.toString()}`);
+    return api.patch(`/platform/shipments/${id}/ship?${params.toString()}`);
 }
 export const AovesShipmentBackToPendingState = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/shipments/${id}/pend?${params.toString()}`);
+    return api.patch(`/platform/shipments/${id}/pend?${params.toString()}`);
 }
 
 export const ResumesTheShipment = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/shipments/${id}/resume?${params.toString()}`);
+    return api.patch(`/platform/shipments/${id}/resume?${params.toString()}`);
 }
 
 

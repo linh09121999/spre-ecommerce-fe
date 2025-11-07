@@ -1,14 +1,14 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type Wishlist } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAWishlist = (data: { wishlist: Wishlist }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/wishlists?${params.toString()}`, data);
+    return api.post(`/platform/wishlists?${params.toString()}`, data);
 }
 export const DeleteAWishlist = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/wishlists/${id}`);
+    return api.delete(`/platform/wishlists/${id}`);
 }
 export const ReturnAListOfWishlists = (
     page?: number,
@@ -23,15 +23,15 @@ export const ReturnAListOfWishlists = (
     if (include) params.append("include", include);
     if (filter_name_cont) params.append("filter[name_cont]", filter_name_cont);
 
-    return api.get(`/api/v2/platform/wishlists?${params.toString()}`);
+    return api.get(`/platform/wishlists?${params.toString()}`);
 }
 export const ReturnAWishlist = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/wishlists/${id}?${params.toString()}`);
+    return api.get(`/platform/wishlists/${id}?${params.toString()}`);
 }
 export const UpdateAWishlist = (data: { wishlist: Wishlist }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/wishlists/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/wishlists/${id}?${params.toString()}`, data);
 }

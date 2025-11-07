@@ -1,12 +1,12 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type Name } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAShippingCategory = (data: { shipping_category: Name }): Promise<AxiosResponse> => {
-    return api.post(`/api/v2/platform/shipping_categories`, data);
+    return api.post(`/platform/shipping_categories`, data);
 }
 export const DeleteAShippingCategory = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/shipping_categories/${id}`);
+    return api.delete(`/platform/shipping_categories/${id}`);
 }
 export const ReturnAListOfShippingCategoryies = (
     page?: number,
@@ -19,11 +19,11 @@ export const ReturnAListOfShippingCategoryies = (
     if (per_page) params.append("per_page", String(per_page));
     if (filter_name_i_cont) params.append("filter[name_i_cont]", filter_name_i_cont);
 
-    return api.get(`/api/v2/platform/shipping_categories?${params.toString()}`);
+    return api.get(`/platform/shipping_categories?${params.toString()}`);
 }
 export const ReturnAShippingCategory = (id: string): Promise<AxiosResponse> => {
-    return api.get(`/api/v2/platform/shipping_categories/${id}`);
+    return api.get(`/platform/shipping_categories/${id}`);
 }
 export const UpdateAShippingCategory = (data: { shipping_category: Name }, id: string): Promise<AxiosResponse> => {
-    return api.patch(`/api/v2/platform/shipping_categories/${id}`, data);
+    return api.patch(`/platform/shipping_categories/${id}`, data);
 }

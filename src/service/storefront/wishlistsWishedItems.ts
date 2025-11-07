@@ -1,9 +1,9 @@
-import api from "../api/apiAuthorization"
+import api from "../../api/apiAuthorization"
 import { type AxiosResponse } from "axios";
 import { type WishedItem, WishedItemUpdate, WishedItemDelete } from '../../interface/sendData/interfaceStorefront'
 
 export const AddItemToWishlist = (data: WishedItem, token: string): Promise<AxiosResponse> => {
-    return api.post(`/api/v2/storefront/wishlists/${token}/add_item`, data,
+    return api.post(`/storefront/wishlists/${token}/add_item`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"
@@ -12,7 +12,7 @@ export const AddItemToWishlist = (data: WishedItem, token: string): Promise<Axio
     )
 } //1
 export const AddItemsToWishlist = (data: WishedItem[], token: string): Promise<AxiosResponse> => {
-    return api.post(`/api/v2/storefront/wishlists/${token}/add_items`, data,
+    return api.post(`/storefront/wishlists/${token}/add_items`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"
@@ -21,13 +21,13 @@ export const AddItemsToWishlist = (data: WishedItem[], token: string): Promise<A
     )
 } //all
 export const DeleteItemFromWishlist = (token: string, item_id: number): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/storefront/wishlists/${token}/remove_item/${item_id}`)
+    return api.delete(`/storefront/wishlists/${token}/remove_item/${item_id}`)
 } //1
 export const DeleteItemsFromWishlist = (
     data: WishedItemDelete,
     token: string
 ): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/storefront/wishlists/${token}/remove_items`, {
+    return api.delete(`/storefront/wishlists/${token}/remove_items`, {
         headers: {
             "Content-Type": "application/vnd.api+json",
         },
@@ -35,7 +35,7 @@ export const DeleteItemsFromWishlist = (
     });
 }; //all
 export const SetWishedItemQuantity = (data: WishedItemUpdate, token: string, item_id: number): Promise<AxiosResponse> => {
-    return api.patch(`/api/v2/storefront/wishlists/${token}/set_item_quantity/${item_id}`, data,
+    return api.patch(`/storefront/wishlists/${token}/set_item_quantity/${item_id}`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"

@@ -1,6 +1,6 @@
-import apiOrderToken from "../api/apiOrderToken";
-import apiAuthorization from "../api/apiAuthorization";
-import apiCreateAWishlist from "../api/apiCreateAWishlist"
+import apiOrderToken from "../../api/apiOrderToken";
+import apiAuthorization from "../../api/apiAuthorization";
+import apiCreateAWishlist from "../../api/apiCreateAWishlist"
 import { type AxiosResponse } from "axios";
 import { type WishlistCreate, WishlistCreateUpdate } from '../../interface/sendData/interfaceStorefront'
 
@@ -16,7 +16,7 @@ export const ListAllWishlists = (
     if (per_page) params.append("per_page", String(per_page));
     if (is_variant_included) params.append("is_variant_included", is_variant_included);
 
-    return apiOrderToken.get(`/api/v2/storefront/wishlists?${params.toString()}`)
+    return apiOrderToken.get(`/storefront/wishlists?${params.toString()}`)
 }
 
 export const CreateAWishlist = (
@@ -26,9 +26,9 @@ export const CreateAWishlist = (
     const params = new URLSearchParams();
     if (fields_wishlist) params.append("fields[wishlist]", fields_wishlist);
 
-    return apiCreateAWishlist.post(`/api/v2/storefront/wishlists?${params.toString()}`, data) //gom ca apiOrderToken, apiOrderToken
+    return apiCreateAWishlist.post(`/storefront/wishlists?${params.toString()}`, data) //gom ca apiOrderToken, apiOrderToken
 }
-export const DeleteAWishlist = (token: string) => apiOrderToken.delete(`/api/v2/storefront/wishlists/${token}`)
+export const DeleteAWishlist = (token: string) => apiOrderToken.delete(`/storefront/wishlists/${token}`)
 export const RetrieveAWishlist = (
     token: string,
     include?: string,
@@ -42,7 +42,7 @@ export const RetrieveAWishlist = (
     if (per_page) params.append("per_page", String(per_page));
     if (is_variant_included) params.append("is_variant_included", is_variant_included);
 
-    return apiOrderToken.get(`/api/v2/storefront/wishlists/${token}?${params.toString()}`)
+    return apiOrderToken.get(`/storefront/wishlists/${token}?${params.toString()}`)
 }
 export const RetrieveTheDefaultWishlist = (
     include?: string,
@@ -54,7 +54,7 @@ export const RetrieveTheDefaultWishlist = (
     if (fields_wishlist) params.append("fields[wishlist]", fields_wishlist);
     if (is_variant_included) params.append("is_variant_included", is_variant_included);
 
-    return apiOrderToken.get(`/api/v2/storefront/wishlists/default?${params.toString()}`)
+    return apiOrderToken.get(`/storefront/wishlists/default?${params.toString()}`)
 }
 export const UpdateAWishlist = (
     data: WishlistCreateUpdate,
@@ -64,7 +64,7 @@ export const UpdateAWishlist = (
     const params = new URLSearchParams();
     if (fields_wishlist) params.append("fields[wishlist]", fields_wishlist);
 
-    return apiAuthorization.patch(`/api/v2/storefront/wishlists/${token}?${params.toString()}`, data,
+    return apiAuthorization.patch(`/storefront/wishlists/${token}?${params.toString()}`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"

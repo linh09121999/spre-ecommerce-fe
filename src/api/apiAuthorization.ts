@@ -1,10 +1,8 @@
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 
-const API_BASE = 'https://demo.spreecommerce.org';
-
 // Tạo instance axios với config mặc định
 const api: AxiosInstance = axios.create({
-    baseURL: API_BASE, // thay bằng domain của bạn
+    baseURL: "/api/authorization", // thay bằng domain của bạn
     timeout: 10000,
     headers: {
         "Content-Type": "application/json",
@@ -14,11 +12,11 @@ const api: AxiosInstance = axios.create({
 // Interceptor xử lý request
 api.interceptors.request.use(
     (config) => {
-        const orderToken = localStorage.getItem("order_token");
-        const userToken = localStorage.getItem("token");
-
-        if (orderToken) config.headers["X-Spree-Order-Token"] = orderToken;
-        if (userToken) config.headers.Authorization = `Bearer ${userToken}`;
+        // Ví dụ: thêm token vào header nếu có
+        const token = localStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     },
     (error) => Promise.reject(error)

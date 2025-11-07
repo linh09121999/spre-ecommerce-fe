@@ -21,7 +21,9 @@ const ContentWrapper = ({ children }: ContentWrapperProps) => {
                 </>
                 :
                 <>
-                    <main>{children}</main>
+                    <main
+                        className="min-h-[45vh]"
+                    >{children}</main>
                     <FooterWeb />
                 </>
             }

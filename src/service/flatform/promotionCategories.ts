@@ -1,14 +1,14 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type PromotionCategory } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAPromotionCategory = (data: { promotion_category: PromotionCategory }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/promotion_categories?${params.toString()}`, data);
+    return api.post(`/platform/promotion_categories?${params.toString()}`, data);
 }
 export const DeleteAPromotionCategory = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/promotion_categories/${id}`);
+    return api.delete(`/platform/promotion_categories/${id}`);
 }
 export const ReturnAListOfPromotionCategories = (
     page?: number,
@@ -25,15 +25,15 @@ export const ReturnAListOfPromotionCategories = (
     if (filter_code_eq) params.append("filter[code_eq]", filter_code_eq);
     if (filter_name_eq) params.append("filter[name_eq]", filter_name_eq);
 
-    return api.get(`/api/v2/platform/promotion_categories?${params.toString()}`);
+    return api.get(`/platform/promotion_categories?${params.toString()}`);
 }
 export const ReturnAPromotionCategory = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/promotion_categories/${id}?${params.toString()}`);
+    return api.get(`/platform/promotion_categories/${id}?${params.toString()}`);
 }
 export const UpdateAPromotionCategory = (data: { promotion_category: PromotionCategory }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/promotion_categories/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/promotion_categories/${id}?${params.toString()}`, data);
 }

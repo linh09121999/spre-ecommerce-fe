@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 
 export const CreateADigitalAsset = (
@@ -11,20 +11,20 @@ export const CreateADigitalAsset = (
 
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/digitals?${params.toString()}`, formData, {
+    return api.post(`/platform/digitals?${params.toString()}`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
         },
     });
 }
 export const DeleteADigitalAsset = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/digitals/${id}`);
+    return api.delete(`/platform/digitals/${id}`);
 }
 
 export const ReturnADigitalAsset = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/digitals/${id}?${params.toString()}`);
+    return api.get(`/platform/digitals/${id}?${params.toString()}`);
 }
 export const ReturnAListOfDigitalAssets = (
     page?: number,
@@ -36,7 +36,7 @@ export const ReturnAListOfDigitalAssets = (
     if (page) params.append("page", String(page));
     if (per_page) params.append("per_page", String(per_page));
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/digitals?${params.toString()}`);
+    return api.get(`/platform/digitals?${params.toString()}`);
 }
 export const UpdateADigitalAsset = (
     variantId: number,
@@ -50,7 +50,7 @@ export const UpdateADigitalAsset = (
 
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/digitals/${id}?${params.toString()}`, formData, {
+    return api.patch(`/platform/digitals/${id}?${params.toString()}`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
         },

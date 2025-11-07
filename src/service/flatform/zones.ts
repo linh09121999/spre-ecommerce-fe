@@ -1,14 +1,14 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type Zone } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAZone = (data: { zone: Zone }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/zones?${params.toString()}`, data);
+    return api.post(`/platform/zones?${params.toString()}`, data);
 }
 export const DeleteAZone = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/zones/${id}`);
+    return api.delete(`/platform/zones/${id}`);
 }
 export const ReturnAListOfZones = (
     page?: number,
@@ -23,15 +23,15 @@ export const ReturnAListOfZones = (
     if (include) params.append("include", include);
     if (filter_description_eq) params.append("filter[description_eq]", filter_description_eq);
 
-    return api.get(`/api/v2/platform/zones?${params.toString()}`);
+    return api.get(`/platform/zones?${params.toString()}`);
 }
 export const ReturnAZone = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/zones/${id}?${params.toString()}`);
+    return api.get(`/platform/zones/${id}?${params.toString()}`);
 }
 export const UpdateAZone = (data: { zone: Zone }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/zones/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/zones/${id}?${params.toString()}`, data);
 }

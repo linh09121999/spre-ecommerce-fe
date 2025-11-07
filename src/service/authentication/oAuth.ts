@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 
 export const GeneratingOAuthToken = (
     data: {

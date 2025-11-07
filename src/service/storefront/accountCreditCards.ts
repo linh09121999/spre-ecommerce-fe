@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 
 export const ListAllCreditCards = (
@@ -11,10 +11,10 @@ export const ListAllCreditCards = (
     if (include) params.append("include", include);
     if (filter_credit_card) params.append("filter[credit_card]", filter_credit_card);
 
-    return api.get(`/api/v2/storefront/account/credit_cards?${params.toString()}`);
+    return api.get(`/storefront/account/credit_cards?${params.toString()}`);
 }
 export const RemoveACreditCard = (id: number): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/storefront/account/credit_cards/${id}`);
+    return api.delete(`/storefront/account/credit_cards/${id}`);
 }
 export const RetrieveTheDefaultCreditCard = (
     include?: string,
@@ -24,5 +24,5 @@ export const RetrieveTheDefaultCreditCard = (
     if (include) params.append("include", include);
     if (filter_credit_card) params.append("filter[credit_card]", filter_credit_card);
 
-    return api.get(`/api/v2/storefront/account/credit_cards/default?${params.toString()}`);
+    return api.get(`/storefront/account/credit_cards/default?${params.toString()}`);
 }

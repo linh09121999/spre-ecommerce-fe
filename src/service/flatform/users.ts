@@ -1,14 +1,14 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type User } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateAUser = (data: { user: User }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/users?${params.toString()}`, data);
+    return api.post(`/platform/users?${params.toString()}`, data);
 }
 export const DeleteAUser = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/users/${id}`);
+    return api.delete(`/platform/users/${id}`);
 }
 export const ReturnAListOfUsers = (
     page?: number,
@@ -25,15 +25,15 @@ export const ReturnAListOfUsers = (
     if (filter_user_id_eq) params.append("filter[user_id_eq]", filter_user_id_eq);
     if (filter_email_cont) params.append("filter[email_cont]", filter_email_cont);
 
-    return api.get(`/api/v2/platform/users?${params.toString()}`);
+    return api.get(`/platform/users?${params.toString()}`);
 }
 export const ReturnAUser = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/users/${id}?${params.toString()}`);
+    return api.get(`/platform/users/${id}?${params.toString()}`);
 }
 export const UpdateAUser = (data: { user: User }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/users/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/users/${id}?${params.toString()}`, data);
 }

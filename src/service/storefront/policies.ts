@@ -1,4 +1,4 @@
-import api from "../api/apiOrderToken";
+import api from "../../api/apiOrderToken";
 
-export const ListAllStorePolicies = () => api.get(`/api/v2/storefront/policies`)
-export const RetrieveAPolicy = (policy_slug: string) => api.get(`/api/v2/storefront/policies/${policy_slug}`)
+export const ListAllStorePolicies = () => api.get(`/storefront/policies`)
+export const RetrieveAPolicy = (policy_slug: string) => api.get(`/storefront/policies/${policy_slug}`)

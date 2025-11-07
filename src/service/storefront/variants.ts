@@ -1,3 +1,3 @@
-import api from "../api/apiOrderToken";
+import api from "../../api/apiOrderToken";
 
-export const ListAllProductVariants = (product_slug: string) => api.get(`/api/v2/storefront/products/${product_slug}/variants`)
+export const ListAllProductVariants = (product_slug: string) => api.get(`/storefront/products/${product_slug}/variants`)

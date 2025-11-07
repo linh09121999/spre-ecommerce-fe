@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type StoreCredit } from '../../interface/sendData/interfaceFlatform'
 
@@ -8,10 +8,10 @@ export const CreateAStoreCredit = (
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/store_credits?${params.toString()}`, data);
+    return api.post(`/platform/store_credits?${params.toString()}`, data);
 }
 export const DeleteAStoreCredit = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/store_credits/${id}`);
+    return api.delete(`/platform/store_credits/${id}`);
 }
 export const ReturnAListOfStoreCredits = (
     page?: number,
@@ -32,15 +32,15 @@ export const ReturnAListOfStoreCredits = (
     if (filter_amount_gteq) params.append("filter[amount_gteq]", filter_amount_gteq);
     if (filter_currency_eq) params.append("filter[currency_eq]", filter_currency_eq);
 
-    return api.get(`/api/v2/platform/store_credits?${params.toString()}`);
+    return api.get(`/platform/store_credits?${params.toString()}`);
 }
 export const ReturnAStoreCredit = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/store_credits/${id}?${params.toString()}`);
+    return api.get(`/platform/store_credits/${id}?${params.toString()}`);
 }
 export const UpdateAStoreCredit = (data: { store_credit: StoreCredit }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/store_credits/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/store_credits/${id}?${params.toString()}`, data);
 }

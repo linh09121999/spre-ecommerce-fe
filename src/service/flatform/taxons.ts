@@ -1,17 +1,17 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 import { type Taxon, TaxonReposition } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateATaxon = (data: { taxon: Taxon }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/api/v2/platform/taxons?${params.toString()}`, data);
+    return api.post(`/platform/taxons?${params.toString()}`, data);
 }
 export const DeleteATaxon = (id: string): Promise<AxiosResponse> => {
-    return api.delete(`/api/v2/platform/taxons/${id}`);
+    return api.delete(`/platform/taxons/${id}`);
 }
 export const repositionATaxon = (data: { taxon: TaxonReposition }, id: string): Promise<AxiosResponse> => {
-    return api.patch(`/api/v2/platform/taxons/${id}/reposition`, data);
+    return api.patch(`/platform/taxons/${id}/reposition`, data);
 }
 export const ReturnAListOfTaxons = (
     page?: number,
@@ -28,15 +28,15 @@ export const ReturnAListOfTaxons = (
     if (filter_taxonomy_id_eq) params.append("filter[taxonomy_id_eq]", filter_taxonomy_id_eq);
     if (filter_name_cont) params.append("filter[name_cont]", filter_name_cont);
 
-    return api.get(`/api/v2/platform/taxons?${params.toString()}`);
+    return api.get(`/platform/taxons?${params.toString()}`);
 }
 export const ReturnATaxon = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/api/v2/platform/taxons/${id}?${params.toString()}`);
+    return api.get(`/platform/taxons/${id}?${params.toString()}`);
 }
 export const UpdateATaxon = (data: { taxon: Taxon }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/api/v2/platform/taxons/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/taxons/${id}?${params.toString()}`, data);
 }

@@ -1,4 +1,4 @@
-import api from "../api/apiAuthorization";
+import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
 
 export const ReturnsAListOfStates = (
@@ -14,8 +14,8 @@ export const ReturnsAListOfStates = (
     if (include) params.append("include", include);
     if (filter_country_id_eq) params.append("filter[country_id_eq]", filter_country_id_eq);
     
-    return api.get(`/api/v2/platform/states?${params.toString()}`);
+    return api.get(`/platform/states?${params.toString()}`);
 }
 export const ReturnsAState = (id: string): Promise<AxiosResponse> => {
-    return api.get(`/api/v2/platform/states/${id}`);
+    return api.get(`/platform/states/${id}`);
 }
