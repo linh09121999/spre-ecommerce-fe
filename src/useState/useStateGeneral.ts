@@ -11,6 +11,8 @@ interface State {
     setIsDashboard: (isCheck: boolean) => void;
     selectNav: number;
     setSelectNav: (select: number) => void;
+    loading: boolean;
+    setLoading: (isCheck: boolean) => void;
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -44,5 +46,7 @@ export const useStateGeneral = create<State>((set) => ({
     isDashboard: false,
     setIsDashboard: (isCheck) => set({ isDashboard: isCheck }),
     selectNav: 0,
-    setSelectNav: (select) => set({ selectNav: select })
+    setSelectNav: (select) => set({ selectNav: select }),
+    loading: true,
+    setLoading: (isCheck) => set({ loading: isCheck })
 }))
