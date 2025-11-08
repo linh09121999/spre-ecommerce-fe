@@ -4,12 +4,14 @@ import { type LineItem, LineItemUpdate } from '../../interface/sendData/interfac
 
 export const AddAnItemToCart = (
     data: LineItem,
-    include?: string,
-    fields_cart?: string
+    paramsObj?: {
+        include?: string,
+        fields_cart?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
-    if (fields_cart) params.append("fields[cart]", fields_cart);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_cart) params.append("fields[cart]", paramsObj?.fields_cart);
     return api.post(`/storefront/cart/add_item?${decodeURIComponent(params.toString())}`, data,
         {
             headers: {
@@ -22,12 +24,14 @@ export const RemoveAnItemToCart = (id: number): Promise<AxiosResponse> => {
 }
 export const SetLineItemQuantity = (
     data: LineItemUpdate,
-    include?: string,
-    fields_cart?: string
+    paramsObj?: {
+        include?: string,
+        fields_cart?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
-    if (fields_cart) params.append("fields[cart]", fields_cart);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_cart) params.append("fields[cart]", paramsObj?.fields_cart);
     return api.patch(`/storefront/cart/set_quantity?${decodeURIComponent(params.toString())}`, data,
         {
             headers: {

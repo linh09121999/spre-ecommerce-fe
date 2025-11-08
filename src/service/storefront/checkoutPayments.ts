@@ -4,12 +4,14 @@ import { type CheckoutPayment } from '../../interface/sendData/interfaceStorefro
 
 export const CreateNewPayment = (
     data: CheckoutPayment,
-    include?: string,
-    fields_cart?: string
+    paramsObj?: {
+        include?: string,
+        fields_cart?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
-    if (fields_cart) params.append("fields[cart]", fields_cart);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_cart) params.append("fields[cart]", paramsObj?.fields_cart);
 
     return api.post(`/storefront/checkout/create_payment?${decodeURIComponent(params.toString())}`, data,
         {

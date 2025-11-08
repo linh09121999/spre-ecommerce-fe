@@ -9,15 +9,17 @@ export const DeleteAStoreCreditCategory = (id: string): Promise<AxiosResponse> =
     return api.delete(`/platform/store_credit_categories/${id}`);
 }
 export const ReturnAListOfStoreCreditCategories = (
-    page?: number,
-    per_page?: number,
-    filter_name_eq?: string
+    paramsObj?: {
+        page?: number,
+        per_page?: number,
+        filter_name_eq?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
 
-    if (page) params.append("page", String(page));
-    if (per_page) params.append("per_page", String(per_page));
-    if (filter_name_eq) params.append("filter[name_eq]", filter_name_eq);
+    if (paramsObj?.page) params.append("page", String(paramsObj?.page));
+    if (paramsObj?.per_page) params.append("per_page", String(paramsObj?.per_page));
+    if (paramsObj?.filter_name_eq) params.append("filter[name_eq]", paramsObj?.filter_name_eq);
 
     return api.get(`/platform/store_credit_categories?${decodeURIComponent(params.toString())}`);
 }

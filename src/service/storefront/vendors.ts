@@ -1,23 +1,27 @@
 import api from "../../api/apiOrderToken";
 
 export const ListAllVendors = (
-    page?: number,
-    per_page?: number,
-    fields_vendor?: string
+    paramsObj?: {
+        page?: number,
+        per_page?: number,
+        fields_vendor?: string
+    }
 ) => {
     const params = new URLSearchParams();
-    if (page) params.append("page", String(page));
-    if (per_page) params.append("per_page", String(per_page));
-    if (fields_vendor) params.append("fields[vendor]", fields_vendor);
+    if (paramsObj?.page) params.append("page", String(paramsObj?.page));
+    if (paramsObj?.per_page) params.append("per_page", String(paramsObj?.per_page));
+    if (paramsObj?.fields_vendor) params.append("fields[vendor]", paramsObj?.fields_vendor);
 
     return api.get(`/storefront/vendors?${decodeURIComponent(params.toString())}`)
 }
 export const RetrieveAVendor = (
     vendor_slug: string,
-    fields_vendor?: string
+    paramsObj?: {
+        fields_vendor?: string
+    }
 ) => {
     const params = new URLSearchParams();
-    if (fields_vendor) params.append("fields[vendor]", fields_vendor);
+    if (paramsObj?.fields_vendor) params.append("fields[vendor]", paramsObj?.fields_vendor);
 
     api.get(`/storefront/vendors/${vendor_slug}?${decodeURIComponent(params.toString())}`)
 }

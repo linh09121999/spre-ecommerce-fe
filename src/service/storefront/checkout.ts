@@ -4,10 +4,12 @@ import { type Checkout } from '../../interface/sendData/interfaceStorefront'
 
 export const UpdateCheckOut = (
     data: { order: Checkout },
-    include?: string
+    paramsObj?: {
+        include?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
     return api.patch(`/storefront/checkout?${decodeURIComponent(params.toString())}`, data,
         {
             headers: {
@@ -18,13 +20,15 @@ export const UpdateCheckOut = (
 }
 
 export const ValidateOrderPayment = (
-    skip_state?: boolean,
-    include?: string,
-    fields_cart?: string
+    paramsObj?: {
+        skip_state?: boolean,
+        include?: string,
+        fields_cart?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (skip_state) params.append("skip_state", String(skip_state));
-    if (include) params.append("include", include);
-    if (fields_cart) params.append("fields[cart]", fields_cart);
+    if (paramsObj?.skip_state) params.append("skip_state", String(paramsObj?.skip_state));
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_cart) params.append("fields[cart]", paramsObj?.fields_cart);
     return api.post(`/storefront/checkout/validate_order_for_payment?${decodeURIComponent(params.toString())}`)
 }

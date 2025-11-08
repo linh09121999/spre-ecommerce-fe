@@ -9,13 +9,15 @@ export const DeleteAStoreCreditType = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/store_credit_types/${id}`);
 }
 export const ReturnAListOfStoreCreditTypes = (
-    page?: number,
-    per_page?: number
+    paramsObj?: {
+        page?: number,
+        per_page?: number
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
 
-    if (page) params.append("page", String(page));
-    if (per_page) params.append("per_page", String(per_page));
+    if (paramsObj?.page) params.append("page", String(paramsObj?.page));
+    if (paramsObj?.per_page) params.append("per_page", String(paramsObj?.per_page));
     return api.get(`/platform/store_credit_types?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAStoreCreditType = (id: string): Promise<AxiosResponse> => {

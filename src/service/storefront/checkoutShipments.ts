@@ -6,13 +6,15 @@ export const ListShippingRates = (): Promise<AxiosResponse> => {
 }
 export const SelectShippingMethodForShipments = (
     data: { shipping_method_id: string },
-    include?: string,
-    fields_cart?: string
+    paramsObj?: {
+        include?: string,
+        fields_cart?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
 
-    if (include) params.append("include", include);
-    if (fields_cart) params.append("fields[cart]", fields_cart);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_cart) params.append("fields[cart]", paramsObj?.fields_cart);
 
     return api.patch(`/storefront/checkout/select_shipping_method?${decodeURIComponent(params.toString())}`, data,
         {

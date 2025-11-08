@@ -2,27 +2,33 @@ import api from "../../api/apiOrderToken";
 import { type AxiosResponse } from "axios";
 
 export const AdvanceCheckout = (
-    include?: string,
-    fields_cart?: string
+    paramsObj?: {
+        include?: string,
+        fields_cart?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
-    if (fields_cart) params.append("fields[cart]", fields_cart);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_cart) params.append("fields[cart]", paramsObj?.fields_cart);
     return api.patch(`/storefront/checkout/advance?${decodeURIComponent(params.toString())}`)
 }
 export const ComplateCheckout = (
-    include?: string,
+    paramsObj?: {
+        include?: string,
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
     return api.patch(`/storefront/checkout/complete?${decodeURIComponent(params.toString())}`)
 }
 export const NextCheckoutStep = (
-    include?: string,
-    fields_cart?: string
+    paramsObj?: {
+        include?: string,
+        fields_cart?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
-    if (fields_cart) params.append("fields[cart]", fields_cart);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_cart) params.append("fields[cart]", paramsObj?.fields_cart);
     return api.patch(`/storefront/checkout/next?${decodeURIComponent(params.toString())}`)
 }

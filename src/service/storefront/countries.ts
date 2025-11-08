@@ -1,12 +1,14 @@
 import api from "../../api/apiOrderToken";
 
 export const GetDefaultCountry = (
-    include?: string,
-    fields_country?: string
+    paramsObj?: {
+        include?: string,
+        fields_country?: string
+    }
 ) => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
-    if (fields_country) params.append("fields[country]", fields_country);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_country) params.append("fields[country]", paramsObj?.fields_country);
 
     return api.get(`/storefront/countries/default?${decodeURIComponent(params.toString())}`)
 }

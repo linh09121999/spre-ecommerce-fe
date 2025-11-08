@@ -12,12 +12,14 @@ export const CreateAnAccount = (data: { user: User }) => {
     );
 }
 export const RetrieveAnAccount = (
-    include?: string,
-    fields_user?: string
+    paramsObj?: {
+        include?: string,
+        fields_user?: string
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
-    if (include) params.append("include", include);
-    if (fields_user) params.append("fields[user]", fields_user);
+    if (paramsObj?.include) params.append("include", paramsObj?.include);
+    if (paramsObj?.fields_user) params.append("fields[user]", paramsObj?.fields_user);
 
     return api.get(`/storefront/account?${decodeURIComponent(params.toString())}`);
 }

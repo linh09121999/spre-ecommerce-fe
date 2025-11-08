@@ -1,6 +1,6 @@
 import api from "../../api/apiAuthorization";
 import { type AxiosResponse } from "axios";
-import { type  DigitalLink} from '../../interface/sendData/interfaceFlatform'
+import { type DigitalLink } from '../../interface/sendData/interfaceFlatform'
 
 export const CreateADigitalLink = (
     data: { digital_link: DigitalLink }
@@ -18,13 +18,15 @@ export const ReturnADigitalLink = (
     return api.get(`/platform/digital_links/${id}`);
 }
 export const ReturnAListOfDigitalLinks = (
-    page?: number,
-    per_page?: number,
+    paramsObj?: {
+        page?: number,
+        per_page?: number,
+    }
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
 
-    if (page) params.append("page", String(page));
-    if (per_page) params.append("per_page", String(per_page));
+    if (paramsObj?.page) params.append("page", String(paramsObj?.page));
+    if (paramsObj?.per_page) params.append("per_page", String(paramsObj?.per_page));
     return api.get(`/platform/digital_links?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateADigitalLink = (

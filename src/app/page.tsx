@@ -17,7 +17,7 @@ const Home: React.FC = () => {
   const getApiProducts = async (filter_taxons: string, page: number, per_page: number) => {
     try {
       setLoading(true);
-      const res = await ListAllProducts(filter_taxons, page.toString(), per_page.toString())
+      const res = await ListAllProducts({ filter_taxons, page, per_page })
       setResProducts_List(res.data)
       console.log(res.data)
     } catch (error: any) {
@@ -49,7 +49,7 @@ const Home: React.FC = () => {
         <div className='flex-grow gap-5 flex flex-col '>
           <h3 className='text-2xl font-bold uppercase'>Sale</h3>
           <div className="gird grid-cols-7 gap-5">
-            {resProducts_List?.data.map((res, id)=>(
+            {resProducts_List?.data.map((res, id) => (
               <div>{res.attributes.name}</div>
             ))}
           </div>
