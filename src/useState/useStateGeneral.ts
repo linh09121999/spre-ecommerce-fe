@@ -29,7 +29,7 @@ export const useStateGeneral = create<State>((set) => ({
     pages: [
         {
             id: 0,
-            title: 'Shop All',
+            title: 'Home',
             path: "/"
         },
         {
