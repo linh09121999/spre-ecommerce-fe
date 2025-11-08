@@ -414,306 +414,306 @@ const HeaderWeb: React.FC = () => {
                                 >
                                     <span className='text-2xl rotate-[180deg]'><IoLogOut /></span>
                                     <span className={` text-xl transition-all duration-300 ease-in-out`}>Logout</span>
-                            </MenuItem>
+                                </MenuItem>
                             </Menu>
                         }
-                    {/*  */}
-                    <button className='px-2 border-l-[2px] border-l-gray-200 items-center text-lg flex gap-1'
-                        onClick={handleClickCurrency}
-                    >
-                        {resStores?.data.attributes.default_currency} ({isCurrency === 'USD' ? <PiCurrencyDollar /> : <PiCurrencyEur />})
-                    </button>
-                    <Menu
-                        anchorEl={anchorElCurrency}
-                        open={openCurrency}
-                        onClose={handleCloseCurrency}
-                        PaperProps={PaperProps}
-                        MenuListProps={MenuListProps}
-                    >
-                        <MenuItem sx={sxMenuItem}
-                            onClick={handleClickUSD}
+                        {/*  */}
+                        <button className='px-2 border-l-[2px] border-l-gray-200 items-center text-lg flex gap-1'
+                            onClick={handleClickCurrency}
                         >
-                            United States Dollar (USD)
-                        </MenuItem>
-                        <MenuItem sx={sxMenuItem}
-                            onClick={handleClickEUR}
+                            {resStores?.data.attributes.default_currency} ({isCurrency === 'USD' ? <PiCurrencyDollar /> : <PiCurrencyEur />})
+                        </button>
+                        <Menu
+                            anchorEl={anchorElCurrency}
+                            open={openCurrency}
+                            onClose={handleCloseCurrency}
+                            PaperProps={PaperProps}
+                            MenuListProps={MenuListProps}
                         >
-                            Euro (EUR)
-                        </MenuItem>
-                    </Menu>
-                </div>
-                {isSearch &&
-                    <Backdrop
-                        sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-                        open={isSearch}
-                    >
-                        <>
-                            <div className="w-full md:w-[600px] sm:w-auto ">
-                                <TextField
-                                    type="search"
-                                    placeholder="Search..."
-                                    sx={sxTextField}
-                                    // onChange={(e) => setInputValueSources(e.target.value)}
-                                    // value={inputValueSources}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    sx={{
-                                                        ...sxButton,
-                                                        background: "rgba(74, 222, 128, 0.1)",
-                                                        border: '1px solid rgba(74, 222, 128, 0.2)',
-                                                        color: 'var(--color-green-500)',
-                                                        borderRadius: '25px',
-                                                        fontWeight: '600',
-                                                        fontSize: 'var(--text-xl)',
-                                                        position: "relative",
-                                                        overflow: "hidden",
-                                                        textTransform: "none",
-                                                        "&::before": {
-                                                            content: '""',
-                                                            position: "absolute",
-                                                            top: 0,
-                                                            left: "50%",
-                                                            height: "100%",
-                                                            width: 0,
-                                                            background: "var(--color-green-400)",
-                                                            opacity: 0,
-                                                            transition: "all 0.5s ease",
-                                                            zIndex: -1,
-                                                        },
-                                                        "&:hover::before": {
-                                                            border: 'none',
-                                                            left: 0,
-                                                            width: "100%",
-                                                            opacity: 1,
-                                                        },
-                                                    }}
-                                                >
-                                                    <div className="relative flex items-center gap-2 svgWrapper">
-                                                        <IoMdSearch className="mx-auto" />
-                                                    </div>
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
-                            < IconButton
-                                sx={sxButton}
-                                onClick={() => setIsSearch(false)}>
-                                <IoClose className=" mx-auto" />
-                            </IconButton>
-                        </>
-                    </Backdrop>
-                }
-            </div>
-        </header >
-            {(hoveredNav === 1 || hoveredNav === 2) &&
-            <div
-                style={{
-                    top: `${headerBottom}px`, // luôn nằm ngay dưới header
-                }}
-                onMouseEnter={() => setHoveredNav(hoveredNav)} // Giữ hiển thị khi rê qua div này
-                onMouseLeave={() => setHoveredNav(null)} // Ẩn khi rời ra ngoài
-                className="absolute left-0 top-full w-full bg-white shadow-lg p-6 z-40 transition-all duration-300"
-            >
-                {hoveredNav === 1 &&
-                    // fashion
-                    <div className='max-w-[1535px] mx-auto grid grid-cols-4 '>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-lg font-bold uppercase'>Men</h3>
-                            <ul className='grid gap-4'>
-                                {filterFashionMen?.map((data, id) => (
-                                    <a key={id}
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                            {data.attributes.name}
-                                        </div>
-                                    </a>
-                                ))}
-                                <a
-                                    // onClick={}
-                                    className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                >
-                                    <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                        View All
-                                        <GrFormNextLink />
-                                    </div>
-                                </a>
-                            </ul>
-                        </div>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-lg font-bold uppercase'>Women</h3>
-                            <ul className='grid gap-4'>
-                                {filterFashionWomen?.map((data, id) => (
-                                    <a key={id}
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                            {data.attributes.name}
-                                        </div>
-                                    </a>
-                                ))}
-                                <a
-                                    // onClick={}
-                                    className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                >
-                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                        View All
-                                        <GrFormNextLink />
-                                    </div>
-                                </a>
-                            </ul>
-                        </div>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-lg font-bold uppercase'>Accessories</h3>
-                            <ul className='grid gap-4'>
-                                {filterFashionAccessories?.map((data, id) => (
-                                    <a key={id}
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                            {data.attributes.name}
-                                        </div>
-                                    </a>
-                                ))}
-                                <a
-                                    // onClick={}
-                                    className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                >
-                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                        View All
-                                        <GrFormNextLink />
-                                    </div>
-                                </a>
-                            </ul>
-                        </div>
-                        {filteredFashionImg?.map((data, id) => (
-                            <div key={id} className='flex-grow gap-4 flex flex-col '>
-                                <img src={data.attributes.header_url} alt={data.attributes.name} />
-                            </div>
-                        ))}
+                            <MenuItem sx={sxMenuItem}
+                                onClick={handleClickUSD}
+                            >
+                                United States Dollar (USD)
+                            </MenuItem>
+                            <MenuItem sx={sxMenuItem}
+                                onClick={handleClickEUR}
+                            >
+                                Euro (EUR)
+                            </MenuItem>
+                        </Menu>
                     </div>
-                }
-                {/* wellness */}
-                {hoveredNav === 2 &&
-                    <div className='max-w-[1535px] mx-auto grid grid-cols-4'>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-lg font-bold uppercase'>Fitness</h3>
-                            <ul className='grid gap-4'>
-                                {filterWellnessFitness?.map((data, id) => (
-                                    <a key={id}
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                            {data.attributes.name}
-                                        </div>
-                                    </a>
-                                ))}
-                                <a
-                                    // onClick={}
-                                    className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                >
-                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                        View All
-                                        <GrFormNextLink />
-                                    </div>
-                                </a>
-                            </ul>
-                        </div>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-lg font-bold uppercase'>Relaxation</h3>
-                            <ul className='grid gap-4'>
-                                {filterWellnessRelaxation?.map((data, id) => (
-                                    <a key={id}
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                            {data.attributes.name}
-                                        </div>
-                                    </a>
-                                ))}
-                                <a
-                                    // onClick={}
-                                    className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                >
-                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                        View All
-                                        <GrFormNextLink />
-                                    </div>
-                                </a>
-                            </ul>
-                        </div>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-lg font-bold uppercase'>Mental Stimulation</h3>
-                            <ul className='grid gap-4'>
-                                {filterWellnessMentalStimulation?.map((data, id) => (
-                                    <a key={id}
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                            {data.attributes.name}
-                                        </div>
-                                    </a>
-                                ))}
-                                <a
-                                    // onClick={}
-                                    className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                >
-                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                        View All
-                                        <GrFormNextLink />
-                                    </div>
-                                </a>
-                            </ul>
-                        </div>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-lg font-bold uppercase'>Nutrition</h3>
-                            <ul className='grid gap-4'>
-                                {filterWellnessNutrition?.map((data, id) => (
-                                    <a key={id}
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                            {data.attributes.name}
-                                        </div>
-                                    </a>
-                                ))}
-                                <a
-                                    // onClick={}
-                                    className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                >
-                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                        View All
-                                        <GrFormNextLink />
-                                    </div>
-                                </a>
-                            </ul>
-                        </div>
-                        {filteredWellnessImg?.map((data, id) => (
+                    {isSearch &&
+                        <Backdrop
+                            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+                            open={isSearch}
+                        >
                             <>
-                                {data.attributes.header_url &&
-                                    <div key={id} className='flex-grow gap-4 flex flex-col '>
-                                        <img src={data.attributes.header_url} alt={data.attributes.name} />
-                                    </div>
-                                }
+                                <div className="w-full md:w-[600px] sm:w-auto ">
+                                    <TextField
+                                        type="search"
+                                        placeholder="Search..."
+                                        sx={sxTextField}
+                                        // onChange={(e) => setInputValueSources(e.target.value)}
+                                        // value={inputValueSources}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        sx={{
+                                                            ...sxButton,
+                                                            background: "rgba(74, 222, 128, 0.1)",
+                                                            border: '1px solid rgba(74, 222, 128, 0.2)',
+                                                            color: 'var(--color-green-500)',
+                                                            borderRadius: '25px',
+                                                            fontWeight: '600',
+                                                            fontSize: 'var(--text-xl)',
+                                                            position: "relative",
+                                                            overflow: "hidden",
+                                                            textTransform: "none",
+                                                            "&::before": {
+                                                                content: '""',
+                                                                position: "absolute",
+                                                                top: 0,
+                                                                left: "50%",
+                                                                height: "100%",
+                                                                width: 0,
+                                                                background: "var(--color-green-400)",
+                                                                opacity: 0,
+                                                                transition: "all 0.5s ease",
+                                                                zIndex: -1,
+                                                            },
+                                                            "&:hover::before": {
+                                                                border: 'none',
+                                                                left: 0,
+                                                                width: "100%",
+                                                                opacity: 1,
+                                                            },
+                                                        }}
+                                                    >
+                                                        <div className="relative flex items-center gap-2 svgWrapper">
+                                                            <IoMdSearch className="mx-auto" />
+                                                        </div>
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </div>
+                                < IconButton
+                                    sx={sxButton}
+                                    onClick={() => setIsSearch(false)}>
+                                    <IoClose className=" mx-auto" />
+                                </IconButton>
                             </>
+                        </Backdrop>
+                    }
+                </div>
+            </header >
+            {(hoveredNav === 1 || hoveredNav === 2) &&
+                <div
+                    style={{
+                        top: `${headerBottom}px`, // luôn nằm ngay dưới header
+                    }}
+                    onMouseEnter={() => setHoveredNav(hoveredNav)} // Giữ hiển thị khi rê qua div này
+                    onMouseLeave={() => setHoveredNav(null)} // Ẩn khi rời ra ngoài
+                    className="absolute left-0 top-full w-full bg-white shadow-lg p-6 z-40 transition-all duration-300"
+                >
+                    {hoveredNav === 1 &&
+                        // fashion
+                        <div className='max-w-[1535px] mx-auto grid grid-cols-4 '>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Men</h3>
+                                <ul className='grid gap-4'>
+                                    {filterFashionMen?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Women</h3>
+                                <ul className='grid gap-4'>
+                                    {filterFashionWomen?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Accessories</h3>
+                                <ul className='grid gap-4'>
+                                    {filterFashionAccessories?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            {filteredFashionImg?.map((data, id) => (
+                                <div key={id} className='flex-grow gap-4 flex flex-col '>
+                                    <img src={data.attributes.header_url} alt={data.attributes.name} />
+                                </div>
+                            ))}
+                        </div>
+                    }
+                    {/* wellness */}
+                    {hoveredNav === 2 &&
+                        <div className='max-w-[1535px] mx-auto grid grid-cols-4'>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Fitness</h3>
+                                <ul className='grid gap-4'>
+                                    {filterWellnessFitness?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Relaxation</h3>
+                                <ul className='grid gap-4'>
+                                    {filterWellnessRelaxation?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Mental Stimulation</h3>
+                                <ul className='grid gap-4'>
+                                    {filterWellnessMentalStimulation?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Nutrition</h3>
+                                <ul className='grid gap-4'>
+                                    {filterWellnessNutrition?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            {filteredWellnessImg?.map((data, id) => (
+                                <>
+                                    {data.attributes.header_url &&
+                                        <div key={id} className='flex-grow gap-4 flex flex-col '>
+                                            <img src={data.attributes.header_url} alt={data.attributes.name} />
+                                        </div>
+                                    }
+                                </>
 
-                        ))}
-                    </div>
-                }
-            </div>
-}
-<ToastContainer position="top-right" autoClose={3000} />
+                            ))}
+                        </div>
+                    }
+                </div>
+            }
+            <ToastContainer position="top-right" autoClose={3000} />
         </>
     )
 }
