@@ -64,6 +64,3 @@ export const RetrieveAProduct = (
 
     return api.get(`/storefront/products/${product_slug}?${decodeURIComponent(params.toString())}`)
 }
-
-// paramsObj?: { include?: string }
-// paramsObj?: {
