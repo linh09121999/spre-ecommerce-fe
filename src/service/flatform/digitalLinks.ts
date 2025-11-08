@@ -25,7 +25,7 @@ export const ReturnAListOfDigitalLinks = (
 
     if (page) params.append("page", String(page));
     if (per_page) params.append("per_page", String(per_page));
-    return api.get(`/platform/digital_links?${params.toString()}`);
+    return api.get(`/platform/digital_links?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateADigitalLink = (
     data: { digital_link: DigitalLink },

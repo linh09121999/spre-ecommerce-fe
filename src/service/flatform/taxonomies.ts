@@ -5,7 +5,7 @@ import { type Taxonomy } from '../../interface/sendData/interfaceFlatform'
 export const CreateATaxonomy = (data: { taxonomy: Taxonomy }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/taxonomies?${params.toString()}`, data);
+    return api.post(`/platform/taxonomies?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteATaxonomy = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/taxonomies/${id}`);
@@ -23,15 +23,15 @@ export const ReturnAListOfTaxonomies = (
     if (include) params.append("include", include);
     if (filter_name_eq) params.append("filter[name_eq]", filter_name_eq);
 
-    return api.get(`/platform/taxonomies?${params.toString()}`);
+    return api.get(`/platform/taxonomies?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnATaxonomy = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/taxonomies/${id}?${params.toString()}`);
+    return api.get(`/platform/taxonomies/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateATaxonomy = (data: { taxonomy: Taxonomy }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/taxonomies/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/taxonomies/${id}?${decodeURIComponent(params.toString())}`, data);
 }

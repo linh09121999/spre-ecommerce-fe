@@ -16,7 +16,7 @@ export const ReturnAListOfStoreCreditTypes = (
 
     if (page) params.append("page", String(page));
     if (per_page) params.append("per_page", String(per_page));
-    return api.get(`/platform/store_credit_types?${params.toString()}`);
+    return api.get(`/platform/store_credit_types?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAStoreCreditType = (id: string): Promise<AxiosResponse> => {
     return api.get(`/platform/store_credit_types/${id}`);

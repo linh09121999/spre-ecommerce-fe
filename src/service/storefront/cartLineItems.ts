@@ -10,7 +10,7 @@ export const AddAnItemToCart = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.post(`/storefront/cart/add_item?${params.toString()}`, data,
+    return api.post(`/storefront/cart/add_item?${decodeURIComponent(params.toString())}`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"
@@ -28,7 +28,7 @@ export const SetLineItemQuantity = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.patch(`/storefront/cart/set_quantity?${params.toString()}`, data,
+    return api.patch(`/storefront/cart/set_quantity?${decodeURIComponent(params.toString())}`, data,
         {
             headers: {
                 "Content-Type": "application/vnd.api+json"

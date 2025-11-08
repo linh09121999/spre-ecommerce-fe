@@ -19,7 +19,7 @@ export const ReturnAListOfStoreCreditCategories = (
     if (per_page) params.append("per_page", String(per_page));
     if (filter_name_eq) params.append("filter[name_eq]", filter_name_eq);
 
-    return api.get(`/platform/store_credit_categories?${params.toString()}`);
+    return api.get(`/platform/store_credit_categories?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAStoreCreditCategory = (id: string): Promise<AxiosResponse> => {
     return api.get(`/platform/store_credit_categories/${id}`);

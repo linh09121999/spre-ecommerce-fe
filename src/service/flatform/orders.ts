@@ -5,33 +5,33 @@ import { type Order } from '../../interface/sendData/interfaceFlatform'
 export const AdvancesAnOrder = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}/advance?${params.toString()}`);
+    return api.patch(`/platform/orders/${id}/advance?${decodeURIComponent(params.toString())}`);
 }
 export const ApplyCouponCodeForAnOrder = (data: { coupon_code: string }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}/apply_coupon_code?${params.toString()}`, data);
+    return api.patch(`/platform/orders/${id}/apply_coupon_code?${decodeURIComponent(params.toString())}`, data);
 }
 export const ApprovesAnOrder = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}/approve?${params.toString()}`);
+    return api.patch(`/platform/orders/${id}/approve?${decodeURIComponent(params.toString())}`);
 }
 export const CancelsAnOrder = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}/cancel?${params.toString()}`);
+    return api.patch(`/platform/orders/${id}/cancel?${decodeURIComponent(params.toString())}`);
 }
 export const CompletesAnOrder = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}/complete?${params.toString()}`);
+    return api.patch(`/platform/orders/${id}/complete?${decodeURIComponent(params.toString())}`);
 }
 
 export const CreatesAnOrder = (data: { order: Order }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/orders?${params.toString()}`);
+    return api.post(`/platform/orders?${decodeURIComponent(params.toString())}`);
 }
 export const DeleteAnOrder = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/orders/${id}`);
@@ -39,12 +39,12 @@ export const DeleteAnOrder = (id: string): Promise<AxiosResponse> => {
 export const EmptiesAnOrder = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}/empty?${params.toString()}`);
+    return api.patch(`/platform/orders/${id}/empty?${decodeURIComponent(params.toString())}`);
 }
 export const NextAnOrder = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}/next?${params.toString()}`);
+    return api.patch(`/platform/orders/${id}/next?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAListOfOrders = (
     page?: number,
@@ -58,20 +58,20 @@ export const ReturnAListOfOrders = (
     if (include) params.append("include", include);
     if (filter_state_eq) params.append("filter[state_eq]]", filter_state_eq);
 
-    return api.get(`/platform/orders?${params.toString()}`);
+    return api.get(`/platform/orders?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAnOrder = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/orders/${id}?${params.toString()}`);
+    return api.get(`/platform/orders/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateAnOrder = (data: { order: Order }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/orders/${id}?${decodeURIComponent(params.toString())}`, data);
 }
 export const UseStoreCreditForAnOrder = (data: { amount: number }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/orders/${id}/use_store_credit?${params.toString()}`, data);
+    return api.patch(`/platform/orders/${id}/use_store_credit?${decodeURIComponent(params.toString())}`, data);
 }

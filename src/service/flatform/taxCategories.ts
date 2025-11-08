@@ -5,7 +5,7 @@ import { type TaxCategory } from '../../interface/sendData/interfaceFlatform'
 export const CreateATaxCategory = (data: { tax_category: TaxCategory }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/tax_categories?${params.toString()}`, data);
+    return api.post(`/platform/tax_categories?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteATaxCategory = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/tax_categories/${id}`);
@@ -27,15 +27,15 @@ export const ReturnAListOfTaxCategories = (
     if (filter_is_default_true) params.append("filter[is_default_true]", filter_is_default_true);
     if (filter_tax_code_eq) params.append("filter[tax_code_eq]", filter_tax_code_eq);
 
-    return api.get(`/platform/tax_categories?${params.toString()}`);
+    return api.get(`/platform/tax_categories?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnATaxCategory = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/tax_categories/${id}?${params.toString()}`);
+    return api.get(`/platform/tax_categories/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateATaxCategory = (data: { tax_category: TaxCategory }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/tax_categories/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/tax_categories/${id}?${decodeURIComponent(params.toString())}`, data);
 }

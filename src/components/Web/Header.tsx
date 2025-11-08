@@ -258,6 +258,28 @@ const HeaderWeb: React.FC = () => {
         }
     }, [])
 
+    const [hidden, setHidden] = useState(false);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            // Khi scroll xuống và quá 100px thì ẩn header
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                setHidden(true);
+            } else if (currentScrollY < lastScrollY) {
+                // Khi scroll lên thì hiện header
+                setHidden(false);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [lastScrollY]);
+
     const filteredFashionImg = useMemo(() => {
         return resTaxons_List?.data.filter((r) =>
             r.attributes.name.toLowerCase().includes("fashion".toLowerCase())
@@ -315,7 +337,9 @@ const HeaderWeb: React.FC = () => {
     return (
         <>
             <header ref={headerRef}
-                className='top-0 sticky z-100 px-5 py-4 bg-white backdrop-blur-[10px] border-b-[1px] border-b-gray-700'
+                className={`top-0 sticky z-100 px-5 py-4 bg-white backdrop-blur-[10px] border-b border-b-gray-700 transition-transform duration-500 ${hidden ? "-translate-y-full" : "translate-y-0"
+                    }`}
+            // className='top-0 sticky z-100 px-5 py-4 bg-white backdrop-blur-[10px] border-b-[1px] border-b-gray-700'
             >
                 <div className='max-w-[1535px] mx-auto flex justify-between items-center'>
                     <img className="w-30 custom-desktop-height "

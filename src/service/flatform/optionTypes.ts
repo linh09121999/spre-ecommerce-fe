@@ -20,7 +20,7 @@ export const ReturnAListOfOptionTypes = (
     if (per_page) params.append("per_page", String(per_page));
     if (filter_option_type_id_eq) params.append("filter[option_type_id_eq]", filter_option_type_id_eq);
     if (filter_name_cont) params.append("filter[name_cont]", filter_name_cont);
-    return api.get(`/platform/option_types?${params.toString()}`);
+    return api.get(`/platform/option_types?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAnOptionType = (id: string): Promise<AxiosResponse> => {
     return api.get(`/platform/option_types/${id}`);

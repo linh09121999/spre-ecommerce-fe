@@ -44,7 +44,7 @@ export const ListAllProducts = (
     if (image_transformation_size) params.append("image_transformation[size]", image_transformation_size);
     if (image_transformation_quality) params.append("image_transformation[quality]", image_transformation_quality);
 
-    return api.get(`/storefront/products?${params.toString()}`)
+    return api.get(`/storefront/products?${decodeURIComponent(params.toString())}`)
 }
 export const RetrieveAProduct = (
     product_slug: string,
@@ -59,5 +59,5 @@ export const RetrieveAProduct = (
     if (image_transformation_size) params.append("image_transformation[size]", image_transformation_size);
     if (image_transformation_quality) params.append("image_transformation[quality]", image_transformation_quality);
 
-    return api.get(`/storefront/products/${product_slug}?${params.toString()}`)
+    return api.get(`/storefront/products/${product_slug}?${decodeURIComponent(params.toString())}`)
 }

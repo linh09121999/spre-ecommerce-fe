@@ -10,7 +10,7 @@ export const ListAllVendors = (
     if (per_page) params.append("per_page", String(per_page));
     if (fields_vendor) params.append("fields[vendor]", fields_vendor);
 
-    return api.get(`/storefront/vendors?${params.toString()}`)
+    return api.get(`/storefront/vendors?${decodeURIComponent(params.toString())}`)
 }
 export const RetrieveAVendor = (
     vendor_slug: string,
@@ -19,5 +19,5 @@ export const RetrieveAVendor = (
     const params = new URLSearchParams();
     if (fields_vendor) params.append("fields[vendor]", fields_vendor);
 
-    api.get(`/storefront/vendors/${vendor_slug}?${params.toString()}`)
+    api.get(`/storefront/vendors/${vendor_slug}?${decodeURIComponent(params.toString())}`)
 }

@@ -13,7 +13,7 @@ export const ListAllOrders = (
     if (page) params.append("page", String(page));
     if (per_page) params.append("per_page", String(per_page));
 
-    return api.get(`/storefront/account/orders?${params.toString()}`);
+    return api.get(`/storefront/account/orders?${decodeURIComponent(params.toString())}`);
 }
 export const RetriebeAnOrder = (
     order_number: number,
@@ -23,5 +23,5 @@ export const RetriebeAnOrder = (
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart)
 
-    return api.get(`/storefront/account/orders/${order_number}?${params.toString()}`);
+    return api.get(`/storefront/account/orders/${order_number}?${decodeURIComponent(params.toString())}`);
 }

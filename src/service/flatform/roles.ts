@@ -19,7 +19,7 @@ export const ReturnAListOfRoles = (
     if (per_page) params.append("per_page", String(per_page));
     if (filter_name_eq) params.append("filter[name_eq]", filter_name_eq);
 
-    return api.get(`/platform/roles?${params.toString()}`);
+    return api.get(`/platform/roles?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnARole = (id: string): Promise<AxiosResponse> => {
     return api.get(`/platform/roles/${id}`);

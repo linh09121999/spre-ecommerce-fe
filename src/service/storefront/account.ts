@@ -19,7 +19,7 @@ export const RetrieveAnAccount = (
     if (include) params.append("include", include);
     if (fields_user) params.append("fields[user]", fields_user);
 
-    return api.get(`/storefront/account?${params.toString()}`);
+    return api.get(`/storefront/account?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateAnAccount = (data: { user: UserUpdate }): Promise<AxiosResponse> => {
     return api.patch(`/storefront/account`, data,

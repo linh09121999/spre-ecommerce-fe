@@ -9,5 +9,5 @@ export const RetrieveAnOrderStatus = (
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
 
-    return api.get(`/storefront/order_status/${order_number}?${params.toString()}`)
+    return api.get(`/storefront/order_status/${order_number}?${decodeURIComponent(params.toString())}`)
 }

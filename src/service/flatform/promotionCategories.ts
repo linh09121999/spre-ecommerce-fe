@@ -5,7 +5,7 @@ import { type PromotionCategory } from '../../interface/sendData/interfaceFlatfo
 export const CreateAPromotionCategory = (data: { promotion_category: PromotionCategory }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/promotion_categories?${params.toString()}`, data);
+    return api.post(`/platform/promotion_categories?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteAPromotionCategory = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/promotion_categories/${id}`);
@@ -25,15 +25,15 @@ export const ReturnAListOfPromotionCategories = (
     if (filter_code_eq) params.append("filter[code_eq]", filter_code_eq);
     if (filter_name_eq) params.append("filter[name_eq]", filter_name_eq);
 
-    return api.get(`/platform/promotion_categories?${params.toString()}`);
+    return api.get(`/platform/promotion_categories?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAPromotionCategory = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/promotion_categories/${id}?${params.toString()}`);
+    return api.get(`/platform/promotion_categories/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateAPromotionCategory = (data: { promotion_category: PromotionCategory }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/promotion_categories/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/promotion_categories/${id}?${decodeURIComponent(params.toString())}`, data);
 }

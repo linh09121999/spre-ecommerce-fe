@@ -20,7 +20,7 @@ export const ListAllPost = (
     if (sort) params.append("sort", sort);
     if (include) params.append("include", include);
 
-    return api.get(`/storefront/posts?${params.toString()}`)
+    return api.get(`/storefront/posts?${decodeURIComponent(params.toString())}`)
 }
 export const RetrieveAPost = (
     id: number,
@@ -29,5 +29,5 @@ export const RetrieveAPost = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
 
-    return api.get(`/storefront/posts/${id}?${params.toString()}`)
+    return api.get(`/storefront/posts/${id}?${decodeURIComponent(params.toString())}`)
 }

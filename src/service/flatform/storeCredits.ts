@@ -8,7 +8,7 @@ export const CreateAStoreCredit = (
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/store_credits?${params.toString()}`, data);
+    return api.post(`/platform/store_credits?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteAStoreCredit = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/store_credits/${id}`);
@@ -32,15 +32,15 @@ export const ReturnAListOfStoreCredits = (
     if (filter_amount_gteq) params.append("filter[amount_gteq]", filter_amount_gteq);
     if (filter_currency_eq) params.append("filter[currency_eq]", filter_currency_eq);
 
-    return api.get(`/platform/store_credits?${params.toString()}`);
+    return api.get(`/platform/store_credits?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAStoreCredit = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/store_credits/${id}?${params.toString()}`);
+    return api.get(`/platform/store_credits/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateAStoreCredit = (data: { store_credit: StoreCredit }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/store_credits/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/store_credits/${id}?${decodeURIComponent(params.toString())}`, data);
 }

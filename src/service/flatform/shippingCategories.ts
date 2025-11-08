@@ -19,7 +19,7 @@ export const ReturnAListOfShippingCategoryies = (
     if (per_page) params.append("per_page", String(per_page));
     if (filter_name_i_cont) params.append("filter[name_i_cont]", filter_name_i_cont);
 
-    return api.get(`/platform/shipping_categories?${params.toString()}`);
+    return api.get(`/platform/shipping_categories?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAShippingCategory = (id: string): Promise<AxiosResponse> => {
     return api.get(`/platform/shipping_categories/${id}`);

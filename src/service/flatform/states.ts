@@ -14,7 +14,7 @@ export const ReturnsAListOfStates = (
     if (include) params.append("include", include);
     if (filter_country_id_eq) params.append("filter[country_id_eq]", filter_country_id_eq);
     
-    return api.get(`/platform/states?${params.toString()}`);
+    return api.get(`/platform/states?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnsAState = (id: string): Promise<AxiosResponse> => {
     return api.get(`/platform/states/${id}`);

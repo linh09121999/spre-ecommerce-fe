@@ -17,7 +17,7 @@ export const ReturnAListOfAddresses = (
     if (filter_user_id_eq) params.append("filter[user_id_eq]", filter_user_id_eq);
     if (filter_firstname_cont) params.append("filter[firstname_cont]", filter_firstname_cont);
 
-    return api.get(`/platform/addresses?${params.toString()}`);
+    return api.get(`/platform/addresses?${decodeURIComponent(params.toString())}`);
 }
 
 export const CreateAnAddress = (
@@ -26,13 +26,13 @@ export const CreateAnAddress = (
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/addresses?${params.toString()}`, data);
+    return api.post(`/platform/addresses?${decodeURIComponent(params.toString())}`, data);
 };
 
 export const ReturnAnAddress = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/addresses/${id}?${params.toString()}`)
+    return api.get(`/platform/addresses/${id}?${decodeURIComponent(params.toString())}`)
 }
 
 export const DeleteAnAddress = (id: string): Promise<AxiosResponse> => api.delete(`/platform/addresses/${id}`)
@@ -40,5 +40,5 @@ export const DeleteAnAddress = (id: string): Promise<AxiosResponse> => api.delet
 export const UpdateAnAddress = (data: { address: Address }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/addresses/${id}?${params.toString()}`, data)
+    return api.patch(`/platform/addresses/${id}?${decodeURIComponent(params.toString())}`, data)
 }

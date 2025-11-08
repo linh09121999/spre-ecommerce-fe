@@ -8,7 +8,7 @@ export const GetDefaultCountry = (
     if (include) params.append("include", include);
     if (fields_country) params.append("fields[country]", fields_country);
 
-    return api.get(`/storefront/countries/default?${params.toString()}`)
+    return api.get(`/storefront/countries/default?${decodeURIComponent(params.toString())}`)
 }
 export const ListAllCountries = () => api.get(`/storefront/countries`)
 export const RetrieveAContry = (iso: number) => api.get(`/storefront/countries/${iso}`)

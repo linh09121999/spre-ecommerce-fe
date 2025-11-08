@@ -8,14 +8,14 @@ export const AdvanceCheckout = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.patch(`/storefront/checkout/advance?${params.toString()}`)
+    return api.patch(`/storefront/checkout/advance?${decodeURIComponent(params.toString())}`)
 }
 export const ComplateCheckout = (
     include?: string,
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/storefront/checkout/complete?${params.toString()}`)
+    return api.patch(`/storefront/checkout/complete?${decodeURIComponent(params.toString())}`)
 }
 export const NextCheckoutStep = (
     include?: string,
@@ -24,5 +24,5 @@ export const NextCheckoutStep = (
     const params = new URLSearchParams();
     if (include) params.append("include", include);
     if (fields_cart) params.append("fields[cart]", fields_cart);
-    return api.patch(`/storefront/checkout/next?${params.toString()}`)
+    return api.patch(`/storefront/checkout/next?${decodeURIComponent(params.toString())}`)
 }

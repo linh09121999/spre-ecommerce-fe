@@ -22,10 +22,10 @@ export const ReturnAListOfPayments = (
     if (filter_payment_method_id_eq) params.append("filter[payment_method_id_eq]", filter_payment_method_id_eq);
     if (filter_amount_gteq) params.append("filter[amount_gteq]", filter_amount_gteq);
 
-    return api.get(`/platform/payments?${params.toString()}`);
+    return api.get(`/platform/payments?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAPayment = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/payments/${id}?${params.toString()}`);
+    return api.get(`/platform/payments/${id}?${decodeURIComponent(params.toString())}`);
 }

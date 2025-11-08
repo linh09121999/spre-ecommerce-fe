@@ -14,11 +14,11 @@ export const ListAllPostCategories = (
     if (per_page) params.append("per_page", String(per_page));
     if (sort) params.append("sort", sort);
 
-    return api.get(`/storefront/post_categories?${params.toString()}`)
+    return api.get(`/storefront/post_categories?${decodeURIComponent(params.toString())}`)
 }
 export const RetrieveAPostCategory = (id: number, include?: string) => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
 
-    return api.get(`/storefront/post_categories/${id}?${params.toString()}`)
+    return api.get(`/storefront/post_categories/${id}?${decodeURIComponent(params.toString())}`)
 }

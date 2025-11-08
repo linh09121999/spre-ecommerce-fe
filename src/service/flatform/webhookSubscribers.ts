@@ -21,7 +21,7 @@ export const ReturnAListOfWebhookSubscribers = (
     if (filter_active_eq) params.append("filter[active_eq]", filter_active_eq);
     if (filter_url_cont) params.append("filter[url_cont]", filter_url_cont);
 
-    return api.get(`/platform/webhooks/subscribers?${params.toString()}`);
+    return api.get(`/platform/webhooks/subscribers?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAWebhookSubscriber = (id: string): Promise<AxiosResponse> => {
     return api.get(`/platform/webhooks/subscribers/${id}`);

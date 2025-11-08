@@ -5,7 +5,7 @@ import { type LineItem, LineItemPost } from '../../interface/sendData/interfaceF
 export const CreateALineItem = (data: { line_item: LineItemPost }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/line_items?${params.toString()}`, data);
+    return api.post(`/platform/line_items?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteALineItem = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/line_items/${id}`);
@@ -16,7 +16,7 @@ export const ReturnALineItem = (
 ): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/line_items/${id}?${params.toString()}`);
+    return api.get(`/platform/line_items/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAListOfLineItems = (
     page?: number,
@@ -31,10 +31,10 @@ export const ReturnAListOfLineItems = (
     if (include) params.append("include", include);
     if (filter_order_id_eq) params.append("filter[order_id_eq]", filter_order_id_eq);
 
-    return api.get(`/platform/line_items?${params.toString()}`);
+    return api.get(`/platform/line_items?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateALineItem = (data: { line_item: LineItem }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/line_items/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/line_items/${id}?${decodeURIComponent(params.toString())}`, data);
 }

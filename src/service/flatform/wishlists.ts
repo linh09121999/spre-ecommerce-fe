@@ -5,7 +5,7 @@ import { type Wishlist } from '../../interface/sendData/interfaceFlatform'
 export const CreateAWishlist = (data: { wishlist: Wishlist }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/wishlists?${params.toString()}`, data);
+    return api.post(`/platform/wishlists?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteAWishlist = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/wishlists/${id}`);
@@ -23,15 +23,15 @@ export const ReturnAListOfWishlists = (
     if (include) params.append("include", include);
     if (filter_name_cont) params.append("filter[name_cont]", filter_name_cont);
 
-    return api.get(`/platform/wishlists?${params.toString()}`);
+    return api.get(`/platform/wishlists?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAWishlist = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/wishlists/${id}?${params.toString()}`);
+    return api.get(`/platform/wishlists/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateAWishlist = (data: { wishlist: Wishlist }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/wishlists/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/wishlists/${id}?${decodeURIComponent(params.toString())}`, data);
 }

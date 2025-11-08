@@ -6,7 +6,7 @@ import { type PromotionActionRule, PromotionActionRuleUpdate } from '../../inter
 export const CreateAPromotionAction = (data: { promotion_action: PromotionActionRule }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/promotion_actions?${params.toString()}`, data);
+    return api.post(`/platform/promotion_actions?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteAPromotionAction = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/promotion_actions/${id}`);
@@ -24,16 +24,16 @@ export const ReturnAListOfPromotionActions = (
     if (include) params.append("include", include);
     if (filter_type_eq) params.append("filter[type_eq]", filter_type_eq);
 
-    return api.get(`/platform/promotion_actions?${params.toString()}`);
+    return api.get(`/platform/promotion_actions?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnAPromotionAction = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/promotion_actions/${id}?${params.toString()}`);
+    return api.get(`/platform/promotion_actions/${id}?${decodeURIComponent(params.toString())}`);
 }
 
 export const UpdateAPromotionAction = (data: { promotion_action: PromotionActionRuleUpdate }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/promotion_actions/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/promotion_actions/${id}?${decodeURIComponent(params.toString())}`, data);
 }

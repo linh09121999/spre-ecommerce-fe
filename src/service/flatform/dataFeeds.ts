@@ -20,7 +20,7 @@ export const ReturnAListOfDataFeeds = (
 
     if (page) params.append("page", String(page));
     if (per_page) params.append("per_page", String(per_page));
-    return api.get(`/platform/data_feeds?${params.toString()}`);
+    return api.get(`/platform/data_feeds?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateADataFeed = (data: { data_feed: DataFeed }, id: string): Promise<AxiosResponse> => {
     return api.patch(`/platform/data_feeds/${id}`, data);

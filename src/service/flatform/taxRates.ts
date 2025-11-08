@@ -5,7 +5,7 @@ import { type TaxRate } from '../../interface/sendData/interfaceFlatform'
 export const CreateATaxRate = (data: { tax_rate: TaxRate }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/tax_rates?${params.toString()}`, data);
+    return api.post(`/platform/tax_rates?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteATaxRate = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/tax_rates/${id}`);
@@ -27,15 +27,15 @@ export const ReturnAListOfTaxRates = (
     if (filter_amount_gt) params.append("filter[amount_gt]", filter_amount_gt);
     if (filter_tax_category_id_eq) params.append("filter[tax_category_id_eq]", filter_tax_category_id_eq);
 
-    return api.get(`/platform/tax_rates?${params.toString()}`);
+    return api.get(`/platform/tax_rates?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnATaxRate = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/tax_rates/${id}?${params.toString()}`);
+    return api.get(`/platform/tax_rates/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateATaxRate = (data: { tax_rate: TaxRate }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/tax_rates/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/tax_rates/${id}?${decodeURIComponent(params.toString())}`, data);
 }

@@ -5,7 +5,7 @@ import { type Taxon, TaxonReposition } from '../../interface/sendData/interfaceF
 export const CreateATaxon = (data: { taxon: Taxon }, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.post(`/platform/taxons?${params.toString()}`, data);
+    return api.post(`/platform/taxons?${decodeURIComponent(params.toString())}`, data);
 }
 export const DeleteATaxon = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/platform/taxons/${id}`);
@@ -28,15 +28,15 @@ export const ReturnAListOfTaxons = (
     if (filter_taxonomy_id_eq) params.append("filter[taxonomy_id_eq]", filter_taxonomy_id_eq);
     if (filter_name_cont) params.append("filter[name_cont]", filter_name_cont);
 
-    return api.get(`/platform/taxons?${params.toString()}`);
+    return api.get(`/platform/taxons?${decodeURIComponent(params.toString())}`);
 }
 export const ReturnATaxon = (id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.get(`/platform/taxons/${id}?${params.toString()}`);
+    return api.get(`/platform/taxons/${id}?${decodeURIComponent(params.toString())}`);
 }
 export const UpdateATaxon = (data: { taxon: Taxon }, id: string, include?: string): Promise<AxiosResponse> => {
     const params = new URLSearchParams();
     if (include) params.append("include", include);
-    return api.patch(`/platform/taxons/${id}?${params.toString()}`, data);
+    return api.patch(`/platform/taxons/${id}?${decodeURIComponent(params.toString())}`, data);
 }
