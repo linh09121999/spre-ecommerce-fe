@@ -761,9 +761,16 @@ interface Taxon_Attributes {
     position: number;
     depth: number;
     updated_at: string; // ISO 8601 date-time string
+    public_metadata?: Record<string, any>;
+    has_products?: boolean;
+    header_url?: string;
     is_root: boolean;
     is_child: boolean;
     is_leaf: boolean;
+    localized_slugs?: {
+        de: string;
+        en: string
+    }
 }
 
 interface Taxon_Relationships {

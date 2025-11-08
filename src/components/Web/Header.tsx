@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Nav from './Nav';
 import {
     TextField,
@@ -9,12 +9,16 @@ import type { SxProps, Theme } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
 
 import { useStateGeneral } from '@/useState/useStateGeneral';
-import { useState_ResStores } from '@/useState/useStatestorefront';
+import { useState_ResStores, useState_ResTaxons } from '@/useState/useStatestorefront';
 import { FaRegHeart, FaRegUser } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { IoMdSearch } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 import { PiCurrencyDollar, PiCurrencyEur } from 'react-icons/pi';
+import { ReturnTheCurrentStore } from '@/service/storefront/stores';
+import { ToastContainer, toast } from 'react-toastify';
+import { ListAllTaxons } from '@/service/storefront/taxons';
+import { GrFormNextLink } from 'react-icons/gr';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     width: '35px',
@@ -140,24 +144,6 @@ const HeaderWeb: React.FC = () => {
         overflow: "hidden",
         textTransform: "none",
         "&:active": { transform: "scale(0.95)" },
-        // "&::before": {
-        //     content: '""',
-        //     position: "absolute",
-        //     top: 0,
-        //     left: "50%",
-        //     height: "100%",
-        //     width: 0,
-        //     background: "var(--color-green-400)",
-        //     opacity: 0,
-        //     transition: "all 0.5s ease",
-        //     zIndex: -1,
-        // },
-        // "&:hover::before": {
-        //     border: 'none',
-        //     left: 0,
-        //     width: "100%",
-        //     opacity: 1,
-        // },
         "& span": {
             display: 'block',
             transition: 'all 0.3s ease-in-out'
@@ -173,12 +159,45 @@ const HeaderWeb: React.FC = () => {
         },
     }
 
-    const { resStores } = useState_ResStores()
+    const { setResStores, resStores } = useState_ResStores()
+    const { resTaxons_List, resTaxons_Retrieve, setResTaxons_List, setResTaxons_Retrieve } = useState_ResTaxons()
 
     const {
-        ordersNumber, heartNumber,
+        setLoading, ordersNumber, heartNumber,
         setIsSearch, isSearch, isCurrency,
         setIsCurrency, hoveredNav, setHoveredNav } = useStateGeneral()
+
+    const getApiStores = async () => {
+        try {
+            setLoading(true);
+            const res = await ReturnTheCurrentStore()
+            setResStores(res.data)
+        } catch (error: any) {
+            toast.error(`Stores: ` + error.response.error)
+        }
+        finally {
+            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
+        }
+    }
+
+    const getApiTaxons = async () => {
+        try {
+            setLoading(true);
+            const res = await ListAllTaxons()
+            console.log(res.data)
+            setResTaxons_List(res.data)
+        } catch (error: any) {
+            toast.error(`Stores: ` + error.response.error)
+        }
+        finally {
+            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
+        }
+    }
+
+    useEffect(() => {
+        getApiStores()
+        getApiTaxons()
+    }, [])
 
     const [anchorElCurrency, setAnchorElCurrency] = useState<null | HTMLElement>(null);
     const openCurrency = Boolean(anchorElCurrency);
@@ -217,10 +236,64 @@ const HeaderWeb: React.FC = () => {
         }
     }, [])
 
+    const filteredFashionImg = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.name.toLowerCase().includes("fashion".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterFashionMen = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/fashion/men/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterFashionWomen = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/fashion/women/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterFashionAccessories = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/fashion/accessories/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filteredWellnessImg = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.name.toLowerCase().includes("wellness".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterWellnessFitness = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/wellness/fitness/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterWellnessRelaxation = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/wellness/relaxation/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterWellnessMentalStimulation = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/wellness/mental-stimulation/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterWellnessNutrition = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/wellness/nutrition/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
     return (
         <>
-            <header ref={headerRef} className='top-0 sticky z-100 px-5 py-4 bg-white backdrop-blur-[10px] border-b-[1px] border-b-gray-700'
-
+            <header ref={headerRef}
+                className='top-0 sticky z-100 px-5 py-4 bg-white backdrop-blur-[10px] border-b-[1px] border-b-gray-700'
             >
                 <div className='max-w-[1535px] mx-auto flex justify-between items-center'>
                     <img className="w-30 custom-desktop-height "
@@ -366,10 +439,216 @@ const HeaderWeb: React.FC = () => {
                     onMouseLeave={() => setHoveredNav(null)} // Ẩn khi rời ra ngoài
                     className="absolute left-0 top-full w-full bg-white shadow-lg p-6 z-40 transition-all duration-300"
                 >
-                    {hoveredNav === 1 && <p>👗 Bộ sưu tập thời trang mới nhất</p>}
-                    {hoveredNav === 2 && <p>🌿 Chăm sóc sức khỏe & tinh thần</p>}
+                    {hoveredNav === 1 &&
+                        // fashion
+                        <div className='max-w-[1535px] mx-auto grid grid-cols-4 '>
+                            {/* <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Men</h3>
+                                <ul className='grid gap-4'>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Women</h3>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Accessories</h3>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <img src={resTaxons_List?.data[5].attributes.header_url} alt={resTaxons_List?.data[5].attributes.name} />
+                            </div> */}
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Men</h3>
+                                <ul className='grid gap-4'>
+                                    {filterFashionMen?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Women</h3>
+                                <ul className='grid gap-4'>
+                                    {filterFashionWomen?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Accessories</h3>
+                                <ul className='grid gap-4'>
+                                    {filterFashionAccessories?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            {filteredFashionImg?.map((data, id) => (
+                                <div key={id} className='flex-grow gap-4 flex flex-col '>
+                                    <img src={data.attributes.header_url} alt={data.attributes.name} />
+                                </div>
+                            ))}
+                        </div>
+                    }
+                    {/* wellness */}
+                    {hoveredNav === 2 &&
+                        <div className='max-w-[1535px] mx-auto grid grid-cols-4'>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Fitness</h3>
+                                <ul className='grid gap-4'>
+                                    {filterWellnessFitness?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Relaxation</h3>
+                                <ul className='grid gap-4'>
+                                    {filterWellnessRelaxation?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Mental Stimulation</h3>
+                                <ul className='grid gap-4'>
+                                    {filterWellnessMentalStimulation?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div className='flex-grow gap-4 flex flex-col '>
+                                <h3 className='text-lg font-bold uppercase'>Nutrition</h3>
+                                <ul className='grid gap-4'>
+                                    {filterWellnessNutrition?.map((data, id) => (
+                                        <a key={id}
+                                            // onClick={}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                {data.attributes.name}
+                                            </div>
+                                        </a>
+                                    ))}
+                                    <a
+                                        // onClick={}
+                                        className='uppercase cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            View All
+                                            <GrFormNextLink />
+                                        </div>
+                                    </a>
+                                </ul>
+                            </div>
+                            {filteredWellnessImg?.map((data, id) => (
+                                <>
+                                    {data.attributes.header_url &&
+                                        <div key={id} className='flex-grow gap-4 flex flex-col '>
+                                            <img src={data.attributes.header_url} alt={data.attributes.name} />
+                                        </div>
+                                    }
+                                </>
+
+                            ))}
+                        </div>
+                    }
                 </div>
             }
+            <ToastContainer position="top-right" autoClose={3000} />
         </>
     )
 }

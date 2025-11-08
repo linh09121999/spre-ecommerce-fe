@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
-import Nav from './Nav';
-import { useStateGeneral } from "@/useState/useStateGeneral";
-import { ToastContainer, toast } from 'react-toastify';
-import { ReturnTheCurrentStore } from '@/service/storefront/stores';
+import React from 'react';
+import { useStateGeneral } from "@/useState/useStateGeneral";;
 import { useState_ResStores } from '@/useState/useStatestorefront';
+import { useRouter } from "next/navigation";
 
-import { FaFacebookF, FaMailBulk, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
 
@@ -19,6 +17,8 @@ const fly1 = keyframes`
 `;
 
 const FooterWeb: React.FC = () => {
+    const router = useRouter();
+
     const sxButton: SxProps<Theme> = {
         background: "rgba(74, 222, 128, 0.1)",
         border: '1px solid rgba(74, 222, 128, 0.2)',
@@ -107,26 +107,9 @@ const FooterWeb: React.FC = () => {
 
     const year = new Date().getFullYear()
 
-    const { setLoading, setYourMail, yourMail } = useStateGeneral()
+    const { setYourMail, yourMail, pages, setSelectNav } = useStateGeneral()
 
-    const { setResStores, resStores } = useState_ResStores()
-
-    const getApiStores = async () => {
-        try {
-            setLoading(true);
-            const res = await ReturnTheCurrentStore()
-            setResStores(res.data)
-        } catch (error: any) {
-            toast.error(`Stores: ` + error.response.error)
-        }
-        finally {
-            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
-        }
-    }
-
-    useEffect(() => {
-        getApiStores()
-    }, [])
+    const { resStores } = useState_ResStores()
 
     const textSubject = "Hello, I'm "
     const body = encodeURIComponent('I am interested in this website');
@@ -187,12 +170,21 @@ const FooterWeb: React.FC = () => {
                     <div className='grid grid-cols-1 lg:grid-cols-3 grow w-full'>
                         <div className='flex-grow gap-4 flex flex-col '>
                             <h3 className='text-xl font-bold'>Shop</h3>
-                            <Nav
-                                classNameUl='grid gap-4 grid-col-1 max-md:grid-cols-2'
-                                classNameTitle='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'
-                                classNameA='cursor-pointer transiton-all duration-300 hover:text-green-400 '
-                                classNameAActive="text-green-400"
-                            />
+                            <ul className='grid gap-4'>
+                                {pages?.map((page, index) => (
+                                    <a key={index}
+                                        onClick={() => {
+                                            setSelectNav(index)
+                                            router.push(page.path)
+                                        }}
+                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                    >
+                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                            {page.title}
+                                        </div>
+                                    </a>
+                                ))}
+                            </ul>
                         </div>
                         <div className='flex-grow gap-4 flex flex-col '>
                             <h3 className='text-xl font-bold'>Account</h3>
@@ -257,7 +249,6 @@ const FooterWeb: React.FC = () => {
                     <p className='text-center'>&copy; {year} Spree Commerce DEMO. All Rights Reserved. Provided by <a className='' href="https://spreecommerce.org/docs/api-reference"><strong className='font-'>Spre Ecommerce</strong></a></p>
                 </div>
             </footer >
-            <ToastContainer position="top-right" autoClose={3000} />
         </>
 
     )
