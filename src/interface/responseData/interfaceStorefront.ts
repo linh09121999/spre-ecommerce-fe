@@ -617,6 +617,8 @@ export interface ResVendors_Retrieve {
 
 // Stores
 interface Store_Attributes {
+    logo: string;
+    mailer_logo: string | null;
     name: string;
     url: string;
     meta_description: string;
@@ -634,7 +636,7 @@ interface Store_Attributes {
     address: string;
     contact_phone: string;
     supported_locales: string;
-    favicon_path: string;
+    favicon_path: string | null;
 }
 
 

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useStateGeneral } from '@/useState/useStateGeneral';
 
 import React, { useState, useEffect, useMemo } from "react";
-import { useState_ResPosts, useState_ResProducts, useState_ResTaxons } from "@/useState/useStatestorefront";
+import { useState_ResPosts, useState_ResProducts, useState_ResStores, useState_ResTaxons } from "@/useState/useStatestorefront";
 import { toast, ToastContainer } from "react-toastify";
 import { ListAllProducts } from "@/service/storefront/products";
 import { IncludedImage } from "@/interface/interface";
@@ -18,6 +18,7 @@ const Home: React.FC = () => {
   const { resTaxons_List } = useState_ResTaxons()
   const { resProducts_NewList, setResProducts_NewList, setResProducts_SaleList, resProducts_SaleList } = useState_ResProducts()
   const { resPosts_List, setResPosts_List } = useState_ResPosts()
+  const { resStores } = useState_ResStores()
 
   const { setLoading } = useStateGeneral()
 
@@ -142,7 +143,7 @@ const Home: React.FC = () => {
             >View all <span className=""><MdNavigateNext size={24} /></span></button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {resPosts_List?.data.slice(0,5).map((res, id) => (
+            {resPosts_List?.data.slice(0, 5).map((res, id) => (
               <>
                 {res.attributes.content &&
                   <div className="relative group overflow-hidden rounded-2xl shadow-lg">
@@ -163,7 +164,7 @@ const Home: React.FC = () => {
             ))}
             <div className="grid gap-5">
               <h3 className="text-lg uppercase font-semibold  bg-clip-text tracking-wide">MOST VIEWED ARTICLES</h3>
-              {resPosts_List?.data.slice(0,5).map((res, id) => (
+              {resPosts_List?.data.slice(0, 5).map((res, id) => (
                 <>
                   {!res.attributes.content &&
                     <div className=" flex gap-2  ">
