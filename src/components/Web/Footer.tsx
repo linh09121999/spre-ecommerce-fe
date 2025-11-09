@@ -169,7 +169,7 @@ const FooterWeb: React.FC = () => {
                     </div>
                     <div className='grid grid-cols-1 lg:grid-cols-3 grow w-full'>
                         <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-xl font-bold'>Shop</h3>
+                            <h3 className='text-xl font-semibold'>Shop</h3>
                             <ul className='grid gap-4'>
                                 {pages?.map((page, index) => (
                                     <a key={index}
@@ -187,7 +187,7 @@ const FooterWeb: React.FC = () => {
                             </ul>
                         </div>
                         <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-xl font-bold'>Account</h3>
+                            <h3 className='text-xl font-semibold'>Account</h3>
                             <ul className='grid gap-4 uppercase'>
                                 {/* account */}
                                 <li>
@@ -210,7 +210,7 @@ const FooterWeb: React.FC = () => {
                             </ul>
                         </div>
                         <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-xl font-bold'>Contact</h3>
+                            <h3 className='text-xl font-semibold'>Contact</h3>
                             {resStores?.data.attributes.facebook &&
                                 <div className='flex gap-3 items-center'>
                                     <a

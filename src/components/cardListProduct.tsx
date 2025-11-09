@@ -1,4 +1,4 @@
-import { ColorOption, IncludedImage, IncludedItem, IncludedOptionType, IncludedTaxon, IncludedVariant, PriceInfo } from '@/interface/interface';
+import { ColorOption, IncludedImage, IncludedItem, IncludedVariant, PriceInfo } from '@/interface/interface';
 import { Product } from '@/interface/responseData/interfaceStorefront';
 import { FormControlLabel, Radio } from '@mui/material';
 import React, { useState } from 'react';
@@ -10,7 +10,7 @@ interface ProductCardProps {
     included: IncludedItem[]
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ products, included }) => {
+const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => {
     const [selectedVariants, setSelectedVariants] = useState<Record<string, string>>({});
     // Hàm tìm hình ảnh theo ID
     const findImageById = (imageId: string): IncludedImage | undefined => {
@@ -204,11 +204,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ products, included }) => {
                                         {colorOptions.map((colorOption) => (
                                             <button
                                                 key={colorOption.color} aria-label='select color'
-                                                className="flex items-center cursor-pointer"
+                                                className="btn-color  flex items-center cursor-pointer border border-gray-300 p-[3px] rounded-full"
+
                                                 onClick={() => handleColorSelect(product.id, colorOption.color)}
                                             >
-                                                <span className={`w-[20px] h-[20px] rounded-full }`}
-                                                    style={{ background: `${colorOption.colorPresentation}` }}
+                                                <span className={`w-[16px] h-[16px] rounded-full shadow-sm`}
+                                                    style={{
+                                                        background: `${colorOption.colorPresentation}`
+                                                    }}
                                                 ></span>
                                             </button>
                                         ))}
@@ -272,4 +275,4 @@ const ProductCard: React.FC<ProductCardProps> = ({ products, included }) => {
     );
 };
 
-export default ProductCard;
+export default ListProductCard;

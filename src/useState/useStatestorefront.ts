@@ -180,13 +180,25 @@ interface State_ResProducts {
     setResProducts_List: (data: ResProduct_ListAll) => void;
     resProduct_Retrieve: ResProduct_Retrieve | undefined;
     setResProduct_Retrieve: (data: ResProduct_Retrieve) => void;
+    // sale
+    resProducts_SaleList: ResProduct_ListAll | undefined;
+    setResProducts_SaleList: (data: ResProduct_ListAll) => void;
+    // new arrivals
+    resProducts_NewList: ResProduct_ListAll | undefined;
+    setResProducts_NewList: (data: ResProduct_ListAll) => void;
 }
 
 export const useState_ResProducts = create<State_ResProducts>((set) => ({
     resProducts_List: undefined,
     setResProducts_List: (data) => set({ resProducts_List: data }),
     resProduct_Retrieve: undefined,
-    setResProduct_Retrieve: (data) => set({ resProduct_Retrieve: data })
+    setResProduct_Retrieve: (data) => set({ resProduct_Retrieve: data }),
+    // sale
+    resProducts_SaleList: undefined,
+    setResProducts_SaleList: (data) => set({ resProducts_SaleList: data }),
+    // new
+    resProducts_NewList: undefined,
+    setResProducts_NewList: (data) => set({ resProducts_NewList: data }),
 }))
 
 // Vendors

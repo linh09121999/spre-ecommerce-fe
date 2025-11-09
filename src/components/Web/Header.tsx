@@ -188,7 +188,6 @@ const HeaderWeb: React.FC = () => {
         try {
             setLoading(true);
             const res = await ListAllTaxons()
-            console.log(res.data)
             setResTaxons_List(res.data)
         } catch (error: any) {
             toast.error(`Stores: ` + error.response.error)
@@ -526,7 +525,7 @@ const HeaderWeb: React.FC = () => {
                                     { filter: filterFashionAccessories, title: "Accessories" },
                                 ].map(({ filter, title }) => (
                                     <div className='flex-grow gap-4 flex flex-col '>
-                                        <h3 className='text-lg font-bold uppercase'>{title}</h3>
+                                        <h3 className='text-lg font-semibold uppercase'>{title}</h3>
                                         <ul className='grid gap-4'>
                                             {filter?.map((data, id) => (
                                                 <a key={id}
@@ -567,7 +566,7 @@ const HeaderWeb: React.FC = () => {
                                     { filter: filterWellnessNutrition, title: "Nutrition" },
                                 ].map(({ filter, title }) => (
                                     <div className='flex-grow gap-4 flex flex-col '>
-                                        <h3 className='text-lg font-bold uppercase'>{title}</h3>
+                                        <h3 className='text-lg font-semibold uppercase'>{title}</h3>
                                         <ul className='grid gap-4'>
                                             {filter?.map((data, id) => (
                                                 <a key={id}
