@@ -103,9 +103,9 @@ const Home: React.FC = () => {
           </div>
           <ListProductCard products={resProducts_NewList?.data ?? []} included={resProducts_NewList?.included ?? []} />
         </div>
-        <p>{resTaxons_List?.data.map((data) => (
+        {/* <p>{resTaxons_List?.data.map((data) => (
           <p>{data.id} : {data.attributes.permalink}</p>
-        ))}</p>
+        ))}</p> */}
       </div>
       <ToastContainer position="top-right" autoClose={3000} />
 

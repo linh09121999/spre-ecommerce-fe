@@ -1,6 +1,5 @@
-import { ColorOption, IncludedImage, IncludedItem, IncludedVariant, PriceInfo } from '@/interface/interface';
+import { ColorOption, IncludedImage, IncludedItem, IncludedVariant, IncludedTaxon, PriceInfo } from '@/interface/interface';
 import { Product } from '@/interface/responseData/interfaceStorefront';
-import { FormControlLabel, Radio } from '@mui/material';
 import React, { useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
@@ -19,11 +18,41 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
         );
     };
 
+    const findTaxon = (TaxonId: string): IncludedTaxon | undefined => {
+        return included.find((item): item is IncludedTaxon =>
+            item.type === 'taxon' && item.id === TaxonId
+        )
+    }
+
     // Hàm tìm variant theo ID
     const findVariantById = (variantId: string): IncludedVariant | undefined => {
         return included.find((item): item is IncludedVariant =>
             item.type === 'variant' && item.id === variantId
         );
+    };
+
+    const getProductTaxonNames = (product: Product): string[] => {
+        const taxonNames: string[] = [];
+
+        product.relationships.taxons.data.forEach(taxonRef => {
+            const taxon = findTaxon(taxonRef.id);
+            if (taxon) {
+                taxonNames.push(taxon.attributes.name);
+            }
+        });
+
+        return taxonNames;
+    };
+
+    const getPrimaryTaxonName = (product: Product): string | null => {
+        const taxonNames = getProductTaxonNames(product);
+        return taxonNames.length > 0 ? taxonNames[0] : null;
+    };
+
+    // Hàm kiểm tra nếu sản phẩm có taxon "New Arrivals"
+    const isNewArrival = (product: Product): boolean => {
+        const taxonNames = getProductTaxonNames(product);
+        return taxonNames.includes('New Arrivals');
     };
 
     // Hàm lấy URL hình ảnh chính cho sản phẩm
@@ -135,11 +164,13 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                 const colorOptions = getColorOptions(product);
                 const selectedVariant = getSelectedVariant(product);
                 const selectedColor = selectedVariants[product.id];
-
+                const taxonNames = getProductTaxonNames(product);
+                const primaryTaxonName = getPrimaryTaxonName(product);
+                const isNew = isNewArrival(product);
                 return (
                     <div
                         key={product.id}
-                        className="grid bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                        className="grid gap-5 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                     >
                         <div>
                             {/* Hình ảnh sản phẩm */}
@@ -158,11 +189,31 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                                 )}
 
                                 {/* Badge giảm giá */}
-                                {priceInfo.discount > 0 && (
+                                {/* {priceInfo.discount > 0 && (
                                     <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold">
                                         -{priceInfo.discount}%
                                     </div>
+                                )} */}
+
+                                {isNew && (
+                                    <div className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-md text-sm font-bold">
+                                        New
+                                    </div>
                                 )}
+
+                                {/* Badge giảm giá */}
+                                {priceInfo.discount > 0 && (
+                                    <div className={`absolute top-3 ${isNew ? 'left-20' : 'left-3'} bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold`}>
+                                        -{priceInfo.discount}%
+                                    </div>
+                                )}
+
+                                {/* Badge taxon (danh mục) */}
+                                {/* {primaryTaxonName && !isNew && (
+                                    <div className="absolute top-3 right-3 bg-blue-500 text-white px-2 py-1 rounded-md text-sm font-bold">
+                                        {primaryTaxonName}
+                                    </div>
+                                )} */}
 
                                 {/* Badge trạng thái */}
                                 {!product.attributes.in_stock && (
@@ -173,7 +224,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                             </div>
 
                             {/* Thông tin sản phẩm */}
-                            <div className="p-5 flex flex-col gap-3">
+                            <div className="p-[20px_20px_0_20px] flex flex-col gap-3">
                                 {/* Tên sản phẩm */}
                                 <h3 className="font-semibold text-gray-800 line-clamp-2">
                                     {product.attributes.name}
@@ -196,6 +247,20 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                                         </span>
                                     )}
                                 </div>
+                                {/* {taxonNames.length > 0 && (
+                                    <div className="mb-2">
+                                        <div className="flex flex-wrap gap-1">
+                                            {taxonNames.map((taxonName, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs"
+                                                >
+                                                    {taxonName}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )} */}
 
                                 {/* Variants */}
                                 {/* Lựa chọn màu sắc */}
@@ -249,7 +314,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                             </div>
                         </div>
                         {/* Trạng thái và nút hành động */}
-                        <div className="flex items-center self-end gap-4 p-5">
+                        <div className="flex items-center self-end gap-4 p-[0_20px_20px_20px]">
                             <button className='border border-green-600 text-green-600 p-2 rounded-lg' aria-label='heart click'>
                                 <span className='text-xl max-md:text-xl svgWrapper'>
                                     <FaRegHeart className="mx-auto" />

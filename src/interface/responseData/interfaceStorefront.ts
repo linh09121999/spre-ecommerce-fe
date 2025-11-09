@@ -521,7 +521,9 @@ interface Product_Attributes {
     localized_slugs: {
         de: string;
         en: string
-    }
+    };
+    tags: Record<string, any>[];
+    labels: Record<string, any>[];
 }
 
 interface Product_Relationships {
