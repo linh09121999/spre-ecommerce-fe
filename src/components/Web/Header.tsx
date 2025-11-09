@@ -238,26 +238,6 @@ const HeaderWeb: React.FC = () => {
         setAnchorElAccount(null);
     };
 
-    const headerRef = useRef<HTMLDivElement>(null)
-
-    const [headerBottom, setHeaderBottom] = useState<number>(0)
-    // 🔹 Cập nhật vị trí header mỗi khi scroll hoặc resize
-    useEffect(() => {
-        const updateHeaderPos = () => {
-            if (headerRef.current) {
-                const rect = headerRef.current.getBoundingClientRect()
-                setHeaderBottom(rect.bottom)
-            }
-        }
-        updateHeaderPos()
-        window.addEventListener("scroll", updateHeaderPos)
-        window.addEventListener("resize", updateHeaderPos)
-        return () => {
-            window.removeEventListener("scroll", updateHeaderPos)
-            window.removeEventListener("resize", updateHeaderPos)
-        }
-    }, [])
-
     const [hidden, setHidden] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -336,10 +316,9 @@ const HeaderWeb: React.FC = () => {
 
     return (
         <>
-            <header ref={headerRef}
+            <header
                 className={`top-0 sticky z-100 px-5 py-4 bg-white backdrop-blur-[10px] border-b border-b-gray-700 transition-transform duration-500 ${hidden ? "-translate-y-full" : "translate-y-0"
                     }`}
-            // className='top-0 sticky z-100 px-5 py-4 bg-white backdrop-blur-[10px] border-b-[1px] border-b-gray-700'
             >
                 <div className='max-w-[1535px] mx-auto flex justify-between items-center'>
                     <img className="w-30 custom-desktop-height "
@@ -532,105 +511,103 @@ const HeaderWeb: React.FC = () => {
                         </Backdrop>
                     }
                 </div>
+                {(hoveredNav === 1 || hoveredNav === 2) &&
+                    <div
+                        onMouseEnter={() => setHoveredNav(hoveredNav)} // Giữ hiển thị khi rê qua div này
+                        onMouseLeave={() => setHoveredNav(null)} // Ẩn khi rời ra ngoài
+                        className="absolute left-0 top-full w-full bg-white shadow-lg p-6 z-40 transition-all duration-300"
+                    >
+                        {hoveredNav === 1 &&
+                            // fashion
+                            <div className='max-w-[1535px] mx-auto grid grid-cols-4 '>
+                                {[
+                                    { filter: filterFashionMen, title: "Men" },
+                                    { filter: filterFashionWomen, title: "Women" },
+                                    { filter: filterFashionAccessories, title: "Accessories" },
+                                ].map(({ filter, title }) => (
+                                    <div className='flex-grow gap-4 flex flex-col '>
+                                        <h3 className='text-lg font-bold uppercase'>{title}</h3>
+                                        <ul className='grid gap-4'>
+                                            {filter?.map((data, id) => (
+                                                <a key={id}
+                                                    // onClick={}
+                                                    className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                                >
+                                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                        {data.attributes.name}
+                                                    </div>
+                                                </a>
+                                            ))}
+                                            <a
+                                                // onClick={}
+                                                className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                            >
+                                                <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                    View All
+                                                    <GrFormNextLink />
+                                                </div>
+                                            </a>
+                                        </ul>
+                                    </div>
+                                ))}
+                                {filteredFashionImg?.map((data, id) => (
+                                    <div key={id} className='flex-grow gap-4 flex flex-col '>
+                                        <img src={data.attributes.header_url} alt={data.attributes.name} />
+                                    </div>
+                                ))}
+                            </div>
+                        }
+                        {/* wellness */}
+                        {hoveredNav === 2 &&
+                            <div className='max-w-[1535px] mx-auto grid grid-cols-4'>
+                                {[
+                                    { filter: filterWellnessFitness, title: "Fitness" },
+                                    { filter: filterWellnessRelaxation, title: "Relaxation" },
+                                    { filter: filterWellnessMentalStimulation, title: "Mental Stimulation" },
+                                    { filter: filterWellnessNutrition, title: "Nutrition" },
+                                ].map(({ filter, title }) => (
+                                    <div className='flex-grow gap-4 flex flex-col '>
+                                        <h3 className='text-lg font-bold uppercase'>{title}</h3>
+                                        <ul className='grid gap-4'>
+                                            {filter?.map((data, id) => (
+                                                <a key={id}
+                                                    // onClick={}
+                                                    className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                                >
+                                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                        {data.attributes.name}
+                                                    </div>
+                                                </a>
+                                            ))}
+                                            <a
+                                                // onClick={}
+                                                className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                            >
+                                                <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                    View All
+                                                    <GrFormNextLink />
+                                                </div>
+                                            </a>
+                                        </ul>
+                                    </div>
+                                ))}
+
+                                {filteredWellnessImg?.map((data, id) => (
+                                    <>
+                                        {data.attributes.header_url &&
+                                            <div key={id} className='flex-grow gap-4 flex flex-col '>
+                                                <img src={data.attributes.header_url} alt={data.attributes.name} />
+                                            </div>
+                                        }
+                                    </>
+
+                                ))}
+                            </div>
+                        }
+                    </div>
+                }
             </header >
-            {(hoveredNav === 1 || hoveredNav === 2) &&
-                <div
-                    style={{
-                        top: `${headerBottom}px`, // luôn nằm ngay dưới header
-                    }}
-                    onMouseEnter={() => setHoveredNav(hoveredNav)} // Giữ hiển thị khi rê qua div này
-                    onMouseLeave={() => setHoveredNav(null)} // Ẩn khi rời ra ngoài
-                    className="absolute left-0 top-full w-full bg-white shadow-lg p-6 z-40 transition-all duration-300"
-                >
-                    {hoveredNav === 1 &&
-                        // fashion
-                        <div className='max-w-[1535px] mx-auto grid grid-cols-4 '>
-                            {[
-                                { filter: filterFashionMen, title: "Men" },
-                                { filter: filterFashionWomen, title: "Women" },
-                                { filter: filterFashionAccessories, title: "Accessories" },
-                            ].map(({ filter, title }) => (
-                                <div className='flex-grow gap-4 flex flex-col '>
-                                    <h3 className='text-lg font-bold uppercase'>{title}</h3>
-                                    <ul className='grid gap-4'>
-                                        {filter?.map((data, id) => (
-                                            <a key={id}
-                                                // onClick={}
-                                                className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                            >
-                                                <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                                    {data.attributes.name}
-                                                </div>
-                                            </a>
-                                        ))}
-                                        <a
-                                            // onClick={}
-                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                        >
-                                            <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                                View All
-                                                <GrFormNextLink />
-                                            </div>
-                                        </a>
-                                    </ul>
-                                </div>
-                            ))}
-                            {filteredFashionImg?.map((data, id) => (
-                                <div key={id} className='flex-grow gap-4 flex flex-col '>
-                                    <img src={data.attributes.header_url} alt={data.attributes.name} />
-                                </div>
-                            ))}
-                        </div>
-                    }
-                    {/* wellness */}
-                    {hoveredNav === 2 &&
-                        <div className='max-w-[1535px] mx-auto grid grid-cols-4'>
-                            {[
-                                { filter: filterWellnessFitness, title: "Fitness" },
-                                { filter: filterWellnessRelaxation, title: "Relaxation" },
-                                { filter: filterWellnessMentalStimulation, title: "Mental Stimulation" },
-                                { filter: filterWellnessNutrition, title: "Nutrition" },
-                            ].map(({ filter, title }) => (
-                                <div className='flex-grow gap-4 flex flex-col '>
-                                    <h3 className='text-lg font-bold uppercase'>{title}</h3>
-                                    <ul className='grid gap-4'>
-                                        {filter?.map((data, id) => (
-                                            <a key={id}
-                                                // onClick={}
-                                                className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                            >
-                                                <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                                    {data.attributes.name}
-                                                </div>
-                                            </a>
-                                        ))}
-                                        <a
-                                            // onClick={}
-                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                        >
-                                            <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                                View All
-                                                <GrFormNextLink />
-                                            </div>
-                                        </a>
-                                    </ul>
-                                </div>
-                            ))}
 
-                            {filteredWellnessImg?.map((data, id) => (
-                                <>
-                                    {data.attributes.header_url &&
-                                        <div key={id} className='flex-grow gap-4 flex flex-col '>
-                                            <img src={data.attributes.header_url} alt={data.attributes.name} />
-                                        </div>
-                                    }
-                                </>
-
-                            ))}
-                        </div>
-                    }
-                </div>
-            }
             <ToastContainer position="top-right" autoClose={3000} />
         </>
     )

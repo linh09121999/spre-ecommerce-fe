@@ -47,3 +47,128 @@ export interface Pages {
     title: string;
     path: string
 }
+
+interface Option {
+    name: string;
+    value: string;
+    presentation: string;
+}
+
+interface VariantAttributes {
+    sku: string;
+    barcode: string | null;
+    weight: string;
+    height: number | null;
+    width: number | null;
+    depth: number | null;
+    is_master: boolean;
+    options_text: string;
+    options: Option[];
+    public_metadata: Record<string, unknown>;
+    purchasable: boolean;
+    in_stock: boolean;
+    backorderable: boolean;
+    currency: string;
+    price: string | null;
+    display_price: string | null;
+    compare_at_price: string | null;
+    display_compare_at_price: string | null;
+}
+
+interface RelationshipData {
+    id: string;
+    type: string;
+}
+
+interface Relationships {
+    metafields: { data: unknown[] };
+    product?: { data: RelationshipData };
+    images: { data: RelationshipData[] };
+    option_values?: { data: RelationshipData[] };
+    parent?: { data: RelationshipData | null };
+    taxonomy?: { data: RelationshipData };
+    children?: { data: RelationshipData[] };
+    image?: { data: RelationshipData | null };
+}
+
+export interface IncludedVariant extends Type {
+    type: string;
+    attributes: VariantAttributes;
+    relationships: Relationships;
+}
+
+interface OptionTypeAttributes {
+    name: string;
+    presentation: string;
+    position: number;
+    public_metadata: Record<string, unknown>;
+}
+
+export interface IncludedOptionType extends Type {
+    type: string;
+    attributes: OptionTypeAttributes;
+    relationships: Relationships;
+}
+
+interface TaxonAttributes {
+    name: string;
+    pretty_name: string;
+    permalink: string;
+    seo_title: string;
+    meta_title: string;
+    meta_description: string;
+    meta_keywords: string | null;
+    left: number;
+    right: number;
+    position: number;
+    depth: number;
+    updated_at: string;
+    public_metadata: Record<string, unknown>;
+    description: string;
+    has_products: boolean;
+    header_url: string | null;
+    is_root: boolean;
+    is_child: boolean;
+    is_leaf: boolean;
+    localized_slugs: Record<string, string>;
+}
+
+export interface IncludedTaxon extends Type {
+    type: string;
+    attributes: TaxonAttributes;
+    relationships: Relationships;
+}
+
+interface ImageStyle {
+    url: string;
+    size: string;
+    width: number;
+    height: number;
+}
+
+interface ImageAttributes {
+    transformed_url: string | null;
+    styles: ImageStyle[];
+    position: number;
+    alt: string | null;
+    original_url: string;
+}
+
+export interface IncludedImage extends Type {
+    type: string;
+    attributes: ImageAttributes;
+}
+
+export type IncludedItem = IncludedVariant | IncludedOptionType | IncludedTaxon | IncludedImage;
+
+export interface PriceInfo {
+    price: number;
+    comparePrice: number | null;
+    discount: number;
+}
+
+export interface ColorOption {
+  color: string;
+  colorPresentation: string;
+  variants: IncludedVariant[];
+}

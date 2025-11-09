@@ -3,7 +3,9 @@ import {
     PaginationMeta,
     Included,
     PaginationLinks,
-    PaginationMetaProduct_OptionType
+    PaginationMetaProduct_OptionType,
+    IncludedItem,
+    IncludedImage
 } from "../interface";
 
 // Account
@@ -516,6 +518,10 @@ interface Product_Attributes {
     display_price: string;
     compare_at_price: string | null;
     display_compare_at_price: string | null;
+    localized_slugs: {
+        de: string;
+        en: string
+    }
 }
 
 interface Product_Relationships {
@@ -542,13 +548,6 @@ interface Product_Relationships {
     };
 }
 
-interface Product {
-    id: string;
-    type: string;
-    attributes: Product_Attributes;
-    relationships: Product_Relationships
-}
-
 interface PaginationMetaProduct_ProductPropertiesr_Value {
     value: string;
     filter_param: string;
@@ -569,14 +568,25 @@ interface PaginationMetaProduct extends PaginationMeta {
     };
 }
 
+export interface Product {
+    id: string;
+    type: string;
+    attributes: Product_Attributes;
+    relationships: Product_Relationships;
+
+}
+
 export interface ResProduct_ListAll {
     data: Product[];
+    included: IncludedItem[];
+    // include: IncludedImage[]
     meta: PaginationMetaProduct;
     links: PaginationLinks
 }
 
 export interface ResProduct_Retrieve {
-    data: Product
+    data: Product;
+    included: IncludedItem[];
 }
 
 // Vendors
