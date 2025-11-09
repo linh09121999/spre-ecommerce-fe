@@ -18,7 +18,6 @@ const Home: React.FC = () => {
   const { resTaxons_List } = useState_ResTaxons()
   const { resProducts_NewList, setResProducts_NewList, setResProducts_SaleList, resProducts_SaleList } = useState_ResProducts()
   const { resPosts_List, setResPosts_List } = useState_ResPosts()
-  const { resStores } = useState_ResStores()
 
   const { setLoading } = useStateGeneral()
 
