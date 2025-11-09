@@ -1,5 +1,8 @@
 import { ColorOption, IncludedImage, IncludedItem, IncludedVariant, IncludedTaxon, PriceInfo } from '@/interface/interface';
 import { Product } from '@/interface/responseData/interfaceStorefront';
+import { IconButton } from '@mui/material';
+import type { SxProps, Theme } from "@mui/material/styles";
+import { keyframes } from "@mui/system";
 import React, { useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
@@ -9,7 +12,35 @@ interface ProductCardProps {
     included: IncludedItem[]
 }
 
+const fly1 = keyframes`
+  from { transform: translateY(0.1em); }
+  to   { transform: translateY(-0.1em); }
+`;
+
 const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => {
+    const sxButton: SxProps<Theme> = {
+        color: 'var(--color-green-500)',
+        borderRadius: '100%',
+        fontWeight: '600',
+        fontSize: 'var(--text-xl)',
+        position: "relative",
+        overflow: "hidden",
+        textTransform: "none",
+        "&:active": { transform: "scale(0.95)" },
+        "& span": {
+            display: 'block',
+            transition: 'all 0.3s ease-in-out'
+        },
+        "& svg": {
+            display: 'block',
+            transformOrigin: 'center center',
+            transition: 'transform 0.3s ease-in-out',
+        },
+        "&:hover .svgWrapper": {
+            animation: `${fly1} 0.6s ease-in-out infinite alternate`,
+            color: 'black'
+        },
+    }
     const [selectedVariants, setSelectedVariants] = useState<Record<string, string>>({});
     // Hàm tìm hình ảnh theo ID
     const findImageById = (imageId: string): IncludedImage | undefined => {
@@ -170,170 +201,147 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                 return (
                     <div
                         key={product.id}
-                        className="grid gap-5 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                        className="group bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 flex flex-col"
                     >
-                        <div>
-                            {/* Hình ảnh sản phẩm */}
-                            <div className="relative h-64 overflow-hidden">
-                                {imageUrl ? (
-                                    <img
-                                        src={imageUrl}
-                                        alt={product.attributes.name}
-                                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                                        onError={handleImageError}
-                                    />
-                                ) : (
-                                    <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                                        <span className="text-gray-400">No Image</span>
-                                    </div>
-                                )}
+                        {/* --- Product Image Section --- */}
+                        <div className="relative h-64 overflow-hidden">
+                            {imageUrl ? (
+                                <img
+                                    src={imageUrl}
+                                    alt={product.attributes.name}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    onError={handleImageError}
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
+                                    No Image
+                                </div>
+                            )}
 
-                                {/* Badge giảm giá */}
-                                {/* {priceInfo.discount > 0 && (
-                                    <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold">
-                                        -{priceInfo.discount}%
-                                    </div>
-                                )} */}
-
+                            {/* Badges */}
+                            <div className="absolute top-3 left-3 flex flex-wrap gap-2">
                                 {isNew && (
-                                    <div className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-md text-sm font-bold">
+                                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
                                         New
-                                    </div>
+                                    </span>
                                 )}
-
-                                {/* Badge giảm giá */}
                                 {priceInfo.discount > 0 && (
-                                    <div className={`absolute top-3 ${isNew ? 'left-20' : 'left-3'} bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold`}>
+                                    <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
                                         -{priceInfo.discount}%
-                                    </div>
-                                )}
-
-                                {/* Badge taxon (danh mục) */}
-                                {/* {primaryTaxonName && !isNew && (
-                                    <div className="absolute top-3 right-3 bg-blue-500 text-white px-2 py-1 rounded-md text-sm font-bold">
-                                        {primaryTaxonName}
-                                    </div>
-                                )} */}
-
-                                {/* Badge trạng thái */}
-                                {!product.attributes.in_stock && (
-                                    <div className="absolute top-3 right-3 bg-gray-600 text-white px-2 py-1 rounded-md text-sm font-bold">
-                                        Out of stock
-                                    </div>
+                                    </span>
                                 )}
                             </div>
 
-                            {/* Thông tin sản phẩm */}
-                            <div className="p-[20px_20px_0_20px] flex flex-col gap-3">
-                                {/* Tên sản phẩm */}
-                                <h3 className="font-semibold text-gray-800 line-clamp-2">
-                                    {product.attributes.name}
-                                </h3>
+                            {!product.attributes.in_stock && (
+                                <span className="absolute top-3 right-3 bg-gray-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
+                                    Out of stock
+                                </span>
+                            )}
+                        </div>
 
-                                {/* Giá sản phẩm */}
+                        {/* --- Product Info --- */}
+                        <div className="flex flex-col gap-3 p-5 flex-grow">
+                            {/* Tên sản phẩm */}
+                            <h3 className="font-semibold text-gray-900 text-base line-clamp-2 group-hover:text-green-600 transition-colors">
+                                {product.attributes.name}
+                            </h3>
+
+                            {/* Giá sản phẩm */}
+                            <div className='flex justify-between'>
                                 <div className="flex items-center gap-2">
                                     {priceInfo.discount > 0 ? (
                                         <>
-                                            <span className="text-xl font-bold text-blue-700">
+                                            <span className="text-lg font-bold text-green-700">
                                                 ${priceInfo.price}
                                             </span>
-                                            <span className="text-sm text-gray-500 line-through">
+                                            <span className="text-sm text-gray-400 line-through">
                                                 ${priceInfo.comparePrice}
                                             </span>
                                         </>
                                     ) : (
-                                        <span className="text-xl font-bold text-blue-700">
+                                        <span className="text-lg font-bold text-green-700">
                                             ${priceInfo.price}
                                         </span>
                                     )}
                                 </div>
-                                {/* {taxonNames.length > 0 && (
-                                    <div className="mb-2">
-                                        <div className="flex flex-wrap gap-1">
-                                            {taxonNames.map((taxonName, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs"
-                                                >
-                                                    {taxonName}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )} */}
-
-                                {/* Variants */}
-                                {/* Lựa chọn màu sắc */}
-                                {colorOptions.length > 0 && (
-                                    <div className="flex flex-wrap gap-2">
-                                        {colorOptions.map((colorOption) => (
-                                            <button
-                                                key={colorOption.color} aria-label='select color'
-                                                className="btn-color  flex items-center cursor-pointer border border-gray-300 p-[3px] rounded-full"
-
-                                                onClick={() => handleColorSelect(product.id, colorOption.color)}
-                                            >
-                                                <span className={`w-[16px] h-[16px] rounded-full shadow-sm`}
-                                                    style={{
-                                                        background: `${colorOption.colorPresentation}`
-                                                    }}
-                                                ></span>
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-
-                                {/* Hiển thị kích thước có sẵn cho màu đã chọn */}
-                                {selectedVariant && (
-                                    <div className="">
-                                        <div className="text-xs text-gray-600 mb-2">Size available:</div>
-                                        <div className="flex flex-wrap gap-1">
-                                            {colorOptions
-                                                .find(opt => opt.color === selectedColor)
-                                                ?.variants.map(variant => {
-                                                    const sizeOption = variant.attributes.options.find(opt => opt.name === 'size');
-                                                    return (
-                                                        <span
-                                                            key={variant.id}
-                                                            className={`
-                              px-2 py-1 rounded text-xs border
-                              ${variant.attributes.in_stock
-                                                                    ? 'bg-green-100 text-green-800 border-green-200'
-                                                                    : 'bg-gray-100 text-gray-500 border-gray-200 line-through'
-                                                                }
-                            `}
-                                                        >
-                                                            {sizeOption?.presentation}
-                                                            {!variant.attributes.in_stock && ' (Hết)'}
-                                                        </span>
-                                                    );
-                                                })}
-                                        </div>
-                                    </div>
-                                )}
+                                < IconButton
+                                    sx={sxButton} >
+                                    <span className='text-black text-2xl max-md:text-xl svgWrapper'>
+                                        <FaRegHeart className="mx-auto" />
+                                    </span>
+                                </IconButton>
                             </div>
+
+
+                            {/* Lựa chọn màu sắc */}
+                            {/* {colorOptions.length > 0 && (
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    {colorOptions.map((colorOption) => (
+                                        <button
+                                            key={colorOption.color}
+                                            aria-label="select color"
+                                            onClick={() => handleColorSelect(product.id, colorOption.color)}
+                                            className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 ${selectedColor === colorOption.color
+                                                    ? 'border-green-600'
+                                                    : 'border-gray-300'
+                                                }`}
+                                            style={{
+                                                background: colorOption.colorPresentation,
+                                            }}
+                                        ></button>
+                                    ))}
+                                </div>
+                            )} */}
+
+                            {/* Kích thước có sẵn */}
+                            {selectedVariant && (
+                                <div className="mt-3">
+                                    <p className="text-xs text-gray-600 mb-1">Size available:</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {colorOptions
+                                            .find((opt) => opt.color === selectedColor)
+                                            ?.variants.map((variant) => {
+                                                const sizeOption = variant.attributes.options.find(
+                                                    (opt) => opt.name === 'size'
+                                                );
+                                                return (
+                                                    <span
+                                                        key={variant.id}
+                                                        className={`px-2 py-1 text-xs rounded-md border ${variant.attributes.in_stock
+                                                            ? 'bg-green-50 text-green-700 border-green-200'
+                                                            : 'bg-gray-100 text-gray-400 border-gray-200 line-through'
+                                                            }`}
+                                                    >
+                                                        {sizeOption?.presentation}
+                                                    </span>
+                                                );
+                                            })}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        {/* Trạng thái và nút hành động */}
-                        <div className="flex items-center self-end gap-4 p-[0_20px_20px_20px]">
-                            <button className='border border-green-600 text-green-600 p-2 rounded-lg' aria-label='heart click'>
-                                <span className='text-xl max-md:text-xl svgWrapper'>
-                                    <FaRegHeart className="mx-auto" />
-                                </span>
+
+                        {/* --- Action Buttons --- */}
+                        {/* <div className="flex items-center gap-3 p-5 border-t border-gray-100">
+                            <button
+                                aria-label="Add to wishlist"
+                                className="p-2.5 border border-gray-300 rounded-xl text-gray-600 hover:border-green-500 hover:text-green-600 transition-colors"
+                            >
+                                <FaRegHeart className="text-lg" />
                             </button>
                             <button
-                                className={`px-4 flex justify-center gap-4 py-2 w-full rounded-lg font-medium transition-colors ${product.attributes.in_stock
-                                    ? 'bg-green-600 hover:bg-green-700 text-white'
-                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                    }`}
                                 disabled={!product.attributes.in_stock}
+                                className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium text-sm transition-all ${product.attributes.in_stock
+                                        ? 'bg-green-600 hover:bg-green-700 text-white shadow-sm'
+                                        : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                                    }`}
                             >
-                                <span className=' text-xl max-md:text-xl'>
-                                    <MdOutlineShoppingCart className="mx-auto" />
-                                </span>
-                                {product.attributes.in_stock ? 'Add cart' : 'Out of stock'}
+                                <MdOutlineShoppingCart className="text-lg" />
+                                {product.attributes.in_stock ? 'Add to Cart' : 'Out of stock'}
                             </button>
-                        </div>
+                        </div> */}
                     </div>
+
                 );
             })}
         </div>
