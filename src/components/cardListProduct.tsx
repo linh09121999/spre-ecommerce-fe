@@ -42,6 +42,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
         },
     }
     const [selectedVariants, setSelectedVariants] = useState<Record<string, string>>({});
+    const [hoveredColor, setHoveredColor] = useState<Record<string, string>>({});
     // Hàm tìm hình ảnh theo ID
     const findImageById = (imageId: string): IncludedImage | undefined => {
         return included.find((item): item is IncludedImage =>
@@ -75,10 +76,10 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
         return taxonNames;
     };
 
-    const getPrimaryTaxonName = (product: Product): string | null => {
-        const taxonNames = getProductTaxonNames(product);
-        return taxonNames.length > 0 ? taxonNames[0] : null;
-    };
+    // const getPrimaryTaxonName = (product: Product): string | null => {
+    //     const taxonNames = getProductTaxonNames(product);
+    //     return taxonNames.length > 0 ? taxonNames[0] : null;
+    // };
 
     // Hàm kiểm tra nếu sản phẩm có taxon "New Arrivals"
     const isNewArrival = (product: Product): boolean => {
@@ -134,7 +135,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
 
         variants.forEach(variant => {
             const colorOption = variant.attributes.options.find(opt => opt.name === 'color');
-            const sizeOption = variant.attributes.options.find(opt => opt.name === 'size');
+            // const sizeOption = variant.attributes.options.find(opt => opt.name === 'size');
 
             if (colorOption) {
                 const colorKey = colorOption.value;
@@ -161,17 +162,17 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
     };
 
     // Hàm lấy variant được chọn
-    const getSelectedVariant = (product: Product): IncludedVariant | undefined => {
-        const selectedColor = selectedVariants[product.id];
-        if (!selectedColor) return undefined;
+    // const getSelectedVariant = (product: Product): IncludedVariant | undefined => {
+    //     const selectedColor = selectedVariants[product.id];
+    //     if (!selectedColor) return undefined;
 
-        const variants = getVariants(product);
-        return variants.find(variant =>
-            variant.attributes.options.some(opt =>
-                opt.name === 'color' && opt.value === selectedColor
-            )
-        );
-    };
+    //     const variants = getVariants(product);
+    //     return variants.find(variant =>
+    //         variant.attributes.options.some(opt =>
+    //             opt.name === 'color' && opt.value === selectedColor
+    //         )
+    //     );
+    // };
 
     // Hàm xử lý lỗi hình ảnh
     const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -187,30 +188,84 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
         );
     }
 
+    const getImageByColor = (product: Product, color: string): string | null => {
+        const variants = getVariants(product);
+
+        // Tìm variant có màu này
+        const variantWithColor = variants.find(variant =>
+            variant.attributes.options.some(opt =>
+                opt.name === 'color' && opt.value === color
+            )
+        );
+
+        if (!variantWithColor) return null;
+
+        // Lấy hình ảnh từ variant
+        const imageRelationship = variantWithColor.relationships.images.data[0];
+        if (!imageRelationship) return null;
+
+        const image = findImageById(imageRelationship.id);
+        if (!image) return null;
+
+        // Ưu tiên ảnh medium hoặc small
+        const mediumStyle = image.attributes.styles.find(style => style.size === '350x468>');
+        const smallStyle = image.attributes.styles.find(style => style.size === '240x240>');
+
+        return mediumStyle?.url || smallStyle?.url || image.attributes.original_url;
+    };
+
+    // Hàm xử lý hover vào color option
+    const handleColorHover = (productId: string, color: string) => {
+        setHoveredColor(prev => ({
+            ...prev,
+            [productId]: color
+        }));
+    };
+
+    // Hàm xử lý khi rời khỏi color option
+    const handleColorLeave = (productId: string) => {
+        setHoveredColor(prev => ({
+            ...prev,
+            [productId]: ''
+        }));
+    };
+
+    // Hàm lấy hình ảnh hiển thị (ưu tiên hình ảnh theo màu đang hover, fallback về hình ảnh chính)
+    const getDisplayImage = (product: Product): string | null => {
+        const productId = product.id;
+        const hoveredColorForProduct = hoveredColor[productId];
+
+        if (hoveredColorForProduct) {
+            const colorImage = getImageByColor(product, hoveredColorForProduct);
+            if (colorImage) return colorImage;
+        }
+
+        return getPrimaryImageUrl(product);
+    };
+
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {products.map((product) => {
-                const imageUrl = getPrimaryImageUrl(product);
                 const priceInfo = getPriceInfo(product);
                 const colorOptions = getColorOptions(product);
-                const selectedVariant = getSelectedVariant(product);
                 const selectedColor = selectedVariants[product.id];
-                const taxonNames = getProductTaxonNames(product);
-                const primaryTaxonName = getPrimaryTaxonName(product);
                 const isNew = isNewArrival(product);
+                const displayImage = getDisplayImage(product);
                 return (
                     <div
                         key={product.id}
-                        className="group bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 flex flex-col"
+                        className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col overflow-hidden"
                     >
-                        {/* --- Product Image Section --- */}
-                        <div className="relative h-64 overflow-hidden">
-                            {imageUrl ? (
+                        {/* --- Product Image --- */}
+                        <div className="relative h-71 overflow-hidden">
+                            {/* {imageUrl ? ( */}
+                            {displayImage ? (
                                 <img
-                                    src={imageUrl}
+                                    src={displayImage}
                                     alt={product.attributes.name}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                     onError={handleImageError}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                             ) : (
                                 <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
@@ -218,36 +273,76 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                                 </div>
                             )}
 
+                            {/* Overlay gradient */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300"></div>
                             {/* Badges */}
-                            <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                            <div className="absolute -top-[3px] -left-[3px]  w-[85px] h-[85px]">
                                 {isNew && (
-                                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
+                                    <span className=" text-xs font-semibold shadow text-center -rotate-45 relative py-[7px] -left-[30px] top-[15px] w-[120px] 
+        bg-gradient-to-b from-green-500 to-green-800 text-white
+        shadow-[0_0_3px_rgba(0,0,0,0.3)] block">
                                         New
                                     </span>
                                 )}
                                 {priceInfo.discount > 0 && (
-                                    <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
+                                    <span className="text-xs font-semibold shadow text-center -rotate-45 relative py-[7px] -left-[30px] top-[15px] w-[120px] 
+        bg-gradient-to-b from-red-500 to-red-800 text-white
+        shadow-[0_0_3px_rgba(0,0,0,0.3)] block">
                                         -{priceInfo.discount}%
                                     </span>
                                 )}
                             </div>
 
+                            {/* Out of stock */}
                             {!product.attributes.in_stock && (
-                                <span className="absolute top-3 right-3 bg-gray-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
+                                <span className="absolute top-3 right-3 bg-gray-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow z-10">
                                     Out of stock
                                 </span>
                             )}
+
+                            {/* Hover favorite button */}
+                            <button aria-label='click heart'
+                                className="absolute bottom-3 right-3 bg-white/90 hover:bg-green-500 text-gray-800 hover:text-white rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300"
+                            >
+                                <FaRegHeart className="text-lg" />
+                            </button>
                         </div>
 
                         {/* --- Product Info --- */}
-                        <div className="flex flex-col gap-3 p-5 flex-grow">
+                        <div className="flex flex-col gap-3 p-5 flex-grow ">
                             {/* Tên sản phẩm */}
                             <h3 className="font-semibold text-gray-900 text-base line-clamp-2 group-hover:text-green-600 transition-colors">
                                 {product.attributes.name}
                             </h3>
 
+                            {colorOptions.length > 0 && (
+                                <div className="flex flex-wrap gap-2">
+                                    {colorOptions.map((colorOption) => (
+                                        <label
+                                            key={colorOption.color}
+                                            className="flex items-center cursor-pointer group relative"
+                                            onMouseEnter={() => handleColorHover(product.id, colorOption.color)}
+                                            onMouseLeave={() => handleColorLeave(product.id)}
+                                        >
+                                            <button
+                                                key={colorOption.color}
+                                                aria-label="select color"
+                                                onClick={() => handleColorSelect(product.id, colorOption.color)}
+                                                className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 ${selectedColor === colorOption.color
+                                                    ? 'border-green-600'
+                                                    : 'border-gray-300'
+                                                    }`}
+                                                style={{
+                                                    background: colorOption.colorPresentation,
+                                                }}
+                                            ></button>
+                                        </label>
+                                    ))}
+                                </div>
+                            )}
+
                             {/* Giá sản phẩm */}
-                            <div className='flex justify-between'>
+                            <div className="flex justify-between items-center mt-auto">
                                 <div className="flex items-center gap-2">
                                     {priceInfo.discount > 0 ? (
                                         <>
@@ -264,82 +359,8 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                                         </span>
                                     )}
                                 </div>
-                                < IconButton
-                                    sx={sxButton} >
-                                    <span className='text-black text-2xl max-md:text-xl svgWrapper'>
-                                        <FaRegHeart className="mx-auto" />
-                                    </span>
-                                </IconButton>
                             </div>
-
-
-                            {/* Lựa chọn màu sắc */}
-                            {/* {colorOptions.length > 0 && (
-                                <div className="flex flex-wrap gap-2 mt-2">
-                                    {colorOptions.map((colorOption) => (
-                                        <button
-                                            key={colorOption.color}
-                                            aria-label="select color"
-                                            onClick={() => handleColorSelect(product.id, colorOption.color)}
-                                            className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 ${selectedColor === colorOption.color
-                                                    ? 'border-green-600'
-                                                    : 'border-gray-300'
-                                                }`}
-                                            style={{
-                                                background: colorOption.colorPresentation,
-                                            }}
-                                        ></button>
-                                    ))}
-                                </div>
-                            )} */}
-
-                            {/* Kích thước có sẵn */}
-                            {selectedVariant && (
-                                <div className="mt-3">
-                                    <p className="text-xs text-gray-600 mb-1">Size available:</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {colorOptions
-                                            .find((opt) => opt.color === selectedColor)
-                                            ?.variants.map((variant) => {
-                                                const sizeOption = variant.attributes.options.find(
-                                                    (opt) => opt.name === 'size'
-                                                );
-                                                return (
-                                                    <span
-                                                        key={variant.id}
-                                                        className={`px-2 py-1 text-xs rounded-md border ${variant.attributes.in_stock
-                                                            ? 'bg-green-50 text-green-700 border-green-200'
-                                                            : 'bg-gray-100 text-gray-400 border-gray-200 line-through'
-                                                            }`}
-                                                    >
-                                                        {sizeOption?.presentation}
-                                                    </span>
-                                                );
-                                            })}
-                                    </div>
-                                </div>
-                            )}
                         </div>
-
-                        {/* --- Action Buttons --- */}
-                        {/* <div className="flex items-center gap-3 p-5 border-t border-gray-100">
-                            <button
-                                aria-label="Add to wishlist"
-                                className="p-2.5 border border-gray-300 rounded-xl text-gray-600 hover:border-green-500 hover:text-green-600 transition-colors"
-                            >
-                                <FaRegHeart className="text-lg" />
-                            </button>
-                            <button
-                                disabled={!product.attributes.in_stock}
-                                className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium text-sm transition-all ${product.attributes.in_stock
-                                        ? 'bg-green-600 hover:bg-green-700 text-white shadow-sm'
-                                        : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                                    }`}
-                            >
-                                <MdOutlineShoppingCart className="text-lg" />
-                                {product.attributes.in_stock ? 'Add to Cart' : 'Out of stock'}
-                            </button>
-                        </div> */}
                     </div>
 
                 );

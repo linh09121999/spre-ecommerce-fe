@@ -4,17 +4,20 @@ import { useRouter } from "next/navigation";
 import { useStateGeneral } from '@/useState/useStateGeneral';
 
 import React, { useState, useEffect, useMemo } from "react";
-import { useState_ResProducts, useState_ResTaxons } from "@/useState/useStatestorefront";
+import { useState_ResPosts, useState_ResProducts, useState_ResTaxons } from "@/useState/useStatestorefront";
 import { toast, ToastContainer } from "react-toastify";
 import { ListAllProducts } from "@/service/storefront/products";
 import { IncludedImage } from "@/interface/interface";
 import ListProductCard from "@/components/cardListProduct";
 import { MdNavigateNext } from "react-icons/md";
+import { FiHeart, FiLayers, FiShoppingBag, FiStar, FiTag } from "react-icons/fi";
+import { ListAllPost } from "@/service/storefront/posts";
 
 const Home: React.FC = () => {
   const router = useRouter();
   const { resTaxons_List } = useState_ResTaxons()
   const { resProducts_NewList, setResProducts_NewList, setResProducts_SaleList, resProducts_SaleList } = useState_ResProducts()
+  const { resPosts_List, setResPosts_List } = useState_ResPosts()
 
   const { setLoading } = useStateGeneral()
 
@@ -37,45 +40,71 @@ const Home: React.FC = () => {
     }
   }
 
+  const getApiPosts = async () => {
+    try {
+      setLoading(true);
+      const res = await ListAllPost()
+      setResPosts_List(res.data)
+    } catch (error: any) {
+      toast.error(`Stores: ` + error.response.error)
+    }
+    finally {
+      setLoading(false); // 👈 tắt loading sau khi có dữ liệu
+    }
+  }
+
   useEffect(() => {
     getApiProducts("173", 1, 5, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
     getApiProducts("174", 1, 5, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
-
+    getApiPosts()
   }, [])
 
   return (
     <>
       <div className="max-w-[1535px] mx-auto flex flex-col gap-10">
         <div className="flex justify-center gap-5">
-          <button
-            className="h-32 w-32 rounded-full border border-gray-400 border-dashed group"
-          >
-            <div className="uppercase text-sm bg-gray-200 h-28 w-28 rounded-full m-auto justify-center content-center">Categories</div>
-          </button>
-          <button
-            className="h-32 w-32 rounded-full border border-gray-400 border-dashed group"
-          >
-            <div className="uppercase text-sm bg-gray-200 h-28 w-28 rounded-full m-auto justify-center content-center">Brands</div>
-          </button><button
-            className="h-32 w-32 rounded-full border border-gray-400 border-dashed group"
-          >
-            <div className="uppercase text-sm bg-gray-200 h-28 w-28 rounded-full m-auto justify-center content-center">Collections</div>
-          </button><button
-            className="h-32 w-32 rounded-full border border-gray-400 border-dashed group"
-          >
-            <div className="uppercase text-sm bg-gray-200 h-28 w-28 rounded-full m-auto justify-center content-center">Wellness</div>
-          </button><button
-            className="h-32 w-32 rounded-full border border-gray-400 border-dashed group"
-          >
-            <div className="uppercase text-sm bg-gray-200 h-28 w-28 rounded-full m-auto justify-center content-center">Beauty</div>
-          </button>
+          {[
+            { title: "Categories", icon: <FiTag size={24} /> },
+            { title: "Brands", icon: <FiShoppingBag size={24} /> },
+            { title: "Collections", icon: <FiLayers size={24} /> },
+            { title: "Wellness", icon: <FiHeart size={24} /> },
+            { title: "Beauty", icon: <FiStar size={24} /> },
+          ].map(({ title, icon }) => (
+            <button
+              key={title}
+              className="h-36 w-36 rounded-full border-2 border-gray-300 border-dashed group relative transition-all duration-300 hover:border-none hover:shadow-xl hover:scale-105"
+            >
+              <div className="flex flex-col items-center justify-center h-32 w-32 m-auto rounded-full bg-gradient-to-br from-gray-300 to-white group-hover:from-green-300 group-hover:to-green-50 transition-all duration-300 shadow-sm">
+                <div className="text-green-600 mb-2 text-3xl group-hover:text-green-700 transition-all duration-300">
+                  {icon}
+                </div>
+                <span className="uppercase text-sm font-semibold text-gray-700 group-hover:text-green-700 transition-all duration-300 text-center">
+                  {title}
+                </span>
+              </div>
+
+              {/* Vòng tròn xoay nhẹ khi hover */}
+              <span className="absolute inset-0 rounded-full border-2 border-dashed border-green-300 opacity-0 group-hover:opacity-100 animate-spin-slow"></span>
+            </button>
+          ))}
         </div>
         <div className="grid grid-cols-2 gap-5">
           {resTaxons_List?.data.map((res, id) => (
             <>
               {(res.attributes.name === 'Men' || res.attributes.name === 'Women') &&
-                <div className="relative group">
-                  <img className="w-full rounded-xl shadow-lg" src={res.attributes.header_url} alt={res.attributes.name} />
+                // <div className="relative group">
+                //   <img className="w-full rounded-xl shadow-lg" src={res.attributes.header_url} alt={res.attributes.name} />
+                // </div>
+                <div key={res.id} className="relative group overflow-hidden rounded-2xl shadow-lg">
+                  <img
+                    src={res.attributes.header_url}
+                    alt={res.attributes.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
+                  <h2 className="absolute bottom-5 left-5 text-white text-2xl font-semibold uppercase tracking-wide">
+                    {res.attributes.name}
+                  </h2>
                 </div>
               }
             </>
@@ -102,6 +131,58 @@ const Home: React.FC = () => {
             >View all <span className=""><MdNavigateNext size={24} /></span></button>
           </div>
           <ListProductCard products={resProducts_NewList?.data ?? []} included={resProducts_NewList?.included ?? []} />
+        </div>
+        <div className='flex-grow gap-5 flex flex-col '>
+          <div className="flex justify-between css-next items-center w-full transition-all duration-300 ease">
+            <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">Latest Posts</h3>
+            <button className="flex gap-1 items-center  tracking-wide"
+              onClick={() => {
+                // router.push('/new-arrivals')
+              }}
+            >View all <span className=""><MdNavigateNext size={24} /></span></button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {resPosts_List?.data.slice(0,5).map((res, id) => (
+              <>
+                {res.attributes.content &&
+                  <div className="relative group overflow-hidden rounded-2xl shadow-lg">
+                    <img src={res.attributes.image_url!} alt={res.attributes.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-b-2xl">
+                      {res.attributes.post_category_title && (
+                        <span className="text-sm text-gray-300">{res.attributes.post_category_title}</span>
+                      )}
+                      <h3 className="text-xl text-white font-semibold mt-1">{res.attributes.title}</h3>
+                      <p className="text-white/70 text-sm mt-1">
+                        {res.attributes.author_name} | Published: {new Date(res.attributes.published_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                }
+              </>
+            ))}
+            <div className="grid gap-5">
+              <h3 className="text-lg uppercase font-semibold  bg-clip-text tracking-wide">MOST VIEWED ARTICLES</h3>
+              {resPosts_List?.data.slice(0,5).map((res, id) => (
+                <>
+                  {!res.attributes.content &&
+                    <div className=" flex gap-2  ">
+                      <div className="relative w-1/3 group overflow-hidden rounded-2xl">
+                        <img src={res.attributes.image_url!} alt={res.attributes.title} className="w-full  h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <div className="absolute  inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
+                      </div>
+                      <div className="p-4 ">
+                        <span className="text-sm text-gray-500">{res.attributes.post_category_title}</span>
+                        <h3 className="text-xl  font-semibold mt-1 mb-2">{res.attributes.title}</h3>
+                        <p className=" text-sm mb-3">{res.attributes.author_name}</p>
+                        <p className=" text-sm mb-3">Published: {res.attributes.published_at}</p>
+                      </div>
+                    </div>
+                  }
+                </>
+              ))}
+            </div>
+          </div>
         </div>
         {/* <p>{resTaxons_List?.data.map((data) => (
           <p>{data.id} : {data.attributes.permalink}</p>
