@@ -333,9 +333,10 @@ const HeaderWeb: React.FC = () => {
                         src="../../LogoFullBlack.webp" />
                     <Nav
                         classNameUl='flex list-none gap-7 uppercase text-lg'
-                        classNameA={` size-[24px] relative cursor-pointer transiton-all duration-300 mo-underline after:absolute after:bottom-[-5px] after:left-0 after:h-[2px] after:bg-green-400 after:transistion-all after:duration-300 after:w-full after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-green-400   menu-item header--nav-link`}
-                        classNameAActive='text-green-400 after:scale-x-100'
-                        classNameAHover='text-green-400 after:scale-x-100'
+                        classNameA={` size-[24px] relative cursor-pointer transiton-all duration-300 mo-underline after:absolute after:bottom-[-5px] after:left-0 after:h-[2px]  after:transistion-all after:duration-300 after:w-full after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100  menu-item header--nav-link`}
+                        classNameAActive='text-green-500 after:scale-x-100 after:bg-green-500'
+                        classNameAHover=' after:scale-x-100 after:bg-gray-200'
+                        classNameADeactive='text-gray-500'
                     />
                     <div className='flex justify-between gap-4 items-center'>
                         {/* search */}

@@ -7,9 +7,10 @@ import { useRouter } from "next/navigation";
 type navProps = {
     classNameUl?: string;
     classNameA?: string;
-    classNameAActive?: string;
+    classNameAActive: string;
     classNameTitle?: string;
-    classNameAHover?: string
+    classNameAHover?: string;
+    classNameADeactive: string;
 }
 
 const Nav: React.FC<navProps> = ({
@@ -17,7 +18,8 @@ const Nav: React.FC<navProps> = ({
     classNameA,
     classNameAActive,
     classNameTitle,
-    classNameAHover
+    classNameAHover,
+    classNameADeactive
 }) => {
     const { pages, selectNav, setSelectNav, setHoveredNav, hoveredNav } = useStateGeneral();
     const router = useRouter();
@@ -32,7 +34,7 @@ const Nav: React.FC<navProps> = ({
                             router.push(page.path)
                         }}
                         onMouseEnter={() => setHoveredNav(index)}
-                        className={`${classNameA} ${selectNav === index ? `${classNameAActive}` : "text-black "} ${hoveredNav === index ? `${classNameAHover}` : ''}`}
+                        className={`${classNameA} ${selectNav === index ? `${classNameAActive}` : `${classNameADeactive}`} ${hoveredNav === index ? `${classNameAHover}` : ''}`}
                     >
                         <div className={classNameTitle}>{page.title}</div>
                     </a>
