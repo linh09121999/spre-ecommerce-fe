@@ -16,7 +16,11 @@ import { ListAllPost } from "@/service/storefront/posts";
 const Home: React.FC = () => {
   const router = useRouter();
   const { resTaxons_List } = useState_ResTaxons()
-  const { resProducts_NewList, setResProducts_NewList, setResProducts_SaleList, resProducts_SaleList } = useState_ResProducts()
+  const {
+    resDataIcludes_NewList, resDataIcludes_SaleList,
+    resDataProducts_NewList, resDataProducts_SaleList,
+    setResDataIcludes_NewList, setResDataIcludes_SaleList, setResDataProduct_NewList, setResDataProduct_SaleList
+  } = useState_ResProducts()
   const { resPosts_List, setResPosts_List } = useState_ResPosts()
 
   const { setLoading } = useStateGeneral()
@@ -27,10 +31,12 @@ const Home: React.FC = () => {
       const res = await ListAllProducts({ filter_taxons, page, per_page, include })
       if (filter_taxons === "173") {
         console.log("173", res.data)
-        setResProducts_SaleList(res.data)
+        setResDataIcludes_SaleList(res.data.included)
+        setResDataProduct_SaleList(res.data.data)
       } else if (filter_taxons === "174") {
         console.log("174", res.data)
-        setResProducts_NewList(res.data)
+        setResDataIcludes_NewList(res.data.included)
+        setResDataProduct_NewList(res.data.data)
       }
     } catch (error: any) {
       toast.error(`Stores: ` + error.response.error)
@@ -92,9 +98,6 @@ const Home: React.FC = () => {
           {resTaxons_List?.data.map((res, id) => (
             <>
               {(res.attributes.name === 'Men' || res.attributes.name === 'Women') &&
-                // <div className="relative group">
-                //   <img className="w-full rounded-xl shadow-lg" src={res.attributes.header_url} alt={res.attributes.name} />
-                // </div>
                 <div key={res.id} className="relative group overflow-hidden rounded-2xl shadow-lg">
                   <img
                     src={res.attributes.header_url}
@@ -120,7 +123,7 @@ const Home: React.FC = () => {
             >View all <span className=""><MdNavigateNext size={24} /></span></button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            <ListProductCard products={resProducts_SaleList?.data ?? []} included={resProducts_SaleList?.included ?? []} />
+            <ListProductCard products={resDataProducts_SaleList ?? []} included={resDataIcludes_SaleList ?? []} />
           </div>
         </div>
         <div className='flex-grow gap-5 flex flex-col '>
@@ -133,7 +136,7 @@ const Home: React.FC = () => {
             >View all <span className=""><MdNavigateNext size={24} /></span></button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            <ListProductCard products={resProducts_NewList?.data ?? []} included={resProducts_NewList?.included ?? []} />
+            <ListProductCard products={resDataProducts_NewList ?? []} included={resDataIcludes_NewList ?? []} />
           </div>
         </div>
         <div className='flex-grow gap-5 flex flex-col '>
@@ -188,9 +191,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-        {/* <p>{resTaxons_List?.data.map((data) => (
-          <p>{data.id} : {data.attributes.permalink}</p>
-        ))}</p> */}
       </div>
       <ToastContainer position="top-right" autoClose={3000} />
 

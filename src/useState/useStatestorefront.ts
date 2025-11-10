@@ -21,8 +21,10 @@ import {
     ResWishlistsWishedItems, ResWishlists_ListAll,
     ResCartOther,
     ResCheckoutPayments_ListAll,
-    ResCheckoutPayments
+    ResCheckoutPayments,
+    Product
 } from '@/interface/responseData/interfaceStorefront'
+import { IncludedItem } from '@/interface/interface';
 
 // Account
 interface State_ResAccount {
@@ -176,29 +178,88 @@ export const useState_ResAdyen = create<State_ResAdyen>((set) => ({
 
 // Products
 interface State_ResProducts {
-    resProducts_List: ResProduct_ListAll | undefined;
-    setResProducts_List: (data: ResProduct_ListAll) => void;
+    // resProducts_List: ResProduct_ListAll | undefined;
+    // setResProducts_List: (data: ResProduct_ListAll) => void;
+    // resProduct_Retrieve: ResProduct_Retrieve | undefined;
+    // setResProduct_Retrieve: (data: ResProduct_Retrieve) => void;
+
+    // resProducts_SaleList: ResProduct_ListAll | undefined;
+    // setResProducts_SaleList: (data: ResProduct_ListAll) => void;
+
+    // resProducts_NewList: ResProduct_ListAll | undefined;
+    // setResProducts_NewList: (data: ResProduct_ListAll) => void;
+
+    resDataProducts_List: Product[]
+    setResDataProduct_List: React.Dispatch<React.SetStateAction<Product[]>>
+    resDataIcludes_List: IncludedItem[]
+    setResDataIcludes_List: React.Dispatch<React.SetStateAction<IncludedItem[]>>
+
     resProduct_Retrieve: ResProduct_Retrieve | undefined;
     setResProduct_Retrieve: (data: ResProduct_Retrieve) => void;
-    // sale
-    resProducts_SaleList: ResProduct_ListAll | undefined;
-    setResProducts_SaleList: (data: ResProduct_ListAll) => void;
-    // new arrivals
-    resProducts_NewList: ResProduct_ListAll | undefined;
-    setResProducts_NewList: (data: ResProduct_ListAll) => void;
+
+    resDataProducts_SaleList: Product[]
+    setResDataProduct_SaleList: React.Dispatch<React.SetStateAction<Product[]>>
+    resDataIcludes_SaleList: IncludedItem[]
+    setResDataIcludes_SaleList: React.Dispatch<React.SetStateAction<IncludedItem[]>>
+
+    resDataProducts_NewList: Product[]
+    setResDataProduct_NewList: React.Dispatch<React.SetStateAction<Product[]>>
+    resDataIcludes_NewList: IncludedItem[]
+    setResDataIcludes_NewList: React.Dispatch<React.SetStateAction<IncludedItem[]>>
 }
 
 export const useState_ResProducts = create<State_ResProducts>((set) => ({
-    resProducts_List: undefined,
-    setResProducts_List: (data) => set({ resProducts_List: data }),
+    // resProducts_List: undefined,
+    // setResProducts_List: (data) => set({ resProducts_List: data }),
+    // resProduct_Retrieve: undefined,
+    // setResProduct_Retrieve: (data) => set({ resProduct_Retrieve: data }),
+
+    // resProducts_SaleList: undefined,
+    // setResProducts_SaleList: (data) => set({ resProducts_SaleList: data }),
+
+    // resProducts_NewList: undefined,
+    // setResProducts_NewList: (data) => set({ resProducts_NewList: data }),
+    resDataProducts_List: [],
+    setResDataProduct_List: (value) =>
+        set((state) => ({
+            resDataProducts_List:
+                typeof value === "function" ? value(state.resDataProducts_List) : value,
+        })),
+    resDataIcludes_List: [],
+    setResDataIcludes_List: (value) =>
+        set((state) => ({
+            resDataIcludes_List:
+                typeof value === "function" ? value(state.resDataIcludes_List) : value,
+        })),
+
     resProduct_Retrieve: undefined,
     setResProduct_Retrieve: (data) => set({ resProduct_Retrieve: data }),
-    // sale
-    resProducts_SaleList: undefined,
-    setResProducts_SaleList: (data) => set({ resProducts_SaleList: data }),
-    // new
-    resProducts_NewList: undefined,
-    setResProducts_NewList: (data) => set({ resProducts_NewList: data }),
+
+    resDataProducts_SaleList: [],
+    setResDataProduct_SaleList: (value) =>
+        set((state) => ({
+            resDataProducts_SaleList:
+                typeof value === "function" ? value(state.resDataProducts_SaleList) : value,
+        })),
+    resDataIcludes_SaleList: [],
+    setResDataIcludes_SaleList: (value) =>
+        set((state) => ({
+            resDataIcludes_SaleList:
+                typeof value === "function" ? value(state.resDataIcludes_SaleList) : value,
+        })),
+
+    resDataProducts_NewList: [],
+    setResDataProduct_NewList: (value) =>
+        set((state) => ({
+            resDataProducts_NewList:
+                typeof value === "function" ? value(state.resDataProducts_NewList) : value,
+        })),
+    resDataIcludes_NewList: [],
+    setResDataIcludes_NewList: (value) =>
+        set((state) => ({
+            resDataIcludes_NewList:
+                typeof value === "function" ? value(state.resDataIcludes_NewList) : value,
+        })),
 }))
 
 // Vendors

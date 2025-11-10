@@ -144,10 +144,10 @@ const Fashion: React.FC = () => {
     }
 
     const router = useRouter();
-    const { resProducts_List, setResProducts_List } = useState_ResProducts()
+    const { resDataIcludes_List, resDataProducts_List, setResDataIcludes_List, setResDataProduct_List } = useState_ResProducts()
     const { resTaxons_Retrieve, setResTaxons_Retrieve } = useState_ResTaxons()
 
-    const { setLoading, setSelectNav } = useStateGeneral()
+    const { setLoading, setSelectNav, prePage } = useStateGeneral()
 
     const getApiTaxonsFashion = async (taxon_permalink: string) => {
         try {
@@ -161,26 +161,57 @@ const Fashion: React.FC = () => {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
         }
     }
-
+    const [loadingReadMore, setLoadingReadMore] = useState<boolean>(false)
+    const [currentPage, setCurrentPage] = useState<number>(0)
+    const [totalData, setTatalData] = useState<number>(0)
 
     const getApiProducts = async (filter_taxons: string, page: number, per_page: number, include: string) => {
         try {
-            setLoading(true);
+            { page === 1 ? setLoading(true) : setLoadingReadMore(true) }
+            setLoadingReadMore(true)
             const res = await ListAllProducts({ filter_taxons, page, per_page, include })
-            setResProducts_List(res.data)
+            // setResProducts_List(res.data)
+            setTatalData(res.data.meta.total_count)
+            if (page === 1) {
+                setResDataProduct_List(res.data.data);
+                setResDataIcludes_List(res.data.included)
+            } else {
+                setResDataProduct_List((prev) => [...prev, ...res.data.data]);
+                setResDataIcludes_List((prev) => [...prev, ...res.data.included])
+            }
+            setCurrentPage(page); // cập nhật page hiện tại sau khi load xong
         } catch (error: any) {
             toast.error(`Stores: ` + error.response.error)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
+            setLoadingReadMore(false)
         }
     }
 
     useEffect(() => {
         setSelectNav(1)
         getApiTaxonsFashion("categories/fashion")
-        getApiProducts("175", 1, 12, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
+        getApiProducts("175", 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
     }, [])
+
+    // Infinite scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            if (loadingReadMore) return;
+
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+                const totalPages = Math.ceil(totalData / prePage);
+                if (currentPage < totalPages) {
+                    getApiProducts("175", currentPage + 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
+                }
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [loadingReadMore, currentPage, totalData, getApiProducts]);
+
 
     const Category = (name: string) => {
         if (!name) return undefined
@@ -254,8 +285,8 @@ const Fashion: React.FC = () => {
 
 
     const filteredReleases = useMemo(() => {
-        if (!Array.isArray(resProducts_List?.data)) return [];
-        const sorted = [...resProducts_List.data].sort((a, b) => {
+        if (!Array.isArray(resDataProducts_List)) return [];
+        const sorted = [...resDataProducts_List].sort((a, b) => {
             switch (sortOption) {
                 case "newest":
                     return (
@@ -281,7 +312,7 @@ const Fashion: React.FC = () => {
         });
 
         return sorted;
-    }, [resProducts_List, sortOption])
+    }, [resDataProducts_List, sortOption])
 
     return (
         <>
@@ -317,13 +348,13 @@ const Fashion: React.FC = () => {
                     <aside className="grid h-fit max-lg:hidden lg:sticky lg:top-[105px] gap-4 ">
                     </aside>
                     <section className="flex flex-col gap-4 md:gap-6">
-                        <div className="flex justify-between">
-                            <div className="flex items-center gap-3">
-                                <h3 className="text-2xl uppercase tracking-wide ">
+                        <div className="items-center pb-2 border-b-[2px] border-b-gray-200 flex justify-between ">
+                            <div className="flex items-end gap-3">
+                                <h3 className="text-xl uppercase tracking-wide ">
                                     Result
                                 </h3>
-                                <span className="text-2xl uppercase">
-                                    <strong className="text-3xl text-green-600">{resProducts_List?.meta.count}</strong>/{resProducts_List?.meta.total_count}
+                                <span className="text-xl uppercase flex gap-1 items-center">
+                                    <strong className="text-3xl text-green-600">{((currentPage + 1) * prePage)}</strong>/{totalData}
                                 </span>
                             </div>
                             <button
@@ -377,8 +408,10 @@ const Fashion: React.FC = () => {
                             </Menu>
                         </div>
                         <div className="grid grid-cols-1  xl:grid-cols-4 gap-6">
-                            <ListProductCard products={filteredReleases ?? []} included={resProducts_List?.included ?? []} />
+                            <ListProductCard products={filteredReleases ?? []} included={resDataIcludes_List ?? []} />
                         </div>
+                        {loadingReadMore && <p className="text-center py-4 text-gray-500">loading more...</p>}
+
                     </section>
 
                 </div>

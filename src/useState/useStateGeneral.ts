@@ -23,6 +23,7 @@ interface State {
     setIsCurrency: (isCheck: string) => void;
     hoveredNav: number | null;
     setHoveredNav: (hover: number | null) => void;
+    prePage: number
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -70,5 +71,6 @@ export const useStateGeneral = create<State>((set) => ({
     isCurrency: 'USD',
     setIsCurrency: (isCheck) => set({ isCurrency: isCheck }),
     hoveredNav: null,
-    setHoveredNav: (hover) => set({ hoveredNav: hover })
+    setHoveredNav: (hover) => set({ hoveredNav: hover }),
+    prePage: 12
 }))
