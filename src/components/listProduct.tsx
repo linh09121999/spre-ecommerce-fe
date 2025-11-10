@@ -303,23 +303,28 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                 :
                 <div className="grid lg:grid-cols-[300px_1fr] gap-5">
                     <aside className="grid h-fit max-lg:hidden lg:sticky lg:top-[105px] gap-4 ">
+                        <div className="items-center pb-2 border-b-[2px] border-b-gray-200">
+                            <h3></h3>
+                        </div>
                     </aside>
                     <section className="flex flex-col gap-4 md:gap-6">
                         <div className="items-center pb-2 border-b-[2px] border-b-gray-200 flex justify-between ">
-                            <div className="flex items-end gap-3">
-                                <h3 className="text-md tracking-wide text-black/70">
-                                    Result
+                            <div>
+                                <h3 className="text-xl uppercase tracking-wide text-black/70">
+                                    PRODUCTS
                                 </h3>
-                                <span className="text-lg uppercase flex gap-1 items-end">
-                                    <strong className="text-3xl text-green-600">{
-                                        products.length === 0 ?
+                                <p className="text-sm text-black/50 flex gap-1 items-end">Show
+                                    <span className="text-lg text-green-600 font-bold">
+                                        {products.length === 0 ?
                                             0 :
                                             (currentPage * prePage) > totalDatas
                                                 ?
                                                 totalDatas
                                                 : (currentPage * prePage)
-                                    }</strong>/{totalDatas}
-                                </span>
+                                        }
+                                    </span> items for {totalDatas}
+                                </p>
+
                             </div>
                             <button
                                 className={`
