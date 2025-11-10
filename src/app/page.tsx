@@ -72,7 +72,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <div className="max-w-[1535px] mx-auto flex flex-col gap-10">
+      <div className="max-w-[1535px] mx-auto flex flex-col gap-15">
         <div className="flex justify-center gap-5">
           {[
             { title: "Categories", icon: <FiTag size={24} /> },
@@ -103,7 +103,7 @@ const Home: React.FC = () => {
           {resTaxons_List?.data.map((res, id) => (
             <>
               {(res.attributes.name === 'Men' || res.attributes.name === 'Women') &&
-                <div key={res.id} className="relative group overflow-hidden rounded-2xl shadow-lg">
+                <div key={res.id} className="relative group overflow-hidden rounded-md shadow-lg">
                   <img
                     src={res.attributes.header_url}
                     alt={res.attributes.name}
@@ -119,51 +119,50 @@ const Home: React.FC = () => {
           ))}
         </div>
         <div className='flex-grow gap-5 flex flex-col '>
-          <div className="flex justify-between css-next items-center w-full transition-all duration-300 ease">
+          <div className="flex justify-center css-next items-center w-full transition-all duration-300 ease">
             <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">Sale</h3>
-            <button className="flex gap-1 items-center  tracking-wide"
-              onClick={() => {
-                router.push('/sale')
-              }}
-            >View all <span className=""><MdNavigateNext size={24} /></span></button>
+
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             <ListProductCard products={resDataProducts_SaleList ?? []} included={resDataIcludes_SaleList ?? []} />
           </div>
-        </div>
-        <div className='flex-grow gap-5 flex flex-col '>
-          <div className="flex justify-between css-next items-center w-full transition-all duration-300 ease">
-            <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">New Arrivals</h3>
-            <button className="flex gap-1 items-center  tracking-wide"
+          <div className="css-next px-3 py-[2px]">
+            <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md bg-[rgba(145,158,171,0.12)]"
               onClick={() => {
-                router.push('/new-arrivals')
+                // router.push('/')
               }}
             >View all <span className=""><MdNavigateNext size={24} /></span></button>
+          </div>
+        </div>
+        <div className='flex-grow gap-5 flex flex-col '>
+          <div className="flex justify-center css-next items-center w-full transition-all duration-300 ease">
+            <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">New Arrivals</h3>
+
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             <ListProductCard products={resDataProducts_NewList ?? []} included={resDataIcludes_NewList ?? []} />
           </div>
-        </div>
-        <div className='flex-grow gap-5 flex flex-col '>
-          <div className="flex justify-between css-next items-center w-full transition-all duration-300 ease">
-            <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">Latest Posts</h3>
-            <button className="flex gap-1 items-center  tracking-wide"
+          <div className="css-next px-3 py-[2px]">
+            <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md bg-[rgba(145,158,171,0.12)]"
               onClick={() => {
-                // router.push('/new-arrivals')
+                // router.push('/')
               }}
             >View all <span className=""><MdNavigateNext size={24} /></span></button>
           </div>
+        </div>
+        <div className='flex-grow gap-5 flex flex-col '>
+          <div className="flex justify-center css-next items-center w-full transition-all duration-300 ease">
+            <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">Latest Posts</h3>
+
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {resPosts_List?.data.slice(0, 5).map((res, id) => (
+            {resPosts_List?.data.slice(0, 4).map((res, id) => (
               <>
                 {res.attributes.content &&
-                  <div className="relative group overflow-hidden rounded-2xl shadow-lg">
+                  <div className="relative group overflow-hidden rounded-md shadow-lg">
                     <img src={res.attributes.image_url!} alt={res.attributes.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-b-2xl">
-                      {res.attributes.post_category_title && (
-                        <span className="text-sm text-gray-300">{res.attributes.post_category_title}</span>
-                      )}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-b-md">
                       <h3 className="text-xl text-white font-semibold mt-1">{res.attributes.title}</h3>
                       <p className="text-white/70 text-sm mt-1">
                         {res.attributes.author_name} | Published: {new Date(res.attributes.published_at).toLocaleDateString()}
@@ -174,25 +173,33 @@ const Home: React.FC = () => {
               </>
             ))}
             <div className="grid gap-5">
-              <h3 className="text-lg uppercase font-semibold  bg-clip-text tracking-wide">MOST VIEWED ARTICLES</h3>
-              {resPosts_List?.data.slice(0, 5).map((res, id) => (
-                <>
-                  {!res.attributes.content &&
-                    <div className=" flex gap-2  ">
-                      <div className="relative w-1/3 group overflow-hidden rounded-2xl">
-                        <img src={res.attributes.image_url!} alt={res.attributes.title} className="w-full  h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                        <div className="absolute  inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
+              <div className="grid gap-5 gird grid-cols-2 ">
+                {resPosts_List?.data.slice(0, 4).map((res, id) => (
+                  <>
+                    {!res.attributes.content &&
+                      <div className=" flex flex-col gap-2  ">
+                        <div className="relative w-fill group overflow-hidden rounded-md">
+                          <img src={res.attributes.image_url!} alt={res.attributes.title} className="w-full  h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                          <div className="absolute  inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
+                        </div>
+                        <div className=" ">
+                          <h3 className="text-xl  font-semibold mt-1 mb-2">{res.attributes.title}</h3>
+                          <p className="text-black/70 text-sm mt-1">
+                            {res.attributes.author_name} | Published: {new Date(res.attributes.published_at).toLocaleDateString()}
+                          </p>
+                        </div>
                       </div>
-                      <div className="p-4 ">
-                        <span className="text-sm text-gray-500">{res.attributes.post_category_title}</span>
-                        <h3 className="text-xl  font-semibold mt-1 mb-2">{res.attributes.title}</h3>
-                        <p className=" text-sm mb-3">{res.attributes.author_name}</p>
-                        <p className=" text-sm mb-3">Published: {new Date(res.attributes.published_at).toLocaleDateString()}</p>
-                      </div>
-                    </div>
-                  }
-                </>
-              ))}
+                    }
+                  </>
+                ))}
+              </div>
+              <div className="css-next px-3 py-[2px]">
+                <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md bg-[rgba(145,158,171,0.12)]"
+                  onClick={() => {
+                    // router.push('/')
+                  }}
+                >View all <span className=""><MdNavigateNext size={24} /></span></button>
+              </div>
             </div>
           </div>
         </div>

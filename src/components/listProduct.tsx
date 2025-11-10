@@ -248,7 +248,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
     return (
         <div className={`max-w-[1535px] mx-auto flex flex-col ${taxonsRetrieve?.data.attributes.header_url ? 'gap-10' : 'gap-5'}`}>
-            <div className={`${taxonsRetrieve?.data.attributes.header_url ? 'shadow-xl rounded-3xl' : ''} relative w-full  overflow-hidden  group`}>
+            <div className={`${taxonsRetrieve?.data.attributes.header_url ? 'shadow-xl rounded-md' : ''} relative w-full  overflow-hidden  group`}>
                 {/* Ảnh nền */}
                 {taxonsRetrieve?.data.attributes.header_url ?
                     <>
@@ -330,9 +330,9 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                 className={`
                     ${openSortBy ? "shadow-xl " : ""} 
                     flex justify-between items-center w-full sm:w-auto 
-                    px-3 py-2 md:px-4 md:py-2  md:rounded-[10px] 
+                    px-3 py-2 md:px-4 md:py-2  md:rounded-sm 
                      transition-all duration-300 ease 
-                    h-[40px] hover:shadow-xl rounded-2xl transition-all duration-300 
+                    h-[40px] hover:shadow-xl rounded-md transition-all duration-300 
                 `}
                                 onClick={handleClickSortBy}
                             >

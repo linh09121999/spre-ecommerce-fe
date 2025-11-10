@@ -565,7 +565,7 @@ const HeaderWeb: React.FC = () => {
                                 ))}
                                 {filteredFashionImg?.map((data, id) => (
                                     <div key={id} className='flex-grow gap-4 flex flex-col '>
-                                        <img src={data.attributes.header_url} alt={data.attributes.name} />
+                                        <img src={data.attributes.header_url} alt={data.attributes.name} className='rounded-md' />
                                     </div>
                                 ))}
                             </div>

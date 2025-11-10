@@ -121,6 +121,49 @@ const FooterWeb: React.FC = () => {
 
     return (
         <>
+            <section className='p-5 flex flex-col gap-5 bg-gray-200 text-black'>
+                <div className='max-w-[800px] mx-auto flex flex-col gap-5 py-5'>
+                    <h3 className='text-2xl text-center uppercase font-semibold  bg-clip-text tracking-wide'>Subscribe to our newsletter</h3>
+                    <p className='text-black/70 text-xl text-center'>This section lets you capture newsletter sign-ups, with all submissions conveniently recorded in the customer management area of your admin dashboard for easy access and follow-up.</p>
+                    <div className='flex gap-2'>
+                        <TextField
+                            aria-label="input email"
+                            placeholder="Enter your email.."
+                            name="email"
+                            sx={sxText}
+                            value={yourMail}
+                            onChange={handleChangeEmail}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton className=" w-full group backdrop-blur-[4px] place-self-end flex z-10  inline-flex shadow-md transition-transform duration-300 ease-in-out"
+                                            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${resStores?.data.attributes.customer_support_email}&su=${encodeURIComponent(textSubject + yourMail)}&body=${body}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            sx={sxButton}
+                                        >
+                                            <div className="relative flex items-center gap-2 svgWrapper">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 24 24"
+                                                    width="24"
+                                                    height="24"
+                                                >
+                                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                                    <path
+                                                        fill="currentColor"
+                                                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                                                    ></path>
+                                                </svg>
+                                            </div>
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </div>
+                </div>
+            </section>
             <footer className='p-5 flex flex-col gap-5 bg-white text-black'>
                 <div className='max-w-[1500px] mx-auto flex gap-0 md:gap-10 md:flex-row  flex-col py-5 border-b border-b-gray-300'>
                     <div className='flex justify-center gap-4 flex-col border-b md:border-none'>
@@ -129,43 +172,7 @@ const FooterWeb: React.FC = () => {
                             src="../../LogoFullBlack.webp" />
 
                         <div className='text-black/70'>{resStores?.data.attributes.meta_description}</div>
-                        <div className='flex gap-2'>
-                            <TextField
-                                aria-label="input email"
-                                placeholder="Enter your email.."
-                                name="email"
-                                sx={sxText}
-                                value={yourMail}
-                                onChange={handleChangeEmail}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton className=" w-full group backdrop-blur-[4px] place-self-end flex z-10  inline-flex shadow-md transition-transform duration-300 ease-in-out"
-                                                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${resStores?.data.attributes.customer_support_email}&su=${encodeURIComponent(textSubject + yourMail)}&body=${body}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                sx={sxButton}
-                                            >
-                                                <div className="relative flex items-center gap-2 svgWrapper">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 24 24"
-                                                        width="24"
-                                                        height="24"
-                                                    >
-                                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                                        <path
-                                                            fill="currentColor"
-                                                            d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                                                        ></path>
-                                                    </svg>
-                                                </div>
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </div>
+
                     </div>
                     <div className='grid grid-cols-1 lg:grid-cols-3 grow w-full'>
                         <div className='flex-grow gap-4 flex flex-col '>

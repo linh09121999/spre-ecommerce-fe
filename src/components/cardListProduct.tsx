@@ -242,7 +242,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                 return (
                     <div
                         key={product.id}
-                        className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col overflow-hidden"
+                        className="group relative bg-white rounded-md shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col overflow-hidden"
                     >
                         {/* --- Product Image --- */}
                         <div className="relative h-auto overflow-hidden">
