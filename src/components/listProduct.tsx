@@ -145,11 +145,12 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     const { prePage, loadingReadMore,
-        currentPage, totalDatas
+        currentPage, totalDatas, sortOption, setSortOption,
+        sortBy, setSortBy,
     } = useStateGeneral()
 
-    const [sortBy, setSortBy] = useState<string>("Relevance")
-    const [sortOption, setSortOption] = useState("relevance");
+    // const [sortBy, setSortBy] = useState<string>("Relevance")
+    // const [sortOption, setSortOption] = useState("relevance");
 
     const Category = (name: string) => {
         if (!name) return undefined
@@ -244,113 +245,141 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
         return sorted;
     }, [products, sortOption])
+
     return (
-        <div className="max-w-[1535px] mx-auto flex flex-col gap-10">
-            <div className="relative w-full rounded-3xl overflow-hidden shadow-xl group">
+        <div className={`max-w-[1535px] mx-auto flex flex-col ${taxonsRetrieve?.data.attributes.header_url ? 'gap-10' : 'gap-5'}`}>
+            <div className={`${taxonsRetrieve?.data.attributes.header_url ? 'shadow-xl rounded-3xl' : ''} relative w-full  overflow-hidden  group`}>
                 {/* Ảnh nền */}
-                {taxonsRetrieve?.data.attributes.header_url && (
-                    <img
-                        src={taxonsRetrieve?.data.attributes.header_url}
-                        alt={taxonsRetrieve?.data.attributes.name}
-                        className="w-full aspect-[16/5] object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                )}
+                {taxonsRetrieve?.data.attributes.header_url ?
+                    <>
+                        <img
+                            src={taxonsRetrieve?.data.attributes.header_url}
+                            alt={taxonsRetrieve?.data.attributes.name}
+                            className="w-full aspect-[16/5] object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        {/* Lớp phủ gradient tối giúp chữ nổi */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
 
-                {/* Lớp phủ gradient tối giúp chữ nổi */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-
-                {/* Nội dung chữ overlay */}
-                <div className="absolute left-0 bottom-0  p-10 text-white z-10 w-3/4 grid gap-3">
-                    <span className="text-xl uppercase text-gray-300">{Category(taxonsRetrieve?.data.attributes.permalink!)}</span>
-                    <h3 className="text-4xl font-bold uppercase tracking-wide mb-3 bg-gradient-to-r from-green-400 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
-                        {taxonsRetrieve?.data.attributes.name}
-                    </h3>
-                    <p className="text-gray-100 text-lg leading-relaxed">
-                        {taxonsRetrieve?.data.attributes.description}
-                    </p>
-                </div>
-
-                {/* Hiệu ứng điểm nhấn (vòng sáng mờ khi hover) */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-[radial-gradient(circle_at_center,white_0%,transparent_60%)] mix-blend-overlay"></div>
-            </div>
-            <div className="grid lg:grid-cols-[300px_1fr] gap-5">
-                <aside className="grid h-fit max-lg:hidden lg:sticky lg:top-[105px] gap-4 ">
-                </aside>
-                <section className="flex flex-col gap-4 md:gap-6">
-                    <div className="items-center pb-2 border-b-[2px] border-b-gray-200 flex justify-between ">
-                        <div className="flex items-end gap-3">
-                            <h3 className="text-lg uppercase tracking-wide ">
-                                Result
+                        {/* Nội dung chữ overlay */}
+                        <div className="absolute left-0 bottom-0  p-10 text-white z-10 w-3/4 grid gap-3">
+                            <span className="text-xl uppercase text-gray-300">{Category(taxonsRetrieve?.data.attributes.permalink)}</span>
+                            <h3 className="text-4xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-400 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
+                                {taxonsRetrieve?.data.attributes.name}
                             </h3>
-                            <span className="text-lg uppercase flex gap-1 items-center">
-                                <strong className="text-3xl text-green-600">{
-                                    products.length === 0 ?
-                                        0 :
-                                        (currentPage * prePage) > totalDatas
-                                            ?
-                                            totalDatas
-                                            : (currentPage * prePage)
-                                }</strong>/{totalDatas}
-                            </span>
+                            {taxonsRetrieve?.data.attributes.description &&
+                                <p className="text-gray-400 text-lg leading-relaxed">
+                                    {taxonsRetrieve?.data.attributes.description}
+                                </p>
+                            }
                         </div>
-                        <button
-                            className={`
+
+                        {/* Hiệu ứng điểm nhấn (vòng sáng mờ khi hover) */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-[radial-gradient(circle_at_center,white_0%,transparent_60%)] mix-blend-overlay"></div>
+
+                    </>
+                    :
+                    <>
+                        {/* Nội dung chữ overlay */}
+                        <div className=" border-b-[2px] border-b-gray-200 grid gap-3 pb-5 w-full">
+                            <span className="text-xl  uppercase text-gray-500">{Category(taxonsRetrieve?.data.attributes.permalink!)}</span>
+                            <h3 className="text-4xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-500 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
+                                {taxonsRetrieve?.data.attributes.name}
+                            </h3>
+                            {taxonsRetrieve?.data.attributes.description &&
+                                <p className="text-gray-400 text-lg leading-relaxed w-3/4">
+                                    {taxonsRetrieve?.data.attributes.description}
+                                </p>
+                            }
+                        </div>
+                    </>
+                }
+
+
+            </div>
+            {products.length === 0 ?
+                <div className="flex justify-center items-center">
+                    <p className="text-gray-500 text-lg text-center">There are no products</p>
+                </div>
+                :
+                <div className="grid lg:grid-cols-[300px_1fr] gap-5">
+                    <aside className="grid h-fit max-lg:hidden lg:sticky lg:top-[105px] gap-4 ">
+                    </aside>
+                    <section className="flex flex-col gap-4 md:gap-6">
+                        <div className="items-center pb-2 border-b-[2px] border-b-gray-200 flex justify-between ">
+                            <div className="flex items-end gap-3">
+                                <h3 className="text-md tracking-wide text-black/70">
+                                    Result
+                                </h3>
+                                <span className="text-lg uppercase flex gap-1 items-end">
+                                    <strong className="text-3xl text-green-600">{
+                                        products.length === 0 ?
+                                            0 :
+                                            (currentPage * prePage) > totalDatas
+                                                ?
+                                                totalDatas
+                                                : (currentPage * prePage)
+                                    }</strong>/{totalDatas}
+                                </span>
+                            </div>
+                            <button
+                                className={`
                     ${openSortBy ? "shadow-xl " : ""} 
                     flex justify-between items-center w-full sm:w-auto 
                     px-3 py-2 md:px-4 md:py-2  md:rounded-[10px] 
                      transition-all duration-300 ease 
                     h-[40px] hover:shadow-xl rounded-2xl transition-all duration-300 
                 `}
-                            onClick={handleClickSortBy}
-                        >
-                            <div className="flex items-center gap-2 md:gap-4">
-                                <p className="text-black/70 text-sm">Sort by:</p>
-                                <p className=" text-lg w-[80px] md:w-[120px] text-start truncate">
-                                    {sortBy}
-                                </p>
-                            </div>
-                            <span className="transtion-all duration-300 ease ml-2">
-                                {openSortBy ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
-                            </span>
-                        </button>
-                        <Menu
-                            anchorEl={anchorElSortBy}
-                            open={openSortBy}
-                            onClose={handleCloseSortBy}
-                            PaperProps={PaperProps}
-                            MenuListProps={MenuListProps}
-                        >
-                            <MenuItem onClick={handleSortDefault} sx={sxMenuItem}>
-                                Relevance
-                            </MenuItem>
-                            <MenuItem onClick={handleSortHighest} sx={sxMenuItem}>
-                                Price (Highest)
-                            </MenuItem>
-                            <MenuItem onClick={handleSortLowest} sx={sxMenuItem}>
-                                Price (Lowest)
-                            </MenuItem>
-                            <MenuItem onClick={handleSortNewest} sx={sxMenuItem}>
-                                Release Date (Newest)
-                            </MenuItem>
-                            <MenuItem onClick={handleSortOldest} sx={sxMenuItem}>
-                                Release Date (Oldest)
-                            </MenuItem>
-                            <MenuItem onClick={handleSortAtoZ} sx={sxMenuItem}>
-                                Title (A-Z)
-                            </MenuItem>
-                            <MenuItem onClick={handleSortZtoA} sx={sxMenuItem}>
-                                Title (Z-A)
-                            </MenuItem>
-                        </Menu>
-                    </div>
-                    <div className="grid grid-cols-1  xl:grid-cols-4 gap-6">
-                        <ListProductCard products={filteredReleases ?? []} included={included ?? []} />
-                    </div>
-                    {loadingReadMore && <p className="text-center py-4 text-gray-500">loading more...</p>}
+                                onClick={handleClickSortBy}
+                            >
+                                <div className="flex items-center gap-2 md:gap-4">
+                                    <p className="text-black/70 text-md">Sort by:</p>
+                                    <p className=" text-lg w-[80px] md:w-[120px] text-start truncate">
+                                        {sortBy}
+                                    </p>
+                                </div>
+                                <span className="transtion-all duration-300 ease ml-2">
+                                    {openSortBy ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}
+                                </span>
+                            </button>
+                            <Menu
+                                anchorEl={anchorElSortBy}
+                                open={openSortBy}
+                                onClose={handleCloseSortBy}
+                                PaperProps={PaperProps}
+                                MenuListProps={MenuListProps}
+                            >
+                                <MenuItem onClick={handleSortDefault} sx={sxMenuItem}>
+                                    Relevance
+                                </MenuItem>
+                                <MenuItem onClick={handleSortHighest} sx={sxMenuItem}>
+                                    Price (Highest)
+                                </MenuItem>
+                                <MenuItem onClick={handleSortLowest} sx={sxMenuItem}>
+                                    Price (Lowest)
+                                </MenuItem>
+                                <MenuItem onClick={handleSortNewest} sx={sxMenuItem}>
+                                    Release Date (Newest)
+                                </MenuItem>
+                                <MenuItem onClick={handleSortOldest} sx={sxMenuItem}>
+                                    Release Date (Oldest)
+                                </MenuItem>
+                                <MenuItem onClick={handleSortAtoZ} sx={sxMenuItem}>
+                                    Title (A-Z)
+                                </MenuItem>
+                                <MenuItem onClick={handleSortZtoA} sx={sxMenuItem}>
+                                    Title (Z-A)
+                                </MenuItem>
+                            </Menu>
+                        </div>
+                        <div className="grid grid-cols-1  xl:grid-cols-4 gap-6">
+                            <ListProductCard products={filteredReleases ?? []} included={included ?? []} />
+                        </div>
+                        {loadingReadMore && <p className="text-center py-4 text-gray-500">loading more...</p>}
 
-                </section>
+                    </section>
 
-            </div>
+                </div>
+            }
         </div>
     );
 }

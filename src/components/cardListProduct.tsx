@@ -175,14 +175,6 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
         target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmM2YzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
     };
 
-    if (products.length === 0) {
-        return (
-            <div className="flex justify-center items-center h-64">
-                <p className="text-gray-500 text-lg">There are no products</p>
-            </div>
-        );
-    }
-
     const getImageByColor = (product: Product, color: string): string | null => {
         const variants = getVariants(product);
 

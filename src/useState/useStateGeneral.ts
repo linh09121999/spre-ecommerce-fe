@@ -32,6 +32,10 @@ interface State {
     setTotalPages: (total: number) => void;
     currentPage: number;
     setCurrentPage: (current: number) => void;
+    sortBy: string;
+    setSortBy: (sort: string) => void;
+    sortOption: string;
+    setSortOption: (sort: string) => void;
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -69,11 +73,11 @@ export const useStateGeneral = create<State>((set) => ({
     loading: true,
     setLoading: (isCheck) => set({ loading: isCheck }),
     yourMail: '',
-    setYourMail: (mail) => ({ yourMail: mail }),
+    setYourMail: (mail) => set({ yourMail: mail }),
     ordersNumber: 0,
-    setOrdersNumber: (order) => ({ ordersNumber: order }),
+    setOrdersNumber: (order) => set({ ordersNumber: order }),
     heartNumber: 0,
-    setHeartNumber: (heart) => ({ heartNumber: heart }),
+    setHeartNumber: (heart) => set({ heartNumber: heart }),
     isSearch: false,
     setIsSearch: (isCheck) => set({ isSearch: isCheck }),
     isCurrency: 'USD',
@@ -89,5 +93,8 @@ export const useStateGeneral = create<State>((set) => ({
     setTotalDatas: (total) => set({ totalDatas: total }),
     totalPages: 0,
     setTotalPages: (total) => set({ totalPages: total }),
-
+    sortBy: 'Relevance',
+    setSortBy: (sort) => set({ sortBy: sort }),
+    sortOption: 'relevance',
+    setSortOption: (sort) => set({ sortOption: sort }),
 }))

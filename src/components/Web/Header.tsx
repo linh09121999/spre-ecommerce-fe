@@ -313,6 +313,14 @@ const HeaderWeb: React.FC = () => {
         );
     }, [resTaxons_List?.data]);
 
+    const toPath = (text: string): string => {
+        return text
+            .toLowerCase()        // chuyển hết về chữ thường
+            .trim()               // bỏ khoảng trắng đầu/cuối
+            .replace(/\s+/g, '-') // thay khoảng trắng bằng dấu gạch ngang
+            .replace(/[^\w-]/g, ''); // loại bỏ ký tự đặc biệt
+    };
+
     return (
         <>
             <header
@@ -325,8 +333,9 @@ const HeaderWeb: React.FC = () => {
                         src="../../LogoFullBlack.webp" />
                     <Nav
                         classNameUl='flex list-none gap-7 uppercase text-lg'
-                        classNameA='size-[24px] relative cursor-pointer transiton-all duration-300 mo-underline after:absolute after:bottom-[-5px] after:left-0 after:h-[2px] after:bg-green-400 after:transistion-all after:duration-300 after:w-full after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-green-400 menu-item header--nav-link'
+                        classNameA={` size-[24px] relative cursor-pointer transiton-all duration-300 mo-underline after:absolute after:bottom-[-5px] after:left-0 after:h-[2px] after:bg-green-400 after:transistion-all after:duration-300 after:w-full after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100 hover:text-green-400   menu-item header--nav-link`}
                         classNameAActive='text-green-400 after:scale-x-100'
+                        classNameAHover='text-green-400 after:scale-x-100'
                     />
                     <div className='flex justify-between gap-4 items-center'>
                         {/* search */}
@@ -529,7 +538,9 @@ const HeaderWeb: React.FC = () => {
                                         <ul className='grid gap-4'>
                                             {filter?.map((data, id) => (
                                                 <a key={id}
-                                                    // onClick={}
+                                                    onClick={() => {
+                                                        router.push(toPath(data.attributes.name))
+                                                    }}
                                                     className='cursor-pointer transiton-all duration-300 hover:text-green-400'
                                                 >
                                                     <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
@@ -538,7 +549,9 @@ const HeaderWeb: React.FC = () => {
                                                 </a>
                                             ))}
                                             <a
-                                                // onClick={}
+                                                onClick={() => {
+                                                    router.push(toPath(title))
+                                                }}
                                                 className='cursor-pointer transiton-all duration-300 hover:text-green-400'
                                             >
                                                 <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
@@ -570,7 +583,9 @@ const HeaderWeb: React.FC = () => {
                                         <ul className='grid gap-4'>
                                             {filter?.map((data, id) => (
                                                 <a key={id}
-                                                    // onClick={}
+                                                    onClick={() => {
+                                                        router.push(toPath(data.attributes.name))
+                                                    }}
                                                     className='cursor-pointer transiton-all duration-300 hover:text-green-400'
                                                 >
                                                     <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
@@ -579,7 +594,9 @@ const HeaderWeb: React.FC = () => {
                                                 </a>
                                             ))}
                                             <a
-                                                // onClick={}
+                                                onClick={() => {
+                                                    router.push(toPath(title))
+                                                }}
                                                 className='cursor-pointer transiton-all duration-300 hover:text-green-400'
                                             >
                                                 <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>

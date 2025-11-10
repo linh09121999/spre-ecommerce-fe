@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
-const Fashion: React.FC = () => {
+const ScentedCandles: React.FC = () => {
     const router = useRouter();
     const { resDataIcludes_List, resDataProducts_List, setResDataIcludes_List, setResDataProduct_List } = useState_ResProducts()
     const { resTaxons_Retrieve, setResTaxons_Retrieve } = useState_ResTaxons()
@@ -61,9 +61,9 @@ const Fashion: React.FC = () => {
     }
 
     useEffect(() => {
-        setSelectNav(1)
-        getApiTaxonsFashion("categories/fashion")
-        getApiProducts("175", 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
+        setSelectNav(2)
+        getApiTaxonsFashion("categories/wellness/relaxation/scented-candles")
+        getApiProducts("194", 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
     }, [])
 
     // Infinite scroll
@@ -75,7 +75,7 @@ const Fashion: React.FC = () => {
 
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
                 if (currentPage < totalPages) {
-                    getApiProducts("175", currentPage + 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
+                    getApiProducts("194", currentPage + 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
                 }
             }
         };
@@ -92,4 +92,4 @@ const Fashion: React.FC = () => {
     );
 }
 
-export default Fashion
+export default ScentedCandles

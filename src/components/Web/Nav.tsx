@@ -9,6 +9,7 @@ type navProps = {
     classNameA?: string;
     classNameAActive?: string;
     classNameTitle?: string;
+    classNameAHover?: string
 }
 
 const Nav: React.FC<navProps> = ({
@@ -16,8 +17,9 @@ const Nav: React.FC<navProps> = ({
     classNameA,
     classNameAActive,
     classNameTitle,
+    classNameAHover
 }) => {
-    const { pages, selectNav, setSelectNav, setHoveredNav } = useStateGeneral();
+    const { pages, selectNav, setSelectNav, setHoveredNav, hoveredNav } = useStateGeneral();
     const router = useRouter();
 
     return (
@@ -30,7 +32,7 @@ const Nav: React.FC<navProps> = ({
                             router.push(page.path)
                         }}
                         onMouseEnter={() => setHoveredNav(index)}
-                        className={`${classNameA} ${selectNav === index ? `${classNameAActive}` : "text-black "}`}
+                        className={`${classNameA} ${selectNav === index ? `${classNameAActive}` : "text-black "} ${hoveredNav === index ? `${classNameAHover}` : ''}`}
                     >
                         <div className={classNameTitle}>{page.title}</div>
                     </a>
