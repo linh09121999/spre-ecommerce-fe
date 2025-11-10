@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Pages } from '@/interface/interface'
+import { FilterProduct, Pages } from '@/interface/interface'
 
 // import { JSX } from 'react';
 
@@ -36,6 +36,10 @@ interface State {
     setSortBy: (sort: string) => void;
     sortOption: string;
     setSortOption: (sort: string) => void;
+    filterAvailabity: FilterProduct[];
+    filterTaxonsFashion: FilterProduct[];
+    filterTaxonsWellness: FilterProduct[];
+    
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -97,4 +101,19 @@ export const useStateGeneral = create<State>((set) => ({
     setSortBy: (sort) => set({ sortBy: sort }),
     sortOption: 'relevance',
     setSortOption: (sort) => set({ sortOption: sort }),
+    filterAvailabity: [
+        { id: 0, title: "In stock" },
+        { id: 1, title: "Out of stock" }
+    ],
+    filterTaxonsFashion: [
+        { id: 0, title: "Men" },
+        { id: 1, title: "Women" },
+        { id: 3, title: "Accessories" }
+    ],
+    filterTaxonsWellness: [
+        { id: 0, title: "Fitness" },
+        { id: 1, title: "Relaxation" },
+        { id: 2, title: "Mental Stimulation" },
+        { id: 3, title: "Nutrition" }
+    ]
 }))

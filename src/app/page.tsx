@@ -127,7 +127,7 @@ const Home: React.FC = () => {
             <ListProductCard products={resDataProducts_SaleList ?? []} included={resDataIcludes_SaleList ?? []} />
           </div>
           <div className="css-next px-3 py-[2px]">
-            <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md bg-[rgba(145,158,171,0.12)]"
+            <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               onClick={() => {
                 // router.push('/')
               }}
@@ -143,7 +143,7 @@ const Home: React.FC = () => {
             <ListProductCard products={resDataProducts_NewList ?? []} included={resDataIcludes_NewList ?? []} />
           </div>
           <div className="css-next px-3 py-[2px]">
-            <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md bg-[rgba(145,158,171,0.12)]"
+            <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               onClick={() => {
                 // router.push('/')
               }}
@@ -194,7 +194,7 @@ const Home: React.FC = () => {
                 ))}
               </div>
               <div className="css-next px-3 py-[2px]">
-                <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md bg-[rgba(145,158,171,0.12)]"
+                <button className="mx-auto flex w-[105px] h-10  justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                   onClick={() => {
                     // router.push('/')
                   }}

@@ -170,12 +170,17 @@ export interface PriceInfo {
 }
 
 export interface ColorOption {
-  color: string;
-  colorPresentation: string;
-  variants: IncludedVariant[];
+    color: string;
+    colorPresentation: string;
+    variants: IncludedVariant[];
 }
 
 export interface ProductCardProps {
     products: Product[];
     included: IncludedItem[]
+}
+
+export interface FilterProduct {
+    id: number;
+    title: string
 }

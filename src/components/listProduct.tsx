@@ -4,11 +4,13 @@ import Image from "next/image";
 
 import React, { useState, useEffect, useMemo } from "react";
 import ListProductCard from "./cardListProduct";
-import { Menu, MenuItem } from "@mui/material";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { Checkbox, FormControlLabel, InputAdornment, Menu, MenuItem, Slider, TextField } from "@mui/material";
+import { FaCheckCircle, FaChevronDown, FaChevronUp, FaMinusCircle, FaRegCircle } from "react-icons/fa";
 import { useStateGeneral } from "@/useState/useStateGeneral";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { ResTaxons_Retrieve } from "@/interface/responseData/interfaceStorefront";
+import { PiCurrencyDollar } from "react-icons/pi";
+import { useState_ResTaxons } from "@/useState/useStatestorefront";
 
 interface ListProduct extends ProductCardProps {
     taxonsRetrieve: ResTaxons_Retrieve
@@ -31,13 +33,13 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             md: '100%',
         },
         '& .MuiOutlinedInput-root': {
-            borderRadius: "10px",
-            background: 'linear-gradient(to bottom right, rgba(17, 24, 39, 0.8), rgba(3, 7, 18, 0.8), rgba(0, 0, 0, 0.8))',
+            borderRadius: "var(--radius-md)",
+            background: 'white',
             backdropFilter: 'blur(10px)',
             padding: '3px 8px !important',
             transition: 'all 0.3s',
             fontSize: 'var(--text-xl)',
-            border: '1px solid var(--color-gray-800)',
+            border: '1px solid var(--color-gray-200)',
             height: '40px',
         },
         '& .MuiOutlinedInput-notchedOutline': {
@@ -54,7 +56,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         },
 
         '& .MuiInputBase-input': {
-            color: 'var(--color-cyan-300)',
+            color: 'var(--color-gray-500)',
             paddingLeft: '14px',
             fontSize: 'var(--text-lg)',
             border: 'none',
@@ -87,19 +89,19 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             fontSize: 'var(--text-sm) !important',
         },
         ":hover": {
-            color: 'var(--color-cyan-300)'
+            color: 'var(--color-green-500)'
         }
     }
 
     const sxCheckBoxMinate: SxProps<Theme> = {
-        color: 'white',
-        '&.Mui-checked': { color: 'var(--color-cyan-300)' },
-        '&.MuiCheckbox-indeterminate': { color: 'var(--color-cyan-300)' },
+        color: 'black',
+        '&.Mui-checked': { color: 'var(--color-green-500)' },
+        '&.MuiCheckbox-indeterminate': { color: 'var(--color-green-500)' },
     }
 
     const sxCheckBox: SxProps<Theme> = {
-        color: 'white',
-        '&.Mui-checked': { color: 'var(--color-cyan-300)' },
+        color: 'black',
+        '&.Mui-checked': { color: 'var(--color-green-500)' },
     }
 
     const sxPaperPropsDrawer: SxProps<Theme> = {
@@ -144,13 +146,75 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         }
     }
 
+    const sxSlider: SxProps<Theme> = {
+        color: "var(--color-gray-500)",
+        '& .MuiSlider-thumb': {
+            bgcolor: '#fff',
+            border: '2px solid currentColor',
+            width: 20,
+            height: 20,
+            boxShadow: '0 0 0 8px rgba(0,0,0,0.02)',
+        },
+        '& .MuiSlider-track': {
+            border: 'none',
+        },
+        '& .MuiSlider-rail': {
+            opacity: 0.5,
+            backgroundColor: 'var(--color-gray-300)',
+        },
+        '& .MuiSlider-mark': {
+            backgroundColor: 'transparent',
+        }
+    }
+
     const { prePage, loadingReadMore,
         currentPage, totalDatas, sortOption, setSortOption,
-        sortBy, setSortBy,
+        sortBy, setSortBy, filterAvailabity, filterTaxonsFashion, filterTaxonsWellness
     } = useStateGeneral()
 
-    // const [sortBy, setSortBy] = useState<string>("Relevance")
-    // const [sortOption, setSortOption] = useState("relevance");
+    const { resTaxons_List } = useState_ResTaxons()
+
+    const filterFashionMen = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/fashion/men/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterFashionWomen = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/fashion/women/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterFashionAccessories = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/fashion/accessories/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterWellnessFitness = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/wellness/fitness/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterWellnessRelaxation = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/wellness/relaxation/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterWellnessMentalStimulation = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/wellness/mental-stimulation/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
+
+    const filterWellnessNutrition = useMemo(() => {
+        return resTaxons_List?.data.filter((r) =>
+            r.attributes.permalink.toLowerCase().includes("categories/wellness/nutrition/".toLowerCase())
+        );
+    }, [resTaxons_List?.data]);
 
     const Category = (name: string) => {
         if (!name) return undefined
@@ -246,6 +310,327 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         return sorted;
     }, [products, sortOption])
 
+    const [showAvailabity, setShowAvailabity] = useState<boolean>(true)
+    const [showPrice, setShowPrice] = useState<boolean>(true)
+    const [showTaxons, setShowTaxons] = useState<boolean>(true)
+    const [showColor, setShowColor] = useState<boolean>(true)
+    const [showSize, setShowSize] = useState<boolean>(true)
+
+    // availabyty
+    const [checkedItemsAvailabity, setCheckedItemsAvailabity] = useState<number[]>([])
+    const allCheckedAvailabity = checkedItemsAvailabity.length === filterAvailabity.length
+    const isIndeterminateAvailabity = checkedItemsAvailabity.length > 0 && checkedItemsAvailabity.length < filterAvailabity.length
+
+    // Khi click vào "All"
+    const handleCheckAllAvailabity = () => {
+        allCheckedAvailabity ?
+            setCheckedItemsAvailabity([])
+            :
+            setCheckedItemsAvailabity(filterAvailabity.map((type) => type.id))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemAvailabity = (id: number) => {
+        checkedItemsAvailabity.includes(id) ?
+            setCheckedItemsAvailabity(checkedItemsAvailabity.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckedItemsAvailabity([...checkedItemsAvailabity, id])
+
+            )
+    }
+
+    // fashion
+    const [checkedItemsTaxonsFashion, setCheckItemTaxonsFashion] = useState<number[]>([])
+    const allCheckedTaxonsFashion = checkedItemsTaxonsFashion.length === filterTaxonsFashion.length
+    const isIndeterminateTaxonsFashion = checkedItemsTaxonsFashion.length > 0 && checkedItemsTaxonsFashion.length < filterTaxonsFashion.length
+
+    // Khi click vào "All"
+    const handleCheckAllTaxonsFashion = () => {
+        allCheckedTaxonsFashion ?
+            setCheckItemTaxonsFashion([])
+            :
+            setCheckItemTaxonsFashion(filterTaxonsFashion.map((type) => type.id))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsFashion = (id: number) => {
+        checkedItemsTaxonsFashion.includes(id) ?
+            setCheckItemTaxonsFashion(checkedItemsTaxonsFashion.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsFashion([...checkedItemsTaxonsFashion, id])
+
+            )
+    }
+
+    // wellness
+    const [checkedItemsTaxonsWellness, setCheckItemTaxonsWellness] = useState<number[]>([])
+    const allCheckedTaxonsWellness = checkedItemsTaxonsWellness.length === filterTaxonsWellness.length
+    const isIndeterminateTaxonsWellness = checkedItemsTaxonsWellness.length > 0 && checkedItemsTaxonsWellness.length < filterTaxonsWellness.length
+
+    // Khi click vào "All"
+    const handleCheckAllTaxonsWellness = () => {
+        allCheckedTaxonsWellness ?
+            setCheckItemTaxonsWellness([])
+            :
+            setCheckItemTaxonsWellness(filterTaxonsWellness.map((type) => type.id))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsWellness = (id: number) => {
+        checkedItemsTaxonsWellness.includes(id) ?
+            setCheckItemTaxonsWellness(checkedItemsTaxonsWellness.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsWellness([...checkedItemsTaxonsWellness, id])
+
+            )
+    }
+
+    // men
+    const [checkedItemsTaxonsMen, setCheckItemTaxonsMen] = useState<number[]>([])
+    const allCheckedTaxonsMen =
+        filterFashionMen && filterFashionMen.length > 0
+            ? checkedItemsTaxonsMen.length === filterFashionMen.length
+            : false;
+
+    const isIndeterminateTaxonsMen =
+        filterFashionMen && filterFashionMen.length > 0
+            ? checkedItemsTaxonsMen.length > 0 &&
+            checkedItemsTaxonsMen.length < filterFashionMen.length
+            : false;
+    // Khi click vào "All"
+    const handleCheckAllTaxonsMen = () => {
+        allCheckedTaxonsMen ?
+            setCheckItemTaxonsMen([])
+            :
+            setCheckItemTaxonsMen(filterFashionMen!.map((type) => Number(type.id)))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsMen = (id: number) => {
+        checkedItemsTaxonsMen.includes(id) ?
+            setCheckItemTaxonsMen(checkedItemsTaxonsMen.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsMen([...checkedItemsTaxonsMen, id])
+
+            )
+    }
+
+    // women
+    const [checkedItemsTaxonsWomen, setCheckItemTaxonsWomen] = useState<number[]>([])
+    const allCheckedTaxonsWomen =
+        filterFashionWomen && filterFashionWomen.length > 0
+            ? checkedItemsTaxonsWomen.length === filterFashionWomen.length
+            : false;
+
+    const isIndeterminateTaxonsWomen =
+        filterFashionWomen && filterFashionWomen.length > 0
+            ? checkedItemsTaxonsWomen.length > 0 &&
+            checkedItemsTaxonsWomen.length < filterFashionWomen.length
+            : false;
+    // Khi click vào "All"
+    const handleCheckAllTaxonsWomen = () => {
+        allCheckedTaxonsWomen ?
+            setCheckItemTaxonsWomen([])
+            :
+            setCheckItemTaxonsWomen(filterFashionWomen!.map((type) => Number(type.id)))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsWomen = (id: number) => {
+        checkedItemsTaxonsWomen.includes(id) ?
+            setCheckItemTaxonsWomen(checkedItemsTaxonsWomen.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsWomen([...checkedItemsTaxonsWomen, id])
+
+            )
+    }
+
+    // accessories
+    const [checkedItemsTaxonsAccessories, setCheckItemTaxonsAccessories] = useState<number[]>([])
+    const allCheckedTaxonsAccessories =
+        filterFashionAccessories && filterFashionAccessories.length > 0
+            ? checkedItemsTaxonsWomen.length === filterFashionAccessories.length
+            : false;
+
+    const isIndeterminateTaxonsAccessories =
+        filterFashionAccessories && filterFashionAccessories.length > 0
+            ? checkedItemsTaxonsWomen.length > 0 &&
+            checkedItemsTaxonsWomen.length < filterFashionAccessories.length
+            : false;
+    // Khi click vào "All"
+    const handleCheckAllTaxonsAccessories = () => {
+        allCheckedTaxonsAccessories ?
+            setCheckItemTaxonsAccessories([])
+            :
+            setCheckItemTaxonsAccessories(filterFashionAccessories!.map((type) => Number(type.id)))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsAccessories = (id: number) => {
+        checkedItemsTaxonsAccessories.includes(id) ?
+            setCheckItemTaxonsAccessories(checkedItemsTaxonsAccessories.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsAccessories([...checkedItemsTaxonsAccessories, id])
+
+            )
+    }
+
+    // Fitness
+    const [checkedItemsTaxonsFitness, setCheckItemTaxonsFitness] = useState<number[]>([])
+    const allCheckedTaxonsFitness =
+        filterWellnessFitness && filterWellnessFitness.length > 0
+            ? checkedItemsTaxonsWomen.length === filterWellnessFitness.length
+            : false;
+
+    const isIndeterminateTaxonsFitness =
+        filterWellnessFitness && filterWellnessFitness.length > 0
+            ? checkedItemsTaxonsWomen.length > 0 &&
+            checkedItemsTaxonsWomen.length < filterWellnessFitness.length
+            : false;
+    // Khi click vào "All"
+    const handleCheckAllTaxonsFitness = () => {
+        allCheckedTaxonsFitness ?
+            setCheckItemTaxonsFitness([])
+            :
+            setCheckItemTaxonsFitness(filterWellnessFitness!.map((type) => Number(type.id)))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsFitness = (id: number) => {
+        checkedItemsTaxonsFitness.includes(id) ?
+            setCheckItemTaxonsFitness(checkedItemsTaxonsFitness.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsFitness([...checkedItemsTaxonsFitness, id])
+
+            )
+    }
+
+    // Relaxation
+    const [checkedItemsTaxonsRelaxation, setCheckItemTaxonsRelaxation] = useState<number[]>([])
+    const allCheckedTaxonsRelaxation =
+        filterWellnessRelaxation && filterWellnessRelaxation.length > 0
+            ? checkedItemsTaxonsWomen.length === filterWellnessRelaxation.length
+            : false;
+
+    const isIndeterminateTaxonsRelaxation =
+        filterWellnessRelaxation && filterWellnessRelaxation.length > 0
+            ? checkedItemsTaxonsWomen.length > 0 &&
+            checkedItemsTaxonsWomen.length < filterWellnessRelaxation.length
+            : false;
+    // Khi click vào "All"
+    const handleCheckAllTaxonsRelaxation = () => {
+        allCheckedTaxonsRelaxation ?
+            setCheckItemTaxonsRelaxation([])
+            :
+            setCheckItemTaxonsRelaxation(filterWellnessRelaxation!.map((type) => Number(type.id)))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsRelaxation = (id: number) => {
+        checkedItemsTaxonsRelaxation.includes(id) ?
+            setCheckItemTaxonsRelaxation(checkedItemsTaxonsRelaxation.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsRelaxation([...checkedItemsTaxonsRelaxation, id])
+
+            )
+    }
+
+    // Mental Stimulation
+    const [checkedItemsTaxonsMentalStimulation, setCheckItemTaxonsMentalStimulation] = useState<number[]>([])
+    const allCheckedTaxonsMentalStimulation =
+        filterWellnessMentalStimulation && filterWellnessMentalStimulation.length > 0
+            ? checkedItemsTaxonsWomen.length === filterWellnessMentalStimulation.length
+            : false;
+
+    const isIndeterminateTaxonsMentalStimulation =
+        filterWellnessMentalStimulation && filterWellnessMentalStimulation.length > 0
+            ? checkedItemsTaxonsWomen.length > 0 &&
+            checkedItemsTaxonsWomen.length < filterWellnessMentalStimulation.length
+            : false;
+    // Khi click vào "All"
+    const handleCheckAllTaxonsMentalStimulation = () => {
+        allCheckedTaxonsMentalStimulation ?
+            setCheckItemTaxonsMentalStimulation([])
+            :
+            setCheckItemTaxonsMentalStimulation(filterWellnessMentalStimulation!.map((type) => Number(type.id)))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsMentalStimulation = (id: number) => {
+        checkedItemsTaxonsMentalStimulation.includes(id) ?
+            setCheckItemTaxonsMentalStimulation(checkedItemsTaxonsMentalStimulation.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsMentalStimulation([...checkedItemsTaxonsMentalStimulation, id])
+
+            )
+    }
+    // Nutrition
+    const [checkedItemsTaxonsNutrition, setCheckItemTaxonsNutrition] = useState<number[]>([])
+    const allCheckedTaxonsNutrition =
+        filterWellnessNutrition && filterWellnessNutrition.length > 0
+            ? checkedItemsTaxonsWomen.length === filterWellnessNutrition.length
+            : false;
+
+    const isIndeterminateTaxonsNutrition =
+        filterWellnessNutrition && filterWellnessNutrition.length > 0
+            ? checkedItemsTaxonsWomen.length > 0 &&
+            checkedItemsTaxonsWomen.length < filterWellnessNutrition.length
+            : false;
+    // Khi click vào "All"
+    const handleCheckAllTaxonsNutrition = () => {
+        allCheckedTaxonsNutrition ?
+            setCheckItemTaxonsNutrition([])
+            :
+            setCheckItemTaxonsNutrition(filterWellnessNutrition!.map((type) => Number(type.id)))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemTaxonsNutrition = (id: number) => {
+        checkedItemsTaxonsNutrition.includes(id) ?
+            setCheckItemTaxonsNutrition(checkedItemsTaxonsNutrition.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemTaxonsNutrition([...checkedItemsTaxonsNutrition, id])
+
+            )
+    }
+
+    const [priceMin, setPriceMin] = React.useState<number>(0);
+    const [priceMax, setPriceMax] = React.useState<number>(200);
+
+    const handleChangeInputPriceMin = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const valuePriceMin = Number(e.target.value)
+        if (valuePriceMin > priceMax) return
+        setPriceMin(valuePriceMin || 0)
+    }
+
+    const handleChangeInputPriceMax = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const valuePriceMax = Number(e.target.value)
+        if (valuePriceMax < priceMin) return
+        setPriceMax(valuePriceMax || 0)
+    }
+
+    const handleChangeSliderCommitted = (_event: Event | React.SyntheticEvent, newValue: number | number[]) => {
+        const [min, max] = newValue as number[];
+    }
+
+    const handleChangeSlider = (_event: Event, newValue: number | number[]) => {
+        const [min, max] = newValue as number[];
+        setPriceMin(min);
+        setPriceMax(max);
+    };
+
+
+
     return (
         <div className={`max-w-[1535px] mx-auto flex flex-col ${taxonsRetrieve?.data.attributes.header_url ? 'gap-10' : 'gap-5'}`}>
             <div className={`${taxonsRetrieve?.data.attributes.header_url ? 'shadow-xl rounded-md' : ''} relative w-full  overflow-hidden  group`}>
@@ -301,12 +686,551 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                     <p className="text-gray-500 text-lg text-center">There are no products</p>
                 </div>
                 :
-                <div className="grid lg:grid-cols-[300px_1fr] gap-5">
-                    <aside className="grid h-fit max-lg:hidden lg:sticky lg:top-[105px] gap-4 ">
+                <div className="grid lg:grid-cols-[300px_1fr] gap-10">
+                    {/* lg:sticky lg:top-[105px] */}
+                    <aside className="grid h-fit max-lg:hidden  gap-10 ">
                         <div className="items-center pb-2 border-b-[2px] border-b-gray-200">
-                            <h3></h3>
+                            <h3 className="text-xl uppercase tracking-wide text-black/70">Filter</h3>
                         </div>
-                    </aside>
+                        <div className="flex flex-col gap-5">
+                            <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                onClick={() => {
+                                    setShowAvailabity(!showAvailabity)
+                                }}
+                            >
+                                <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Availabity</h3>
+                                <span className="">{showAvailabity ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                            </button>
+                            {showAvailabity && (
+                                <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                    <FormControlLabel control={
+                                        <Checkbox
+                                            indeterminate={isIndeterminateAvailabity}
+                                            checked={allCheckedAvailabity}
+                                            onChange={handleCheckAllAvailabity}
+                                            icon={<FaRegCircle />}
+                                            indeterminateIcon={<FaMinusCircle />}
+                                            checkedIcon={<FaCheckCircle />}
+                                            sx={sxCheckBoxMinate}
+                                        />
+                                    }
+                                        label="All"
+                                        sx={sxControlLabel}
+                                    />
+                                    {filterAvailabity.map((vailabity) => (
+                                        <FormControlLabel key={vailabity.id} control={
+                                            <Checkbox
+                                                checked={checkedItemsAvailabity.includes(vailabity.id)}
+                                                onChange={() => handleCheckItemAvailabity(vailabity.id)}
+                                                icon={<FaRegCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBox}
+                                            />
+                                        }
+                                            label={vailabity.title}
+                                            sx={sxControlLabel}
+                                        />
+                                    ))}
+
+                                </div>
+                            )}
+                        </div>
+                        <div className="flex flex-col gap-5">
+                            <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                onClick={() => {
+                                    setShowPrice(!showPrice)
+                                }}
+                            >
+                                <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Price</h3>
+                                <span className="">{showPrice ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                            </button>
+                            {showPrice && (
+                                <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                    <div className="px-2">
+                                        <Slider
+                                            value={[priceMin, priceMax]}
+                                            onChange={handleChangeSlider}
+                                            onChangeCommitted={handleChangeSliderCommitted}
+                                            min={0}
+                                            max={1000}
+                                            valueLabelDisplay="auto"
+                                            sx={sxSlider}
+                                        />
+                                    </div>
+                                    <div className="flex justify-between gap-2 items-center">
+                                        <TextField
+                                            type="number"
+                                            slotProps={{
+                                                input: {
+                                                    startAdornment: (
+                                                        <InputAdornment position="start"
+                                                        >
+                                                            <PiCurrencyDollar />
+                                                        </InputAdornment>
+                                                    ),
+                                                },
+                                            }}
+                                            value={priceMin}
+                                            variant="outlined"
+                                            sx={sxTextField}
+                                            onChange={handleChangeInputPriceMin}
+                                        />
+                                        <p>to</p>
+                                        <TextField
+                                            type="number"
+                                            slotProps={{
+                                                input: {
+                                                    startAdornment: (
+                                                        <InputAdornment position="start"
+                                                        >
+                                                            <PiCurrencyDollar />
+                                                        </InputAdornment>
+                                                    ),
+                                                },
+                                            }}
+                                            value={priceMax}
+                                            variant="outlined"
+                                            sx={sxTextField}
+                                            onChange={handleChangeInputPriceMax}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {taxonsRetrieve?.data.attributes.name === 'Fashion' &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons &&
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsFashion}
+                                                checked={allCheckedTaxonsFashion}
+                                                onChange={handleCheckAllTaxonsFashion}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterTaxonsFashion.map((filter) => (
+                                            <FormControlLabel key={filter.id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsFashion.includes(filter.id)}
+                                                    onChange={() => handleCheckItemTaxonsFashion(filter.id)}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.title}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        {taxonsRetrieve?.data.attributes.name === 'Wellness' &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons && (
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsWellness}
+                                                checked={allCheckedTaxonsWellness}
+                                                onChange={handleCheckAllTaxonsWellness}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterTaxonsWellness.map((filter) => (
+                                            <FormControlLabel key={filter.id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsWellness.includes(filter.id)}
+                                                    onChange={() => handleCheckItemTaxonsWellness(filter.id)}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.title}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        }
+
+                        {(taxonsRetrieve?.data.attributes.name === 'Men' && filterFashionMen!.length > 0) &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons && (
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsMen}
+                                                checked={allCheckedTaxonsMen}
+                                                onChange={handleCheckAllTaxonsMen}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterFashionMen!.map((filter, id) => (
+                                            <FormControlLabel key={id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsMen.includes(Number(filter.id))}
+                                                    onChange={() => handleCheckItemTaxonsMen(Number(filter.id))}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.attributes.name}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        }
+
+                        {(taxonsRetrieve?.data.attributes.name === 'Women' && filterFashionWomen!.length > 0) &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons && (
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsWomen}
+                                                checked={allCheckedTaxonsWomen}
+                                                onChange={handleCheckAllTaxonsWomen}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterFashionWomen!.map((filter, id) => (
+                                            <FormControlLabel key={id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsWomen.includes(Number(filter.id))}
+                                                    onChange={() => handleCheckItemTaxonsWomen(Number(filter.id))}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.attributes.name}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>)}
+                            </div>
+                        }
+
+                        {(taxonsRetrieve?.data.attributes.name === 'Accessories' && filterFashionAccessories!.length > 0) &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons && (
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsAccessories}
+                                                checked={allCheckedTaxonsAccessories}
+                                                onChange={handleCheckAllTaxonsAccessories}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterFashionAccessories!.map((filter, id) => (
+                                            <FormControlLabel key={id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsAccessories.includes(Number(filter.id))}
+                                                    onChange={() => handleCheckItemTaxonsAccessories(Number(filter.id))}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.attributes.name}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>)}
+                            </div>
+                        }
+
+                        {(taxonsRetrieve?.data.attributes.name === 'Fitness' && filterWellnessFitness!.length > 0) &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons && (
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsFitness}
+                                                checked={allCheckedTaxonsFitness}
+                                                onChange={handleCheckAllTaxonsFitness}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterWellnessFitness!.map((filter, id) => (
+                                            <FormControlLabel key={id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsFitness.includes(Number(filter.id))}
+                                                    onChange={() => handleCheckItemTaxonsFitness(Number(filter.id))}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.attributes.name}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>)}
+                            </div>
+                        }
+
+                        {(taxonsRetrieve?.data.attributes.name === 'Relaxation' && filterWellnessRelaxation!.length > 0) &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons && (
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsRelaxation}
+                                                checked={allCheckedTaxonsRelaxation}
+                                                onChange={handleCheckAllTaxonsRelaxation}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterWellnessRelaxation!.map((filter, id) => (
+                                            <FormControlLabel key={id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsRelaxation.includes(Number(filter.id))}
+                                                    onChange={() => handleCheckItemTaxonsRelaxation(Number(filter.id))}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.attributes.name}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>)}
+                            </div>
+                        }
+
+                        {(taxonsRetrieve?.data.attributes.name === 'Mental Stimulation' && filterWellnessMentalStimulation!.length > 0) &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons && (
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsMentalStimulation}
+                                                checked={allCheckedTaxonsMentalStimulation}
+                                                onChange={handleCheckAllTaxonsMentalStimulation}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterWellnessMentalStimulation!.map((filter, id) => (
+                                            <FormControlLabel key={id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsMentalStimulation.includes(Number(filter.id))}
+                                                    onChange={() => handleCheckItemTaxonsMentalStimulation(Number(filter.id))}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.attributes.name}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>)}
+                            </div>
+                        }
+
+                        {(taxonsRetrieve?.data.attributes.name === 'Nutrition' && filterWellnessNutrition!.length > 0) &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons && (
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateTaxonsNutrition}
+                                                checked={allCheckedTaxonsNutrition}
+                                                onChange={handleCheckAllTaxonsNutrition}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterWellnessNutrition!.map((filter, id) => (
+                                            <FormControlLabel key={id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsTaxonsNutrition.includes(Number(filter.id))}
+                                                    onChange={() => handleCheckItemTaxonsNutrition(Number(filter.id))}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.attributes.name}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>)}
+                            </div>
+                        }
+
+                        <div className="flex flex-col gap-5">
+                            <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                onClick={() => {
+                                    setShowColor(!showColor)
+                                }}
+                            >
+                                <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Color</h3>
+                                <span className="">{showColor ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                            </button>
+                            {showColor && (
+                                <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex flex-col gap-5">
+                            <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                onClick={() => {
+                                    setShowSize(!showSize)
+                                }}
+                            >
+                                <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Size</h3>
+                                <span className="">{showSize ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                            </button>
+                            {showSize && (
+                                <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                </div>
+                            )}
+                        </div>
+
+                        <button className=" h-10  justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                        >
+                            Clear All Filters
+                        </button>
+                    </aside >
                     <section className="flex flex-col gap-4 md:gap-6">
                         <div className="items-center pb-2 border-b-[2px] border-b-gray-200 flex justify-between ">
                             <div>
@@ -383,9 +1307,9 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
                     </section>
 
-                </div>
+                </div >
             }
-        </div>
+        </div >
     );
 }
 
