@@ -1,3 +1,5 @@
+import { Product } from "./responseData/interfaceStorefront";
+
 export interface PaginationMeta {
     count: number;
     total_count: number;
@@ -171,4 +173,9 @@ export interface ColorOption {
   color: string;
   colorPresentation: string;
   variants: IncludedVariant[];
+}
+
+export interface ProductCardProps {
+    products: Product[];
+    included: IncludedItem[]
 }

@@ -178,17 +178,6 @@ export const useState_ResAdyen = create<State_ResAdyen>((set) => ({
 
 // Products
 interface State_ResProducts {
-    // resProducts_List: ResProduct_ListAll | undefined;
-    // setResProducts_List: (data: ResProduct_ListAll) => void;
-    // resProduct_Retrieve: ResProduct_Retrieve | undefined;
-    // setResProduct_Retrieve: (data: ResProduct_Retrieve) => void;
-
-    // resProducts_SaleList: ResProduct_ListAll | undefined;
-    // setResProducts_SaleList: (data: ResProduct_ListAll) => void;
-
-    // resProducts_NewList: ResProduct_ListAll | undefined;
-    // setResProducts_NewList: (data: ResProduct_ListAll) => void;
-
     resDataProducts_List: Product[]
     setResDataProduct_List: React.Dispatch<React.SetStateAction<Product[]>>
     resDataIcludes_List: IncludedItem[]
@@ -209,16 +198,6 @@ interface State_ResProducts {
 }
 
 export const useState_ResProducts = create<State_ResProducts>((set) => ({
-    // resProducts_List: undefined,
-    // setResProducts_List: (data) => set({ resProducts_List: data }),
-    // resProduct_Retrieve: undefined,
-    // setResProduct_Retrieve: (data) => set({ resProduct_Retrieve: data }),
-
-    // resProducts_SaleList: undefined,
-    // setResProducts_SaleList: (data) => set({ resProducts_SaleList: data }),
-
-    // resProducts_NewList: undefined,
-    // setResProducts_NewList: (data) => set({ resProducts_NewList: data }),
     resDataProducts_List: [],
     setResDataProduct_List: (value) =>
         set((state) => ({

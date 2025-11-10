@@ -115,7 +115,6 @@ const Fashion: React.FC = () => {
 
     const sxBox2Drawer: SxProps<Theme> = {
         display: 'flex',
-        // justifyContent: 'flex-end',
         alignItems: 'center',
         padding: '12px 16px',
         cursor: 'pointer'
@@ -147,7 +146,9 @@ const Fashion: React.FC = () => {
     const { resDataIcludes_List, resDataProducts_List, setResDataIcludes_List, setResDataProduct_List } = useState_ResProducts()
     const { resTaxons_Retrieve, setResTaxons_Retrieve } = useState_ResTaxons()
 
-    const { setLoading, setSelectNav, prePage } = useStateGeneral()
+    const { setLoading, setSelectNav, prePage, loadingReadMore, setLoadingReadMore,
+        currentPage, setCurrentPage, totalDatas, totalPages, setTotalDatas, setTotalPages
+    } = useStateGeneral()
 
     const getApiTaxonsFashion = async (taxon_permalink: string) => {
         try {
@@ -161,17 +162,19 @@ const Fashion: React.FC = () => {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
         }
     }
-    const [loadingReadMore, setLoadingReadMore] = useState<boolean>(false)
-    const [currentPage, setCurrentPage] = useState<number>(0)
-    const [totalData, setTatalData] = useState<number>(0)
+
+    const [sortBy, setSortBy] = useState<string>("Relevance")
+    const [sortOption, setSortOption] = useState("relevance");
 
     const getApiProducts = async (filter_taxons: string, page: number, per_page: number, include: string) => {
         try {
             { page === 1 ? setLoading(true) : setLoadingReadMore(true) }
             setLoadingReadMore(true)
             const res = await ListAllProducts({ filter_taxons, page, per_page, include })
-            // setResProducts_List(res.data)
-            setTatalData(res.data.meta.total_count)
+            setTotalDatas(res.data.meta.total_count)
+            setTotalPages(res.data.meta.total_pages)
+            setCurrentPage(page); // cập nhật page hiện tại sau khi load xong
+
             if (page === 1) {
                 setResDataProduct_List(res.data.data);
                 setResDataIcludes_List(res.data.included)
@@ -179,9 +182,11 @@ const Fashion: React.FC = () => {
                 setResDataProduct_List((prev) => [...prev, ...res.data.data]);
                 setResDataIcludes_List((prev) => [...prev, ...res.data.included])
             }
-            setCurrentPage(page); // cập nhật page hiện tại sau khi load xong
         } catch (error: any) {
-            toast.error(`Stores: ` + error.response.error)
+            toast.error(`Products: ` + error.response.error)
+            setResDataProduct_List([])
+            setResDataIcludes_List([])
+            setCurrentPage(0)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
@@ -197,11 +202,12 @@ const Fashion: React.FC = () => {
 
     // Infinite scroll
     useEffect(() => {
+        setSortBy("Relevance")
+        setSortOption("relevance");
         const handleScroll = () => {
             if (loadingReadMore) return;
 
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-                const totalPages = Math.ceil(totalData / prePage);
                 if (currentPage < totalPages) {
                     getApiProducts("175", currentPage + 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
                 }
@@ -210,7 +216,7 @@ const Fashion: React.FC = () => {
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [loadingReadMore, currentPage, totalData, getApiProducts]);
+    }, [loadingReadMore, currentPage, totalDatas, getApiProducts]);
 
 
     const Category = (name: string) => {
@@ -231,8 +237,6 @@ const Fashion: React.FC = () => {
         setAnchorElSortBy(null);
     };
 
-    const [sortBy, setSortBy] = useState<string>("Relevance")
-    const [sortOption, setSortOption] = useState("relevance");
     const handleSortDefault = () => {
         handleCloseSortBy()
         setSortBy("Relevance")
@@ -350,11 +354,17 @@ const Fashion: React.FC = () => {
                     <section className="flex flex-col gap-4 md:gap-6">
                         <div className="items-center pb-2 border-b-[2px] border-b-gray-200 flex justify-between ">
                             <div className="flex items-end gap-3">
-                                <h3 className="text-xl uppercase tracking-wide ">
+                                <h3 className="text-lg uppercase tracking-wide ">
                                     Result
                                 </h3>
-                                <span className="text-xl uppercase flex gap-1 items-center">
-                                    <strong className="text-3xl text-green-600">{((currentPage + 1) * prePage)}</strong>/{totalData}
+                                <span className="text-lg uppercase flex gap-1 items-center">
+                                    <strong className="text-3xl text-green-600">{
+                                        resDataProducts_List.length === 0 ?
+                                            0 :
+                                            (currentPage * prePage) > totalDatas ?
+                                                totalDatas
+                                                : (currentPage * prePage)
+                                    }</strong>/{totalDatas}
                                 </span>
                             </div>
                             <button

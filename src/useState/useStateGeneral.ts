@@ -23,7 +23,15 @@ interface State {
     setIsCurrency: (isCheck: string) => void;
     hoveredNav: number | null;
     setHoveredNav: (hover: number | null) => void;
-    prePage: number
+    prePage: number;
+    loadingReadMore: boolean;
+    setLoadingReadMore: (isCheck: boolean) => void;
+    totalDatas: number;
+    setTotalDatas: (total: number) => void;
+    totalPages: number;
+    setTotalPages: (total: number) => void;
+    currentPage: number;
+    setCurrentPage: (current: number) => void;
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -72,5 +80,14 @@ export const useStateGeneral = create<State>((set) => ({
     setIsCurrency: (isCheck) => set({ isCurrency: isCheck }),
     hoveredNav: null,
     setHoveredNav: (hover) => set({ hoveredNav: hover }),
-    prePage: 12
+    prePage: 12,
+    loadingReadMore: false,
+    setLoadingReadMore: (isCheck) => set({ loadingReadMore: isCheck }),
+    currentPage: 0,
+    setCurrentPage: (current) => set({ currentPage: current }),
+    totalDatas: 0,
+    setTotalDatas: (total) => set({ totalDatas: total }),
+    totalPages: 0,
+    setTotalPages: (total) => set({ totalPages: total }),
+
 }))

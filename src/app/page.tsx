@@ -30,16 +30,21 @@ const Home: React.FC = () => {
       setLoading(true);
       const res = await ListAllProducts({ filter_taxons, page, per_page, include })
       if (filter_taxons === "173") {
-        console.log("173", res.data)
         setResDataIcludes_SaleList(res.data.included)
         setResDataProduct_SaleList(res.data.data)
       } else if (filter_taxons === "174") {
-        console.log("174", res.data)
         setResDataIcludes_NewList(res.data.included)
         setResDataProduct_NewList(res.data.data)
       }
     } catch (error: any) {
-      toast.error(`Stores: ` + error.response.error)
+      toast.error(`Products: ` + error.response.error)
+      if (filter_taxons === "173") {
+        setResDataIcludes_SaleList([])
+        setResDataProduct_SaleList([])
+      } else if (filter_taxons === "174") {
+        setResDataIcludes_NewList([])
+        setResDataProduct_NewList([])
+      }
     }
     finally {
       setLoading(false); // 👈 tắt loading sau khi có dữ liệu
@@ -52,7 +57,7 @@ const Home: React.FC = () => {
       const res = await ListAllPost()
       setResPosts_List(res.data)
     } catch (error: any) {
-      toast.error(`Stores: ` + error.response.error)
+      toast.error(`Posts: ` + error.response.error)
     }
     finally {
       setLoading(false); // 👈 tắt loading sau khi có dữ liệu

@@ -1,4 +1,4 @@
-import { ColorOption, IncludedImage, IncludedItem, IncludedVariant, IncludedTaxon, PriceInfo } from '@/interface/interface';
+import { ColorOption, IncludedImage, IncludedItem, IncludedVariant, IncludedTaxon, PriceInfo, ProductCardProps } from '@/interface/interface';
 import { Product } from '@/interface/responseData/interfaceStorefront';
 import { IconButton } from '@mui/material';
 import type { SxProps, Theme } from "@mui/material/styles";
@@ -6,11 +6,6 @@ import { keyframes } from "@mui/system";
 import React, { useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
-
-interface ProductCardProps {
-    products: Product[];
-    included: IncludedItem[]
-}
 
 const fly1 = keyframes`
   from { transform: translateY(0.1em); }
