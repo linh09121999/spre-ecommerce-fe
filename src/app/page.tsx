@@ -119,7 +119,9 @@ const Home: React.FC = () => {
               }}
             >View all <span className=""><MdNavigateNext size={24} /></span></button>
           </div>
-          <ListProductCard products={resProducts_SaleList?.data ?? []} included={resProducts_SaleList?.included ?? []} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <ListProductCard products={resProducts_SaleList?.data ?? []} included={resProducts_SaleList?.included ?? []} />
+          </div>
         </div>
         <div className='flex-grow gap-5 flex flex-col '>
           <div className="flex justify-between css-next items-center w-full transition-all duration-300 ease">
@@ -130,7 +132,9 @@ const Home: React.FC = () => {
               }}
             >View all <span className=""><MdNavigateNext size={24} /></span></button>
           </div>
-          <ListProductCard products={resProducts_NewList?.data ?? []} included={resProducts_NewList?.included ?? []} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <ListProductCard products={resProducts_NewList?.data ?? []} included={resProducts_NewList?.included ?? []} />
+          </div>
         </div>
         <div className='flex-grow gap-5 flex flex-col '>
           <div className="flex justify-between css-next items-center w-full transition-all duration-300 ease">
@@ -175,7 +179,7 @@ const Home: React.FC = () => {
                         <span className="text-sm text-gray-500">{res.attributes.post_category_title}</span>
                         <h3 className="text-xl  font-semibold mt-1 mb-2">{res.attributes.title}</h3>
                         <p className=" text-sm mb-3">{res.attributes.author_name}</p>
-                        <p className=" text-sm mb-3">Published: {res.attributes.published_at}</p>
+                        <p className=" text-sm mb-3">Published: {new Date(res.attributes.published_at).toLocaleDateString()}</p>
                       </div>
                     </div>
                   }

@@ -245,7 +245,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
 
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <>
             {products.map((product) => {
                 const priceInfo = getPriceInfo(product);
                 const colorOptions = getColorOptions(product);
@@ -258,14 +258,14 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                         className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col overflow-hidden"
                     >
                         {/* --- Product Image --- */}
-                        <div className="relative h-71 overflow-hidden">
+                        <div className="relative h-auto overflow-hidden">
                             {/* {imageUrl ? ( */}
                             {displayImage ? (
                                 <img
                                     src={displayImage}
                                     alt={product.attributes.name}
                                     onError={handleImageError}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    className="w-full aspect-[1/1] object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                             ) : (
                                 <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
@@ -276,7 +276,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                             {/* Overlay gradient */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300"></div>
                             {/* Badges */}
-                            <div className="absolute -top-[3px] -left-[3px]  w-[85px] h-[85px]">
+                            <div className="absolute top-[3px] left-[3px]  w-[90px] h-[90px]">
                                 {isNew && (
                                     <span className=" text-xs font-semibold shadow text-center -rotate-45 relative py-[7px] -left-[30px] top-[15px] w-[120px] 
         bg-gradient-to-b from-green-500 to-green-800 text-white
@@ -291,14 +291,18 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                                         -{priceInfo.discount}%
                                     </span>
                                 )}
+                                {!product.attributes.in_stock && (
+                                    <span className="text-xs font-semibold shadow text-center -rotate-45 relative py-[7px] -left-[30px] top-[15px] w-[120px]
+                            bg-gradient-to-b from-gray-500 to-gray-800 text-white
+        shadow-[0_0_3px_rgba(0,0,0,0.3)] block
+                                    ">
+                                        Out of stock
+                                    </span>
+                                )}
                             </div>
 
                             {/* Out of stock */}
-                            {!product.attributes.in_stock && (
-                                <span className="absolute top-3 right-3 bg-gray-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow z-10">
-                                    Out of stock
-                                </span>
-                            )}
+
 
                             {/* Hover favorite button */}
                             <button aria-label='click heart'
@@ -365,7 +369,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
 
                 );
             })}
-        </div>
+        </>
     );
 };
 
