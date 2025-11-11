@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { FilterProduct, Pages } from '@/interface/interface'
+import { FilterProduct, FilterProductColor, Pages } from '@/interface/interface'
 
 // import { JSX } from 'react';
 
@@ -36,11 +36,19 @@ interface State {
     setSortBy: (sort: string) => void;
     sortOption: string;
     setSortOption: (sort: string) => void;
-    filterAllProduct: FilterProduct[];
+    filterTaxonsAllProduct: FilterProduct[];
+    filterCollectonsAllProduct: FilterProduct[];
     filterAvailabity: FilterProduct[];
     filterTaxonsFashion: FilterProduct[];
     filterTaxonsWellness: FilterProduct[];
 
+    filterSize: FilterProduct[];
+    checkedSize: number[];
+    setCheckedSize: React.Dispatch<React.SetStateAction<number[]>>;
+
+    filterColor: FilterProduct[];
+    checkedColor: number[];
+    setCheckedColor: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 export const useStateGeneral = create<State>((set) => ({
@@ -104,13 +112,16 @@ export const useStateGeneral = create<State>((set) => ({
 
     sortOption: "relevance",
     setSortOption: (sort) => set({ sortOption: sort }),
-    filterAllProduct: [
+    filterTaxonsAllProduct: [
         { id: 0, title: "Categories" },
         { id: 1, title: "Brands" },
         { id: 2, title: "Wellness" },
         { id: 3, title: "Beauty" }
-    ]
-    ,
+    ],
+    filterCollectonsAllProduct: [
+        { id: 0, title: "On sale" },
+        { id: 1, title: "New arrivals" }
+    ],
     filterAvailabity: [
         { id: 0, title: "In stock" },
         { id: 1, title: "Out of stock" }
@@ -125,5 +136,53 @@ export const useStateGeneral = create<State>((set) => ({
         { id: 1, title: "Relaxation" },
         { id: 2, title: "Mental Stimulation" },
         { id: 3, title: "Nutrition" }
-    ]
+    ],
+
+    filterSize: [
+        { id: 0, title: "S" },
+        { id: 1, title: "M" },
+        { id: 2, title: "L" },
+        { id: 3, title: "XL" },
+        { id: 4, title: "Small" },
+        { id: 5, title: "Medium" },
+        { id: 6, title: "Large" }
+    ],
+    checkedSize: [],
+    setCheckedSize: (value) =>
+        set((state) => ({
+            checkedSize:
+                typeof value === "function"
+                    ? (value as (prev: number[]) => number[])(state.checkedSize)
+                    : value,
+        })),
+
+    filterColor: [
+        { id: 0, title: "Olive" },
+        { id: 1, title: "Black" },
+        { id: 2, title: "White" },
+        { id: 3, title: "Red" },
+        { id: 4, title: "Green" },
+        { id: 5, title: "Blue" },
+        { id: 6, title: "Yellow" },
+        { id: 7, title: "Orange" },
+        { id: 8, title: "Purple" },
+        { id: 9, title: "Pink" },
+        { id: 10, title: "Brown" },
+        { id: 11, title: "Beige" },
+        { id: 12, title: "Gold" },
+        { id: 13, title: "Grey" },
+        { id: 14, title: "Light Blue" },
+        { id: 15, title: "Cream" },
+        { id: 16, title: "Turquoise" },
+        { id: 17, title: "Teal" },
+    ],
+
+    checkedColor: [],
+    setCheckedColor: (value) =>
+        set((state) => ({
+            checkedColor:
+                typeof value === "function"
+                    ? (value as (prev: number[]) => number[])(state.checkedColor)
+                    : value,
+        })),
 }))

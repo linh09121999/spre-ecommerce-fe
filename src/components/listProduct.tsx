@@ -4,13 +4,14 @@ import Image from "next/image";
 
 import React, { useState, useEffect, useMemo } from "react";
 import ListProductCard from "./cardListProduct";
-import { Checkbox, FormControlLabel, InputAdornment, Menu, MenuItem, Slider, TextField } from "@mui/material";
+import { Checkbox, FormControlLabel, IconButton, InputAdornment, Menu, MenuItem, Slider, TextField } from "@mui/material";
 import { FaCheckCircle, FaChevronDown, FaChevronUp, FaMinusCircle, FaRegCircle } from "react-icons/fa";
 import { useStateGeneral } from "@/useState/useStateGeneral";
 import type { SxProps, Theme } from "@mui/material/styles";
 import { ResTaxons_Retrieve } from "@/interface/responseData/interfaceStorefront";
 import { PiCurrencyDollar } from "react-icons/pi";
 import { useState_ResTaxons } from "@/useState/useStatestorefront";
+import { IoMdSearch } from "react-icons/io";
 
 interface ListProduct extends ProductCardProps {
     taxonsRetrieve: ResTaxons_Retrieve
@@ -170,11 +171,11 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     const { prePage, loadingReadMore,
         currentPage, totalDatas,
         sortOption, setSortOption, sortBy, setSortBy,
-        filterAvailabity, filterTaxonsFashion, filterTaxonsWellness, filterAllProduct
+        filterAvailabity, filterTaxonsFashion, filterTaxonsWellness,
+        filterTaxonsAllProduct, filterCollectonsAllProduct,
+        filterSize, checkedSize, setCheckedSize,
+        filterColor, checkedColor, setCheckedColor
     } = useStateGeneral()
-
-    // const [sortBy, setSortBy] = useState<string>("Relevance")
-    // const [sortOption, setSortOption] = useState<string>("relevance")
 
 
     const { resTaxons_List } = useState_ResTaxons()
@@ -318,6 +319,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     const [showAvailabity, setShowAvailabity] = useState<boolean>(true)
     const [showPrice, setShowPrice] = useState<boolean>(true)
     const [showTaxons, setShowTaxons] = useState<boolean>(true)
+    const [showCollectons, setShowCollectons] = useState<boolean>(true)
     const [showColor, setShowColor] = useState<boolean>(true)
     const [showSize, setShowSize] = useState<boolean>(true)
 
@@ -346,25 +348,49 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // all
-    const [checkedItemsAllProduct, setCheckItemAllProduct] = useState<number[]>([])
-    const allCheckedAllProduct = checkedItemsAllProduct.length === filterAllProduct.length
-    const isIndeterminateAllProduct = checkedItemsAllProduct.length > 0 && checkedItemsAllProduct.length < filterAllProduct.length
+    const [checkedItemsTaxonsAllProduct, setCheckItemTaxonsAllProduct] = useState<number[]>([])
+    const allCheckedTaxonsAllProduct = checkedItemsTaxonsAllProduct.length === filterTaxonsAllProduct.length
+    const isIndeterminateTaxonsAllProduct = checkedItemsTaxonsAllProduct.length > 0 && checkedItemsTaxonsAllProduct.length < filterTaxonsAllProduct.length
 
     // Khi click vào "All"
-    const handleCheckAllAllProduct = () => {
-        allCheckedAllProduct ?
-            setCheckItemAllProduct([])
+    const handleCheckAllTaxonsAllProduct = () => {
+        allCheckedTaxonsAllProduct ?
+            setCheckItemTaxonsAllProduct([])
             :
-            setCheckItemAllProduct(filterAllProduct.map((type) => type.id))
+            setCheckItemTaxonsAllProduct(filterTaxonsAllProduct.map((type) => type.id))
     }
 
     // Khi click vào từng item
-    const handleCheckItemAllProduct = (id: number) => {
-        checkedItemsAllProduct.includes(id) ?
-            setCheckItemAllProduct(checkedItemsAllProduct.filter((itemId) => itemId !== id))
+    const handleCheckItemTaxonsAllProduct = (id: number) => {
+        checkedItemsTaxonsAllProduct.includes(id) ?
+            setCheckItemTaxonsAllProduct(checkedItemsTaxonsAllProduct.filter((itemId) => itemId !== id))
             :
             (
-                setCheckItemAllProduct([...checkedItemsAllProduct, id])
+                setCheckItemTaxonsAllProduct([...checkedItemsTaxonsAllProduct, id])
+
+            )
+    }
+
+    // 
+    const [checkedItemsCollectonsAllProduct, setCheckItemCollectonsAllProduct] = useState<number[]>([])
+    const allCheckedCollectonsAllProduct = checkedItemsCollectonsAllProduct.length === filterCollectonsAllProduct.length
+    const isIndeterminateCollectonsAllProduct = checkedItemsCollectonsAllProduct.length > 0 && checkedItemsCollectonsAllProduct.length < filterCollectonsAllProduct.length
+
+    // Khi click vào "All"
+    const handleCheckAllCollectonsAllProduct = () => {
+        allCheckedCollectonsAllProduct ?
+            setCheckItemCollectonsAllProduct([])
+            :
+            setCheckItemCollectonsAllProduct(filterCollectonsAllProduct.map((type) => type.id))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemCollectonsAllProduct = (id: number) => {
+        checkedItemsCollectonsAllProduct.includes(id) ?
+            setCheckItemCollectonsAllProduct(checkedItemsCollectonsAllProduct.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemCollectonsAllProduct([...checkedItemsCollectonsAllProduct, id])
 
             )
     }
@@ -633,6 +659,42 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             )
     }
 
+    // size
+    const [inputValueSize, setInputValueSize] = useState<string>("");
+
+    const filterSearchSize = useMemo(() => {
+        if (!inputValueSize.trim()) return filterSize;
+        return filterSize.filter((r) =>
+            r.title.toLowerCase().includes(inputValueSize.toLowerCase())
+        );
+    }, [inputValueSize, filterSize]);
+
+    const handleSelectSize = (id: number) => {
+        setCheckedSize((prev) =>
+            prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
+        );
+    };
+
+    // color
+    const [inputValueColor, setInputValueColor] = useState<string>("");
+
+    const filterSearchColor = useMemo(() => {
+        if (!inputValueColor.trim()) return filterColor;
+        return filterColor.filter((r) =>
+            r.title.toLowerCase().includes(inputValueColor.toLowerCase())
+        );
+    }, [inputValueColor, filterColor]);
+
+    const handleSelectColor = (id: number) => {
+        setCheckedColor((prev) =>
+            prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
+        );
+    };
+
+    const toLowerNoSpace = (str: string): string => {
+        return str.toLowerCase().replace(/\s+/g, '');
+    };
+
     const [priceMin, setPriceMin] = React.useState<number>(0);
     const [priceMax, setPriceMax] = React.useState<number>(200);
 
@@ -664,51 +726,61 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         <div className={`max-w-[1535px] mx-auto flex flex-col px-5 py-10 ${taxonsRetrieve?.data.attributes.header_url ? 'gap-10' : 'gap-5'}`}>
             <div className={`${taxonsRetrieve?.data.attributes.header_url ? 'shadow-xl rounded-md' : ''} relative w-full  overflow-hidden  group`}>
                 {/* Ảnh nền */}
-                {taxonsRetrieve?.data.attributes.header_url ?
+                {!taxonsRetrieve ?
                     <>
-                        <img
-                            src={taxonsRetrieve?.data.attributes.header_url}
-                            alt={taxonsRetrieve?.data.attributes.name}
-                            className="w-full aspect-[16/5] object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        {/* Lớp phủ gradient tối giúp chữ nổi */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-
-                        {/* Nội dung chữ overlay */}
-                        <div className="absolute left-0 bottom-0  p-10 text-white z-10 w-3/4 grid gap-3">
-                            <span className="text-xl uppercase text-gray-300">{Category(taxonsRetrieve?.data.attributes.permalink)}</span>
-                            <h3 className="text-4xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-400 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
-                                {taxonsRetrieve?.data.attributes.name}
+                        <div className=" border-b-[2px] border-b-gray-200 grid gap-3 pb-5 w-full">
+                            <h3 className="text-3xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-500 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
+                                Shop all
                             </h3>
-                            {taxonsRetrieve?.data.attributes.description &&
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    {taxonsRetrieve?.data.attributes.description}
-                                </p>
-                            }
                         </div>
-
-                        {/* Hiệu ứng điểm nhấn (vòng sáng mờ khi hover) */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-[radial-gradient(circle_at_center,white_0%,transparent_60%)] mix-blend-overlay"></div>
-
                     </>
                     :
                     <>
-                        {/* Nội dung chữ overlay */}
-                        <div className=" border-b-[2px] border-b-gray-200 grid gap-3 pb-5 w-full">
-                            <span className="text-xl  uppercase text-gray-500">{Category(taxonsRetrieve?.data.attributes.permalink!)}</span>
-                            <h3 className="text-4xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-500 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
-                                {taxonsRetrieve?.data.attributes.name}
-                            </h3>
-                            {taxonsRetrieve?.data.attributes.description &&
-                                <p className="text-gray-400 text-lg leading-relaxed w-3/4">
-                                    {taxonsRetrieve?.data.attributes.description}
-                                </p>
-                            }
-                        </div>
+                        {taxonsRetrieve?.data.attributes.header_url ?
+                            <>
+                                <img
+                                    src={taxonsRetrieve?.data.attributes.header_url}
+                                    alt={taxonsRetrieve?.data.attributes.name}
+                                    className="w-full aspect-[16/5] object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                                {/* Lớp phủ gradient tối giúp chữ nổi */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+
+                                {/* Nội dung chữ overlay */}
+                                <div className="absolute left-0 bottom-0  p-10 text-white z-10 w-3/4 grid gap-3">
+                                    <span className="text-xl uppercase text-gray-300">{Category(taxonsRetrieve?.data.attributes.permalink)}</span>
+                                    <h3 className="text-4xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-400 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
+                                        {taxonsRetrieve?.data.attributes.name}
+                                    </h3>
+                                    {taxonsRetrieve?.data.attributes.description &&
+                                        <p className="text-gray-400 text-lg leading-relaxed">
+                                            {taxonsRetrieve?.data.attributes.description}
+                                        </p>
+                                    }
+                                </div>
+
+                                {/* Hiệu ứng điểm nhấn (vòng sáng mờ khi hover) */}
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 bg-[radial-gradient(circle_at_center,white_0%,transparent_60%)] mix-blend-overlay"></div>
+
+                            </>
+                            :
+                            <>
+                                {/* Nội dung chữ overlay */}
+                                <div className=" border-b-[2px] border-b-gray-200 grid gap-3 pb-5 w-full">
+                                    <span className="text-xl  uppercase text-gray-500">{Category(taxonsRetrieve?.data.attributes.permalink!)}</span>
+                                    <h3 className="text-3xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-500 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
+                                        {taxonsRetrieve?.data.attributes.name}
+                                    </h3>
+                                    {taxonsRetrieve?.data.attributes.description &&
+                                        <p className="text-gray-400 text-lg leading-relaxed w-3/4">
+                                            {taxonsRetrieve?.data.attributes.description}
+                                        </p>
+                                    }
+                                </div>
+                            </>
+                        }
                     </>
                 }
-
-
             </div>
             {products.length === 0 ?
                 <div className="flex justify-center items-center">
@@ -828,48 +900,92 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                         </div>
 
                         {!taxonsRetrieve &&
-                            <div className="flex flex-col gap-5">
-                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
-                                    onClick={() => {
-                                        setShowTaxons(!showTaxons)
-                                    }}
-                                >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
-                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
-                                </button>
-                                {showTaxons &&
-                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
-                                        <FormControlLabel control={
-                                            <Checkbox
-                                                indeterminate={isIndeterminateAllProduct}
-                                                checked={allCheckedAllProduct}
-                                                onChange={handleCheckAllAllProduct}
-                                                icon={<FaRegCircle />}
-                                                indeterminateIcon={<FaMinusCircle />}
-                                                checkedIcon={<FaCheckCircle />}
-                                                sx={sxCheckBoxMinate}
-                                            />
-                                        }
-                                            label="All"
-                                            sx={sxControlLabel}
-                                        />
-                                        {filterAllProduct.map((filter) => (
-                                            <FormControlLabel key={filter.id} control={
+                            <>
+                                <div className="flex flex-col gap-5">
+                                    <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                        onClick={() => {
+                                            setShowTaxons(!showTaxons)
+                                        }}
+                                    >
+                                        <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
+                                        <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                    </button>
+                                    {showTaxons &&
+                                        <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                            <FormControlLabel control={
                                                 <Checkbox
-                                                    checked={checkedItemsAllProduct.includes(filter.id)}
-                                                    onChange={() => handleCheckItemAllProduct(filter.id)}
+                                                    indeterminate={isIndeterminateTaxonsAllProduct}
+                                                    checked={allCheckedTaxonsAllProduct}
+                                                    onChange={handleCheckAllTaxonsAllProduct}
                                                     icon={<FaRegCircle />}
+                                                    indeterminateIcon={<FaMinusCircle />}
                                                     checkedIcon={<FaCheckCircle />}
-                                                    sx={sxCheckBox}
+                                                    sx={sxCheckBoxMinate}
                                                 />
                                             }
-                                                label={filter.title}
+                                                label="All"
                                                 sx={sxControlLabel}
                                             />
-                                        ))}
-                                    </div>
-                                }
-                            </div>
+                                            {filterTaxonsAllProduct.map((filter) => (
+                                                <FormControlLabel key={filter.id} control={
+                                                    <Checkbox
+                                                        checked={checkedItemsTaxonsAllProduct.includes(filter.id)}
+                                                        onChange={() => handleCheckItemTaxonsAllProduct(filter.id)}
+                                                        icon={<FaRegCircle />}
+                                                        checkedIcon={<FaCheckCircle />}
+                                                        sx={sxCheckBox}
+                                                    />
+                                                }
+                                                    label={filter.title}
+                                                    sx={sxControlLabel}
+                                                />
+                                            ))}
+                                        </div>
+                                    }
+                                </div>
+                                <div className="flex flex-col gap-5">
+                                    <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                        onClick={() => {
+                                            setShowCollectons(!showCollectons)
+                                        }}
+                                    >
+                                        <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Collectons</h3>
+                                        <span className="">{showCollectons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                    </button>
+                                    {showCollectons &&
+                                        <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                            <FormControlLabel control={
+                                                <Checkbox
+                                                    indeterminate={isIndeterminateCollectonsAllProduct}
+                                                    checked={allCheckedCollectonsAllProduct}
+                                                    onChange={handleCheckAllCollectonsAllProduct}
+                                                    icon={<FaRegCircle />}
+                                                    indeterminateIcon={<FaMinusCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBoxMinate}
+                                                />
+                                            }
+                                                label="All"
+                                                sx={sxControlLabel}
+                                            />
+                                            {filterCollectonsAllProduct.map((filter) => (
+                                                <FormControlLabel key={filter.id} control={
+                                                    <Checkbox
+                                                        checked={checkedItemsCollectonsAllProduct.includes(filter.id)}
+                                                        onChange={() => handleCheckItemCollectonsAllProduct(filter.id)}
+                                                        icon={<FaRegCircle />}
+                                                        checkedIcon={<FaCheckCircle />}
+                                                        sx={sxCheckBox}
+                                                    />
+                                                }
+                                                    label={filter.title}
+                                                    sx={sxControlLabel}
+                                                />
+                                            ))}
+                                        </div>
+                                    }
+                                </div>
+                            </>
                         }
 
                         {taxonsRetrieve?.data.attributes.name === 'Fashion' &&
@@ -879,7 +995,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons &&
@@ -924,7 +1040,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons && (
@@ -969,7 +1085,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons && (
@@ -1014,7 +1130,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons && (
@@ -1058,7 +1174,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons && (
@@ -1102,7 +1218,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons && (
@@ -1146,7 +1262,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons && (
@@ -1190,7 +1306,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons && (
@@ -1234,7 +1350,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         setShowTaxons(!showTaxons)
                                     }}
                                 >
-                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
                                     <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                 </button>
                                 {showTaxons && (
@@ -1282,6 +1398,54 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                             </button>
                             {showColor && (
                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <TextField
+                                            type="search"
+                                            placeholder="Search of Color..."
+                                            sx={sxTextField}
+                                            onChange={(e) => setInputValueColor(e.target.value)}
+                                            value={inputValueColor}
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            sx={{ color: 'var(--color-gray-300)' }}
+                                                        >
+                                                            <IoMdSearch className="mx-auto" />
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        />
+                                        {filterSearchColor.length > 0 ? (
+                                            <div className="flex flex-wrap gap-3">
+                                                {filterSearchColor.map((res) => (
+                                                    <button
+                                                        key={res.id}
+                                                        onClick={() => handleSelectColor(res.id)}
+                                                        className={`flex items-center gap-2 px-2 py-2 rounded-3xl group border `}
+                                                        style={{
+                                                            borderColor: `${checkedColor.includes(res.id) ? `${toLowerNoSpace(res.title)}` : 'var(--color-gray-300) '}`,
+                                                            color: `${checkedColor.includes(res.id) ? `${toLowerNoSpace(res.title)}` : 'var(--color-gray-300)'}`
+                                                        }}
+                                                    >
+                                                        <div className="flex items-center gap-2">
+                                                            <span style={{
+                                                                background: `${toLowerNoSpace(res.title)}`
+                                                            }}
+                                                                className="w-6 h-6 rounded-full border-2 transition-transform hover:scale-110"
+                                                            ></span>
+                                                            <p className="text-sm group-hover:text-gray-500 text-start">{res.title}</p>
+                                                        </div>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <p className="text-gray-400 text-sm italic">
+                                                No color found.
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -1297,6 +1461,43 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                             </button>
                             {showSize && (
                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                    <TextField
+                                        type="search"
+                                        placeholder="Search of size..."
+                                        sx={sxTextField}
+                                        onChange={(e) => setInputValueSize(e.target.value)}
+                                        value={inputValueSize}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                    >
+                                                        <IoMdSearch className="mx-auto" />
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    {filterSearchSize.length > 0 ? (
+                                        <div className="flex flex-wrap gap-3">
+                                            {filterSearchSize.map((res) => (
+                                                <button
+                                                    key={res.id}
+                                                    onClick={() => handleSelectSize(res.id)}
+                                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg group border ${checkedSize.includes(res.id) ? " border-green-500 text-green-500" : "border-gray-300 text-gray-300"}`}
+                                                >
+                                                    <div className="flex items-center gap-4">
+                                                        <p className="text-sm group-hover:text-green-500 text-start">{res.title}</p>
+                                                    </div>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className="text-gray-400 text-sm italic">
+                                            No size found.
+                                        </p>
+                                    )}
                                 </div>
                             )}
                         </div>
