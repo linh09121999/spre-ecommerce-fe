@@ -36,9 +36,8 @@ const ProductDetail: React.FC = () => {
 
   return (
     <>
-      <div className="max-w-[1535px] mx-auto flex flex-col gap-15 px-5 py-5">
-        <ProductDetailCompoment data={resProduct_Retrieve?.data ?? undefined}  included={resProduct_Retrieve?.included ??[]}/>
-      </div>
+      <ProductDetailCompoment data={resProduct_Retrieve?.data ?? undefined} included={resProduct_Retrieve?.included ?? []} />
+
       <ToastContainer position="top-right" autoClose={3000} />
     </>
   );

@@ -4,7 +4,7 @@ import { IconButton } from '@mui/material';
 import type { SxProps, Theme } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
 import { useRouter } from 'next/navigation';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 
@@ -92,7 +92,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
     }, [variants, selectedOptions]);
 
     // Initialize selected options
-    React.useEffect(() => {
+    useEffect(() => {
         if (optionTypes.length > 0 && Object.keys(selectedOptions).length === 0) {
             const initialOptions: SelectedOptions = {};
             optionTypes.forEach(optionType => {
@@ -148,60 +148,66 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
             : 0;
     }
 
+    const taxons = useMemo(() =>
+        included.filter(item => item.type === 'taxon') as IncludedTaxon[],
+        [included]
+    );
+
+    const longestPrettyName = taxons.reduce((longest, current) => {
+        const currentPrettyName = current.attributes?.pretty_name ?? "";
+        return currentPrettyName.length > longest.length ? currentPrettyName : longest;
+    }, "");
+
     return (
         <>
-            <>
-                {/* Breadcrumb */}
-                {/* <nav className="flex items-center space-x-2 px-6 py-4 border-b border-gray-200 text-sm text-gray-600">
-                        <a href="/" className="hover:text-gray-900 transition-colors">Home</a>
-                        <span>/</span>
-                        <a href="/categories" className="hover:text-gray-900 transition-colors">Categories</a>
-                        <span>/</span>
-                        <a href="/categories/fashion" className="hover:text-gray-900 transition-colors">Fashion</a>
-                        <span>/</span>
-                        <a href="/categories/fashion/men" className="hover:text-gray-900 transition-colors">Men</a>
-                        <span>/</span>
-                        <span className="text-gray-900 font-medium">{data.attributes.name}</span>
-                    </nav> */}
+            <div className='w-full'>
+                <div className='flex gap-2 px-5 max-w-[1535px] mx-auto items-center py-[10px] text-xl max-md:text-lg '>
+                    <a onClick={() => {
+                        router.back()
+                    }} className='text-lg'>
+                        {longestPrettyName}
+                    </a>
+                </div>
+            </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
-                    {/* Product Images */}
-                    <div className="space-y-4">
-                        <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
-                            {mainImage && (
-                                <img
-                                    src={mainImage.attributes.original_url}
-                                    alt={data?.attributes.name}
-                                    className="w-full h-full object-cover object-center"
-                                />
-                            )}
-                        </div>
-                        <div className="flex space-x-2 overflow-x-auto pb-2">
-                            {displayImages.map((image, index) => (
-                                <button
-                                    key={image.id}
-                                    className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 transition-all ${index === selectedImageIndex
-                                        ? 'border-blue-500 ring-2 ring-blue-200'
-                                        : 'border-gray-200 hover:border-gray-300'
-                                        }`}
-                                    onClick={() => setSelectedImageIndex(index)}
-                                >
-                                    <img
-                                        src={image.attributes.styles[2]?.url || image.attributes.original_url}
-                                        alt={`${data?.attributes.name} ${index + 1}`}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </button>
-                            ))}
-                        </div>
+            <div className="max-w-[1535px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 py-5 gap-5 px-5">
+                {/* Product Images */}
+                <div className="space-y-4">
+                    <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
+                        {mainImage && (
+                            <img
+                                src={mainImage.attributes.original_url}
+                                alt={data?.attributes.name}
+                                className="w-full h-full object-cover object-center"
+                            />
+                        )}
                     </div>
+                    <div className="flex space-x-2 overflow-x-auto pb-2">
+                        {displayImages.map((image, index) => (
+                            <button
+                                key={image.id}
+                                className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 transition-all ${index === selectedImageIndex
+                                    ? 'border-blue-500 ring-2 ring-blue-200'
+                                    : 'border-gray-200 hover:border-gray-300'
+                                    }`}
+                                onClick={() => setSelectedImageIndex(index)}
+                            >
+                                <img
+                                    src={image.attributes.styles[2]?.url || image.attributes.original_url}
+                                    alt={`${data?.attributes.name} ${index + 1}`}
+                                    className="w-full h-full object-cover"
+                                />
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
-                    {/* Product Info */}
-                    <div className="space-y-6">
-                        <h1 className="text-3xl font-bold text-gray-900">{data?.attributes.name}</h1>
+                {/* Product Info */}
+                <div className="space-y-6">
+                    <h1 className="text-3xl font-bold text-gray-900">{data?.attributes.name}</h1>
 
-                        {/* Price */}
-                        {/* <div className="flex items-center space-x-4">
+                    {/* Price */}
+                    {/* <div className="flex items-center space-x-4">
                                 {hasDiscount && (
                                     <span className="text-xl text-gray-500 line-through">
                                         {data.attributes.display_compare_at_price}
@@ -219,115 +225,134 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                                     </span>
                                 )}
                             </div> */}
-                        <div className="flex items-center space-x-4">
-                            {data && data.attributes && priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 && (
-                                <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-rose-500 to-red-700 text-white shadow-md backdrop-blur-md">
-                                    -{priceInfo(data.attributes.price, data.attributes.compare_at_price)}%
-                                </span>
-                            )}
+                    <div className="flex items-center space-x-4">
+                        {data && data.attributes && priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 && (
+                            <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-rose-500 to-red-700 text-white shadow-md backdrop-blur-md">
+                                -{priceInfo(data.attributes.price, data.attributes.compare_at_price)}%
+                            </span>
+                        )}
+                    </div>
+
+                    <div className="flex justify-between items-center mt-auto">
+                        <div className="flex items-center gap-2">
+                            {data && data.attributes && priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 ?
+                                (
+                                    <>
+                                        <span className="text-lg font-bold text-green-700">
+                                            ${data.attributes.price}
+                                        </span>
+                                        <span className="text-sm text-gray-400 line-through">
+                                            ${data.attributes.compare_at_price}
+                                        </span>
+                                    </>
+                                ) : (
+                                    <span className="text-lg font-bold text-green-700">
+                                        ${data!.attributes.price}
+                                    </span>
+                                )}
                         </div>
+                    </div>
 
-                        {/* Options */}
-                        <div className="space-y-4">
-                            {optionTypes.map(optionType => (
-                                <div key={optionType.id} className="space-y-3">
-                                    <label className="block text-sm font-medium text-gray-700">
-                                        {optionType.attributes.presentation}:
-                                    </label>
-                                    <div className="flex flex-wrap gap-2">
-                                        {Array.from(availableOptions[optionType.attributes.name] || []).map(optionValue => {
-                                            const option = variants
-                                                .flatMap(v => v.attributes.options)
-                                                .find(o => o.name === optionType.attributes.name && o.value === optionValue);
+                    {/* Options */}
+                    <div className="space-y-4">
+                        {optionTypes.map(optionType => (
+                            <div key={optionType.id} className="space-y-3">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    {optionType.attributes.presentation}:
+                                </label>
+                                <div className="flex flex-wrap gap-2">
+                                    {Array.from(availableOptions[optionType.attributes.name] || []).map(optionValue => {
+                                        const option = variants
+                                            .flatMap(v => v.attributes.options)
+                                            .find(o => o.name === optionType.attributes.name && o.value === optionValue);
 
-                                            return (
-                                                <button
-                                                    key={optionValue}
-                                                    className={`px-4 py-2 border rounded-md text-sm font-medium transition-all ${selectedOptions[optionType.attributes.name] === optionValue
-                                                        ? 'bg-blue-500 text-white border-blue-500'
-                                                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                                                        }`}
-                                                    onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
-                                                >
-                                                    {option?.presentation || optionValue}
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
+                                        return (
+                                            <button
+                                                key={optionValue}
+                                                className={`px-4 py-2 border rounded-md text-sm font-medium transition-all ${selectedOptions[optionType.attributes.name] === optionValue
+                                                    ? 'bg-blue-500 text-white border-blue-500'
+                                                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                                                    }`}
+                                                onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
+                                            >
+                                                {option?.presentation || optionValue}
+                                            </button>
+                                        );
+                                    })}
                                 </div>
-                            ))}
-                        </div>
-
-                        {/* Stock Status */}
-                        <div className="flex items-center">
-                            {selectedVariant?.attributes.in_stock ? (
-                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    In Stock
-                                </span>
-                            ) : (
-                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                    Out of Stock
-                                </span>
-                            )}
-                        </div>
-
-                        {/* Quantity and Add to Cart */}
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                                <button
-                                    className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                    onClick={() => handleQuantityChange(quantity - 1)}
-                                    disabled={quantity <= 1}
-                                >
-                                    -
-                                </button>
-                                <span className="px-4 py-2 bg-white min-w-12 text-center font-medium">{quantity}</span>
-                                <button
-                                    className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
-                                    onClick={() => handleQuantityChange(quantity + 1)}
-                                >
-                                    +
-                                </button>
                             </div>
+                        ))}
+                    </div>
 
+                    {/* Stock Status */}
+                    <div className="flex items-center">
+                        {selectedVariant?.attributes.in_stock ? (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                In Stock
+                            </span>
+                        ) : (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                Out of Stock
+                            </span>
+                        )}
+                    </div>
+
+                    {/* Quantity and Add to Cart */}
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                             <button
-                                className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
-                                onClick={handleAddToCart}
-                                disabled={!selectedVariant?.attributes.in_stock || !selectedVariant?.attributes.purchasable}
+                                className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                onClick={() => handleQuantityChange(quantity - 1)}
+                                disabled={quantity <= 1}
                             >
-                                {selectedVariant?.attributes.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                                -
+                            </button>
+                            <span className="px-4 py-2 bg-white min-w-12 text-center font-medium">{quantity}</span>
+                            <button
+                                className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
+                                onClick={() => handleQuantityChange(quantity + 1)}
+                            >
+                                +
                             </button>
                         </div>
 
-                        {/* Product Properties */}
-                        {productProperties.length > 0 && (
-                            <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                                <h3 className="text-lg font-medium text-gray-900">Product Details</h3>
-                                {productProperties.map(property => (
-                                    <div key={property.id} className="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
-                                        <span className="text-sm font-medium text-gray-600">
-                                            {property.attributes.description}:
-                                        </span>
-                                        <span className="text-sm text-gray-900">
-                                            {property.attributes.value}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+                        <button
+                            className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                            onClick={handleAddToCart}
+                            disabled={!selectedVariant?.attributes.in_stock || !selectedVariant?.attributes.purchasable}
+                        >
+                            {selectedVariant?.attributes.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                        </button>
+                    </div>
 
-                        {/* Description */}
-                        <div className="prose prose-sm max-w-none">
-                            <h3 className="text-lg font-medium text-gray-900 mb-3">Description</h3>
-                            {data &&
-                                <div
-                                    className="text-gray-600 leading-relaxed"
-                                    dangerouslySetInnerHTML={{ __html: data.attributes.description }}
-                                />}
+                    {/* Product Properties */}
+                    {productProperties.length > 0 && (
+                        <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                            <h3 className="text-lg font-medium text-gray-900">Product Details</h3>
+                            {productProperties.map(property => (
+                                <div key={property.id} className="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
+                                    <span className="text-sm font-medium text-gray-600">
+                                        {property.attributes.description}:
+                                    </span>
+                                    <span className="text-sm text-gray-900">
+                                        {property.attributes.value}
+                                    </span>
+                                </div>
+                            ))}
                         </div>
+                    )}
+
+                    {/* Description */}
+                    <div className="prose prose-sm max-w-none">
+                        <h3 className="text-lg font-medium text-gray-900 mb-3">Description</h3>
+                        {data &&
+                            <div
+                                className="text-gray-600 leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: data.attributes.description }}
+                            />}
                     </div>
                 </div>
-            </>
+            </div>
         </>
     )
 }
