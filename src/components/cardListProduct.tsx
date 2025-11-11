@@ -3,6 +3,7 @@ import { Product } from '@/interface/responseData/interfaceStorefront';
 import { IconButton } from '@mui/material';
 import type { SxProps, Theme } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
@@ -13,6 +14,7 @@ const fly1 = keyframes`
 `;
 
 const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => {
+    const router = useRouter();
     const sxButton: SxProps<Theme> = {
         color: 'var(--color-green-500)',
         borderRadius: '100%',
@@ -242,17 +244,19 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                 return (
                     <div
                         key={product.id}
-                        className="group relative bg-white rounded-md shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col overflow-hidden"
+                        onClick={()=>{
+                            router.push(`/`)
+                        }}
+                        className="group relative bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col overflow-hidden border border-gray-100"
                     >
                         {/* --- Product Image --- */}
-                        <div className="relative h-auto overflow-hidden">
-                            {/* {imageUrl ? ( */}
+                        <div className="relative overflow-hidden rounded-t-2xl">
                             {displayImage ? (
                                 <img
                                     src={displayImage}
                                     alt={product.attributes.name}
                                     onError={handleImageError}
-                                    className="w-full aspect-[1/1] object-cover transition-transform duration-500 group-hover:scale-110"
+                                    className="w-full aspect-[1/1] object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                                 />
                             ) : (
                                 <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
@@ -260,68 +264,64 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                                 </div>
                             )}
 
-                            {/* Overlay gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300"></div>
-                            {/* Badges */}
-                            <div className="absolute top-[3px] left-[3px]  w-[90px] h-[90px]">
+                            {/* Overlay gradient (sáng hơn, tinh tế hơn) */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+
+                            {/* Premium badges */}
+                            <div className="absolute top-3 left-3 flex flex-col gap-2">
                                 {isNew && (
-                                    <span className=" text-xs font-semibold shadow text-center -rotate-45 relative py-[7px] -left-[30px] top-[15px] w-[120px] 
-        bg-gradient-to-b from-green-500 to-green-800 text-white
-        shadow-[0_0_3px_rgba(0,0,0,0.3)] block">
+                                    <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-emerald-500 to-green-700 text-white shadow-md backdrop-blur-md">
                                         New
                                     </span>
                                 )}
                                 {priceInfo.discount > 0 && (
-                                    <span className="text-xs font-semibold shadow text-center -rotate-45 relative py-[7px] -left-[30px] top-[15px] w-[120px] 
-        bg-gradient-to-b from-red-500 to-red-800 text-white
-        shadow-[0_0_3px_rgba(0,0,0,0.3)] block">
+                                    <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-rose-500 to-red-700 text-white shadow-md backdrop-blur-md">
                                         -{priceInfo.discount}%
                                     </span>
                                 )}
                                 {!product.attributes.in_stock && (
-                                    <span className="text-xs font-semibold shadow text-center -rotate-45 relative py-[7px] -left-[30px] top-[15px] w-[120px]
-                            bg-gradient-to-b from-gray-500 to-gray-800 text-white
-        shadow-[0_0_3px_rgba(0,0,0,0.3)] block
-                                    ">
-                                        Out of stock
+                                    <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-gray-400 to-gray-700 text-white shadow-md backdrop-blur-md">
+                                        Out of Stock
                                     </span>
                                 )}
                             </div>
 
-                            {/* Out of stock */}
-
-
-                            {/* Hover favorite button */}
-                            <button aria-label='click heart'
-                                className="absolute bottom-3 right-3 bg-white/90 hover:bg-green-500 text-gray-800 hover:text-white rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300"
+                            {/* Hover favorite button (floating heart) */}
+                            <button
+                                aria-label="click heart"
+                                className="absolute bottom-3 right-3 bg-white/90 hover:bg-green-600 text-gray-800 hover:text-white rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 transition-all duration-500 hover:scale-110"
                             >
                                 <FaRegHeart className="text-lg" />
                             </button>
                         </div>
 
                         {/* --- Product Info --- */}
-                        <div className="flex flex-col gap-3 p-5 flex-grow ">
-                            {/* Tên sản phẩm */}
-                            <h3 className="font-semibold text-gray-900 text-base line-clamp-2 group-hover:text-green-600 transition-colors">
+                        <div className="flex flex-col gap-3 p-5 flex-grow">
+                            {/* Product Name */}
+                            <h3 className="font-semibold text-gray-900 text-base tracking-wide line-clamp-2 group-hover:text-green-700 transition-colors duration-300">
                                 {product.attributes.name}
                             </h3>
 
+                            {/* Color options */}
                             {colorOptions.length > 0 && (
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-2 mt-1">
                                     {colorOptions.map((colorOption) => (
                                         <label
                                             key={colorOption.color}
-                                            className="flex items-center cursor-pointer group relative"
-                                            onMouseEnter={() => handleColorHover(product.id, colorOption.color)}
+                                            className="relative flex items-center cursor-pointer"
+                                            onMouseEnter={() =>
+                                                handleColorHover(product.id, colorOption.color)
+                                            }
                                             onMouseLeave={() => handleColorLeave(product.id)}
                                         >
                                             <button
-                                                key={colorOption.color}
                                                 aria-label="select color"
-                                                onClick={() => handleColorSelect(product.id, colorOption.color)}
-                                                className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 ${selectedColor === colorOption.color
-                                                    ? 'border-green-600'
-                                                    : 'border-gray-300'
+                                                onClick={() =>
+                                                    handleColorSelect(product.id, colorOption.color)
+                                                }
+                                                className={`w-6 h-6 rounded-full border-[1.5px] transition-all duration-300 hover:scale-110 ${selectedColor === colorOption.color
+                                                    ? "border-green-600 ring-2 ring-green-200"
+                                                    : "border-gray-300"
                                                     }`}
                                                 style={{
                                                     background: colorOption.colorPresentation,
@@ -332,7 +332,7 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                                 </div>
                             )}
 
-                            {/* Giá sản phẩm */}
+                            {/* Price */}
                             <div className="flex justify-between items-center mt-auto">
                                 <div className="flex items-center gap-2">
                                     {priceInfo.discount > 0 ? (
@@ -352,8 +352,10 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        {/* Hover Glow Effect */}
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-green-200/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl pointer-events-none"></div>
+                    </div>
                 );
             })}
         </>

@@ -165,11 +165,15 @@ const FooterWeb: React.FC = () => {
                 </div>
             </section>
             <footer className='p-5 flex flex-col gap-5 bg-white text-black'>
-                <div className='max-w-[1500px] mx-auto flex gap-0 md:gap-10 md:flex-row  flex-col py-5 border-b border-b-gray-300'>
+                <div className='max-w-[1500px] mx-auto flex gap-0 md:gap-10 md:flex-row  flex-col items-start py-5 border-b border-b-gray-300'>
                     <div className='flex justify-center gap-4 flex-col border-b md:border-none'>
-                        <img className="w-40 custom-desktop-height "
-                            alt="Spree Commerce DEMO logo"
-                            src="../../LogoFullBlack.webp" />
+                        <a onClick={() => {
+                            router.push('/')
+                        }}>
+                            <img className="w-40 custom-desktop-height "
+                                alt="Spree Commerce DEMO logo"
+                                src="../../LogoFullBlack.webp" />
+                        </a>
 
                         <div className='text-black/70'>{resStores?.data.attributes.meta_description}</div>
 

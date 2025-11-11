@@ -328,9 +328,13 @@ const HeaderWeb: React.FC = () => {
                     }`}
             >
                 <div className='max-w-[1535px] mx-auto flex justify-between items-center'>
-                    <img className="w-30 custom-desktop-height "
-                        alt="Spree Commerce DEMO logo"
-                        src="../../LogoFullBlack.webp" />
+                    <a onClick={() => {
+                        router.push('/')
+                    }}>
+                        <img className="w-30 custom-desktop-height "
+                            alt="Spree Commerce DEMO logo"
+                            src="../../LogoFullBlack.webp" />
+                    </a>
                     <Nav
                         classNameUl='flex list-none gap-7 uppercase text-lg'
                         classNameA={` size-[24px] relative cursor-pointer transiton-all duration-300 mo-underline after:absolute after:bottom-[-5px] after:left-0 after:h-[2px]  after:transistion-all after:duration-300 after:w-full after:visible after:scale-x-0 hover:after:w-full hover:after:scale-x-100  menu-item header--nav-link`}
