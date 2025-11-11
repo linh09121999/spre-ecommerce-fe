@@ -244,8 +244,8 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                 return (
                     <div
                         key={product.id}
-                        onClick={()=>{
-                            router.push(`/`)
+                        onClick={() => {
+                            router.push(`/product/${product.attributes.slug}`)
                         }}
                         className="group relative bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col overflow-hidden border border-gray-100"
                     >
