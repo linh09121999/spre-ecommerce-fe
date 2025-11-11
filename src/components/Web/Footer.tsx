@@ -21,8 +21,8 @@ const FooterWeb: React.FC = () => {
 
     const sxButton: SxProps<Theme> = {
         background: "rgba(74, 222, 128, 0.1)",
-        border: '1px solid rgba(74, 222, 128, 0.2)',
-        color: 'var(--color-green-500)',
+        border: "1px solid rgba(74, 222, 128, 0.3)",
+        color: "var(--color-green-600)",
         borderRadius: '25px',
         width: '100px',
         fontWeight: '600',
@@ -80,8 +80,14 @@ const FooterWeb: React.FC = () => {
             padding: '3px 8px !important',
             transition: 'all 0.3s',
             fontSize: 'var(--text-xl)',
-            border: '1px solid var(--color-gray-800)',
+            border: '1px solid var(--color-gray-300)',
             height: '60px',
+            "&:hover": { borderColor: "var(--color-green-400)" },
+            "& input": {
+                paddingLeft: "14px",
+                color: "var(--color-green-700)",
+                fontSize: "1rem",
+            },
         },
         '& .MuiOutlinedInput-notchedOutline': {
             border: 'none',

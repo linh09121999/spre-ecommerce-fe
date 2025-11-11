@@ -587,7 +587,7 @@ export interface ResProduct_ListAll {
 }
 
 export interface ResProduct_Retrieve {
-    data: Product;
+    data: Product | undefined;
     included: IncludedItem[];
 }
 

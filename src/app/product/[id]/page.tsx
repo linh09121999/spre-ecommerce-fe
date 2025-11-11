@@ -3,7 +3,9 @@ import React, { useEffect } from "react";
 import { useParams } from 'next/navigation';
 import { useStateGeneral } from "@/useState/useStateGeneral";
 import { RetrieveAProduct } from "@/service/storefront/products";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { useState_ResProducts } from "@/useState/useStatestorefront";
+import ProductDetailCompoment from "@/components/productDetail";
 
 const ProductDetail: React.FC = () => {
   const params = useParams();  // Trả về object { id: '123' }
@@ -12,10 +14,13 @@ const ProductDetail: React.FC = () => {
   const { setLoading, setSelectNav
   } = useStateGeneral()
 
+  const { resProduct_Retrieve, setResProduct_Retrieve } = useState_ResProducts()
+
   const getApiProductRetrieve = async (product_slug: string, include: string) => {
     try {
       setLoading(true);
       const res = await RetrieveAProduct(product_slug, { include })
+      setResProduct_Retrieve(res.data)
     } catch (error: any) {
       toast.error(`Products: ` + error.response.error)
     }
@@ -30,10 +35,12 @@ const ProductDetail: React.FC = () => {
   }, [])
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Chi tiết sản phẩm #{id}</h1>
-      <p>Thông tin chi tiết của sản phẩm ...</p>
-    </div>
+    <>
+      <div className="max-w-[1535px] mx-auto flex flex-col gap-15 px-5 py-5">
+        <ProductDetailCompoment data={resProduct_Retrieve?.data ?? undefined}  included={resProduct_Retrieve?.included ??[]}/>
+      </div>
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 }
 

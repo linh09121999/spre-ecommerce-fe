@@ -157,11 +157,23 @@ interface ImageAttributes {
 }
 
 export interface IncludedImage extends Type {
-    type: string;
     attributes: ImageAttributes;
 }
 
-export type IncludedItem = IncludedVariant | IncludedOptionType | IncludedTaxon | IncludedImage;
+interface ProductPropertyAttributes {
+    value: string;
+    filter_param: string;
+    show_property: boolean;
+    position: number;
+    name: string;
+    description: string
+}
+
+export interface IncludedProductProperty extends Type {
+    attributes: ProductPropertyAttributes
+}
+
+export type IncludedItem = IncludedVariant | IncludedOptionType | IncludedTaxon | IncludedImage | IncludedProductProperty;
 
 export interface PriceInfo {
     price: number;
