@@ -317,7 +317,7 @@ interface State_ResTaxons {
     resTaxons_List: ResTaxons_ListAll | undefined;
     setResTaxons_List: (data: ResTaxons_ListAll) => void;
     resTaxons_Retrieve: ResTaxons_Retrieve | undefined;
-    setResTaxons_Retrieve: (data: ResTaxons_Retrieve) => void;
+    setResTaxons_Retrieve: (data: ResTaxons_Retrieve | undefined) => void;
 }
 
 export const useState_ResTaxons = create<State_ResTaxons>((set) => ({

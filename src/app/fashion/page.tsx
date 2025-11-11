@@ -68,13 +68,13 @@ const Fashion: React.FC = () => {
 
     // Infinite scroll
     useEffect(() => {
-        if (sortBy !== "Relevance") setSortBy("Relevance");
-        if (sortOption !== "relevance") setSortOption("relevance");
         const handleScroll = () => {
             if (loadingReadMore) return;
 
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
                 if (currentPage < totalPages) {
+                    if (sortBy !== "Relevance") setSortBy("Relevance");
+                    if (sortOption !== "relevance") setSortOption("relevance");
                     getApiProducts("175", currentPage + 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
                 }
             }

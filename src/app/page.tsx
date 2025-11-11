@@ -72,7 +72,16 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <div className="max-w-[1535px] mx-auto flex flex-col gap-15">
+      <div className="w-[full] relative h-[440px]">
+        <div className="w-full absolute left-0 h-[440px] ">
+          <img
+            src="https://cdn.vendo.dev/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MjQ3OSwicHVyIjoiYmxvYl9pZCJ9fQ==--2ea59e9a7f3e0127203fa19260ee4f0c827a725d/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwic2F2ZXIiOnsic3RyaXAiOnRydWUsInF1YWxpdHkiOjc1LCJsb3NzbGVzcyI6ZmFsc2UsImFscGhhX3EiOjg1LCJyZWR1Y3Rpb25fZWZmb3J0Ijo2LCJzbWFydF9zdWJzYW1wbGUiOnRydWV9LCJyZXNpemVfdG9fbGltaXQiOls2NDAsbnVsbF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--d96e3e5279c093271eeb921db9065be22fee62e4/Image%20banner.jpg"
+            alt="banner"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 " loading="lazy"/>
+        </div>
+
+      </div>
+      <div className="max-w-[1535px] mx-auto flex flex-col gap-15 px-5 py-10">
         <div className="flex justify-center gap-5">
           {[
             { title: "Categories", icon: <FiTag size={24} /> },

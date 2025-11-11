@@ -1,7 +1,6 @@
 "use client"
 import ListProduct from "@/components/listProduct";
 import { ListAllProducts } from "@/service/storefront/products";
-import { RetrieveATaxon } from "@/service/storefront/taxons";
 import { useStateGeneral } from "@/useState/useStateGeneral";
 import { useState_ResProducts, useState_ResTaxons } from "@/useState/useStatestorefront";
 import { useRouter } from "next/navigation";
@@ -9,7 +8,7 @@ import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
-const TShirts: React.FC = () => {
+const Fashion: React.FC = () => {
     const router = useRouter();
     const { resDataIcludes_List, resDataProducts_List, setResDataIcludes_List, setResDataProduct_List } = useState_ResProducts()
     const { resTaxons_Retrieve, setResTaxons_Retrieve } = useState_ResTaxons()
@@ -19,24 +18,11 @@ const TShirts: React.FC = () => {
         setSortBy, setSortOption, sortBy, sortOption
     } = useStateGeneral()
 
-    const getApiTaxonsFashion = async (taxon_permalink: string) => {
-        try {
-            setLoading(true);
-            const res = await RetrieveATaxon(taxon_permalink)
-            setResTaxons_Retrieve(res.data)
-        } catch (error: any) {
-            toast.error(`Stores: ` + error.response.error)
-        }
-        finally {
-            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
-        }
-    }
-
-    const getApiProducts = async (filter_taxons: string, page: number, per_page: number, include: string) => {
+    const getApiProducts = async (page: number, per_page: number, include: string) => {
         try {
             { page === 1 ? setLoading(true) : setLoadingReadMore(true) }
             setLoadingReadMore(true)
-            const res = await ListAllProducts({ filter_taxons, page, per_page, include })
+            const res = await ListAllProducts({ page, per_page, include })
             setTotalDatas(res.data.meta.total_count)
             setTotalPages(res.data.meta.total_pages)
             setCurrentPage(page); // cập nhật page hiện tại sau khi load xong
@@ -61,9 +47,9 @@ const TShirts: React.FC = () => {
     }
 
     useEffect(() => {
-        setSelectNav(1)
-        getApiTaxonsFashion("categories/fashion/men/t-shirts")
-        getApiProducts("177", 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
+        setSelectNav(0)
+        setResTaxons_Retrieve(undefined)
+        getApiProducts(1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
     }, [])
 
     // Infinite scroll
@@ -75,7 +61,7 @@ const TShirts: React.FC = () => {
                 if (currentPage < totalPages) {
                     if (sortBy !== "Relevance") setSortBy("Relevance");
                     if (sortOption !== "relevance") setSortOption("relevance");
-                    getApiProducts("177", currentPage + 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
+                    getApiProducts(currentPage + 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
                 }
             }
         };
@@ -92,4 +78,4 @@ const TShirts: React.FC = () => {
     );
 }
 
-export default TShirts
+export default Fashion

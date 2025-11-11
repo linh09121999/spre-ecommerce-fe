@@ -184,3 +184,7 @@ export interface FilterProduct {
     id: number;
     title: string
 }
+
+export interface FilterProductColor extends FilterProduct {
+    color: string
+}

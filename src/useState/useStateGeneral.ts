@@ -7,8 +7,8 @@ interface State {
     pages: Pages[];
     isDashboard: boolean;
     setIsDashboard: (isCheck: boolean) => void;
-    selectNav: number;
-    setSelectNav: (select: number) => void;
+    selectNav: number | null;
+    setSelectNav: (select: number | null) => void;
     loading: boolean;
     setLoading: (isCheck: boolean) => void;
     yourMail: string;
@@ -36,18 +36,19 @@ interface State {
     setSortBy: (sort: string) => void;
     sortOption: string;
     setSortOption: (sort: string) => void;
+    filterAllProduct: FilterProduct[];
     filterAvailabity: FilterProduct[];
     filterTaxonsFashion: FilterProduct[];
     filterTaxonsWellness: FilterProduct[];
-    
+
 }
 
 export const useStateGeneral = create<State>((set) => ({
     pages: [
         {
             id: 0,
-            title: 'Home',
-            path: "/"
+            title: 'All Shop',
+            path: "/all-product"
         },
         {
             id: 1,
@@ -62,7 +63,7 @@ export const useStateGeneral = create<State>((set) => ({
         {
             id: 3,
             title: 'New Arrivals',
-            path: "/new_arrivals"
+            path: "/new-arrivals"
         },
         {
             id: 4,
@@ -72,7 +73,7 @@ export const useStateGeneral = create<State>((set) => ({
     ],
     isDashboard: false,
     setIsDashboard: (isCheck) => set({ isDashboard: isCheck }),
-    selectNav: 0,
+    selectNav: null,
     setSelectNav: (select) => set({ selectNav: select }),
     loading: true,
     setLoading: (isCheck) => set({ loading: isCheck }),
@@ -97,10 +98,19 @@ export const useStateGeneral = create<State>((set) => ({
     setTotalDatas: (total) => set({ totalDatas: total }),
     totalPages: 0,
     setTotalPages: (total) => set({ totalPages: total }),
-    sortBy: 'Relevance',
+
+    sortBy: "Relevance",
     setSortBy: (sort) => set({ sortBy: sort }),
-    sortOption: 'relevance',
+
+    sortOption: "relevance",
     setSortOption: (sort) => set({ sortOption: sort }),
+    filterAllProduct: [
+        { id: 0, title: "Categories" },
+        { id: 1, title: "Brands" },
+        { id: 2, title: "Wellness" },
+        { id: 3, title: "Beauty" }
+    ]
+    ,
     filterAvailabity: [
         { id: 0, title: "In stock" },
         { id: 1, title: "Out of stock" }
@@ -108,7 +118,7 @@ export const useStateGeneral = create<State>((set) => ({
     filterTaxonsFashion: [
         { id: 0, title: "Men" },
         { id: 1, title: "Women" },
-        { id: 3, title: "Accessories" }
+        { id: 2, title: "Accessories" }
     ],
     filterTaxonsWellness: [
         { id: 0, title: "Fitness" },

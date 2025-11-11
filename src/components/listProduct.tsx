@@ -168,9 +168,14 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     const { prePage, loadingReadMore,
-        currentPage, totalDatas, sortOption, setSortOption,
-        sortBy, setSortBy, filterAvailabity, filterTaxonsFashion, filterTaxonsWellness
+        currentPage, totalDatas,
+        sortOption, setSortOption, sortBy, setSortBy,
+        filterAvailabity, filterTaxonsFashion, filterTaxonsWellness, filterAllProduct
     } = useStateGeneral()
+
+    // const [sortBy, setSortBy] = useState<string>("Relevance")
+    // const [sortOption, setSortOption] = useState<string>("relevance")
+
 
     const { resTaxons_List } = useState_ResTaxons()
 
@@ -336,6 +341,30 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             :
             (
                 setCheckedItemsAvailabity([...checkedItemsAvailabity, id])
+
+            )
+    }
+
+    // all
+    const [checkedItemsAllProduct, setCheckItemAllProduct] = useState<number[]>([])
+    const allCheckedAllProduct = checkedItemsAllProduct.length === filterAllProduct.length
+    const isIndeterminateAllProduct = checkedItemsAllProduct.length > 0 && checkedItemsAllProduct.length < filterAllProduct.length
+
+    // Khi click vào "All"
+    const handleCheckAllAllProduct = () => {
+        allCheckedAllProduct ?
+            setCheckItemAllProduct([])
+            :
+            setCheckItemAllProduct(filterAllProduct.map((type) => type.id))
+    }
+
+    // Khi click vào từng item
+    const handleCheckItemAllProduct = (id: number) => {
+        checkedItemsAllProduct.includes(id) ?
+            setCheckItemAllProduct(checkedItemsAllProduct.filter((itemId) => itemId !== id))
+            :
+            (
+                setCheckItemAllProduct([...checkedItemsAllProduct, id])
 
             )
     }
@@ -632,7 +661,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
 
     return (
-        <div className={`max-w-[1535px] mx-auto flex flex-col ${taxonsRetrieve?.data.attributes.header_url ? 'gap-10' : 'gap-5'}`}>
+        <div className={`max-w-[1535px] mx-auto flex flex-col px-5 py-10 ${taxonsRetrieve?.data.attributes.header_url ? 'gap-10' : 'gap-5'}`}>
             <div className={`${taxonsRetrieve?.data.attributes.header_url ? 'shadow-xl rounded-md' : ''} relative w-full  overflow-hidden  group`}>
                 {/* Ảnh nền */}
                 {taxonsRetrieve?.data.attributes.header_url ?
@@ -797,6 +826,52 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                 </div>
                             )}
                         </div>
+
+                        {!taxonsRetrieve &&
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowTaxons(!showTaxons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Taxons</h3>
+                                    <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showTaxons &&
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateAllProduct}
+                                                checked={allCheckedAllProduct}
+                                                onChange={handleCheckAllAllProduct}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterAllProduct.map((filter) => (
+                                            <FormControlLabel key={filter.id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsAllProduct.includes(filter.id)}
+                                                    onChange={() => handleCheckItemAllProduct(filter.id)}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.title}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>
+                                }
+                            </div>
+                        }
+
                         {taxonsRetrieve?.data.attributes.name === 'Fashion' &&
                             <div className="flex flex-col gap-5">
                                 <button className="flex justify-between items-center w-full transition-all duration-300 ease"
@@ -1226,7 +1301,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                             )}
                         </div>
 
-                        <button className=" h-10  justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                        <button className=" h-10 border border-gray-100 justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                         >
                             Clear All Filters
                         </button>
