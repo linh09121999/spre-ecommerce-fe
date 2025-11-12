@@ -183,6 +183,12 @@
     color: var(--color-cyan-300) !important;
 }
 
-.attachment img{
-    width: 100%;
+.attachment {
+    justify-items: center;
+}
+
+.attachment img {
+    /* width: 100%; */
+
+    aspect-ratio: 16/9;
 }
