@@ -326,7 +326,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     const [showSize, setShowSize] = useState<boolean>(true)
 
     // availabyty
-    const [checkedItemsAvailabity, setCheckedItemsAvailabity] = useState<number[]>([])
+    const [checkedItemsAvailabity, setCheckedItemsAvailabity] = useState<number[]>(filterAvailabity.map((type) => type.id))
     const allCheckedAvailabity = checkedItemsAvailabity.length === filterAvailabity.length
     const isIndeterminateAvailabity = checkedItemsAvailabity.length > 0 && checkedItemsAvailabity.length < filterAvailabity.length
 
@@ -350,7 +350,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // all
-    const [checkedItemsTaxonsAllProduct, setCheckItemTaxonsAllProduct] = useState<number[]>([])
+    const [checkedItemsTaxonsAllProduct, setCheckItemTaxonsAllProduct] = useState<number[]>(filterTaxonsAllProduct.map((type) => type.id))
     const allCheckedTaxonsAllProduct = checkedItemsTaxonsAllProduct.length === filterTaxonsAllProduct.length
     const isIndeterminateTaxonsAllProduct = checkedItemsTaxonsAllProduct.length > 0 && checkedItemsTaxonsAllProduct.length < filterTaxonsAllProduct.length
 
@@ -374,7 +374,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // 
-    const [checkedItemsCollectonsAllProduct, setCheckItemCollectonsAllProduct] = useState<number[]>([])
+    const [checkedItemsCollectonsAllProduct, setCheckItemCollectonsAllProduct] = useState<number[]>(filterCollectonsAllProduct.map((type) => type.id))
     const allCheckedCollectonsAllProduct = checkedItemsCollectonsAllProduct.length === filterCollectonsAllProduct.length
     const isIndeterminateCollectonsAllProduct = checkedItemsCollectonsAllProduct.length > 0 && checkedItemsCollectonsAllProduct.length < filterCollectonsAllProduct.length
 
@@ -398,7 +398,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // fashion
-    const [checkedItemsTaxonsFashion, setCheckItemTaxonsFashion] = useState<number[]>([])
+    const [checkedItemsTaxonsFashion, setCheckItemTaxonsFashion] = useState<number[]>(filterTaxonsFashion.map((type) => type.id))
     const allCheckedTaxonsFashion = checkedItemsTaxonsFashion.length === filterTaxonsFashion.length
     const isIndeterminateTaxonsFashion = checkedItemsTaxonsFashion.length > 0 && checkedItemsTaxonsFashion.length < filterTaxonsFashion.length
 
@@ -422,7 +422,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // wellness
-    const [checkedItemsTaxonsWellness, setCheckItemTaxonsWellness] = useState<number[]>([])
+    const [checkedItemsTaxonsWellness, setCheckItemTaxonsWellness] = useState<number[]>(filterTaxonsWellness.map((type) => type.id))
     const allCheckedTaxonsWellness = checkedItemsTaxonsWellness.length === filterTaxonsWellness.length
     const isIndeterminateTaxonsWellness = checkedItemsTaxonsWellness.length > 0 && checkedItemsTaxonsWellness.length < filterTaxonsWellness.length
 
@@ -446,7 +446,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // men
-    const [checkedItemsTaxonsMen, setCheckItemTaxonsMen] = useState<number[]>([])
+    const [checkedItemsTaxonsMen, setCheckItemTaxonsMen] = useState<number[]>(filterFashionMen!.map((type) => Number(type.id)))
     const allCheckedTaxonsMen =
         filterFashionMen && filterFashionMen.length > 0
             ? checkedItemsTaxonsMen.length === filterFashionMen.length
@@ -477,7 +477,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // women
-    const [checkedItemsTaxonsWomen, setCheckItemTaxonsWomen] = useState<number[]>([])
+    const [checkedItemsTaxonsWomen, setCheckItemTaxonsWomen] = useState<number[]>(filterFashionWomen!.map((type) => Number(type.id)))
     const allCheckedTaxonsWomen =
         filterFashionWomen && filterFashionWomen.length > 0
             ? checkedItemsTaxonsWomen.length === filterFashionWomen.length
@@ -508,7 +508,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // accessories
-    const [checkedItemsTaxonsAccessories, setCheckItemTaxonsAccessories] = useState<number[]>([])
+    const [checkedItemsTaxonsAccessories, setCheckItemTaxonsAccessories] = useState<number[]>(filterFashionAccessories!.map((type) => Number(type.id)))
     const allCheckedTaxonsAccessories =
         filterFashionAccessories && filterFashionAccessories.length > 0
             ? checkedItemsTaxonsWomen.length === filterFashionAccessories.length
@@ -539,7 +539,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // Fitness
-    const [checkedItemsTaxonsFitness, setCheckItemTaxonsFitness] = useState<number[]>([])
+    const [checkedItemsTaxonsFitness, setCheckItemTaxonsFitness] = useState<number[]>(filterWellnessFitness!.map((type) => Number(type.id)))
     const allCheckedTaxonsFitness =
         filterWellnessFitness && filterWellnessFitness.length > 0
             ? checkedItemsTaxonsWomen.length === filterWellnessFitness.length
@@ -570,7 +570,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // Relaxation
-    const [checkedItemsTaxonsRelaxation, setCheckItemTaxonsRelaxation] = useState<number[]>([])
+    const [checkedItemsTaxonsRelaxation, setCheckItemTaxonsRelaxation] = useState<number[]>(filterWellnessRelaxation!.map((type) => Number(type.id)))
     const allCheckedTaxonsRelaxation =
         filterWellnessRelaxation && filterWellnessRelaxation.length > 0
             ? checkedItemsTaxonsWomen.length === filterWellnessRelaxation.length
@@ -601,7 +601,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // Mental Stimulation
-    const [checkedItemsTaxonsMentalStimulation, setCheckItemTaxonsMentalStimulation] = useState<number[]>([])
+    const [checkedItemsTaxonsMentalStimulation, setCheckItemTaxonsMentalStimulation] = useState<number[]>(filterWellnessMentalStimulation!.map((type) => Number(type.id)))
     const allCheckedTaxonsMentalStimulation =
         filterWellnessMentalStimulation && filterWellnessMentalStimulation.length > 0
             ? checkedItemsTaxonsWomen.length === filterWellnessMentalStimulation.length
@@ -631,7 +631,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             )
     }
     // Nutrition
-    const [checkedItemsTaxonsNutrition, setCheckItemTaxonsNutrition] = useState<number[]>([])
+    const [checkedItemsTaxonsNutrition, setCheckItemTaxonsNutrition] = useState<number[]>(filterWellnessNutrition!.map((type) => Number(type.id)))
     const allCheckedTaxonsNutrition =
         filterWellnessNutrition && filterWellnessNutrition.length > 0
             ? checkedItemsTaxonsWomen.length === filterWellnessNutrition.length
@@ -723,14 +723,74 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     };
 
     const handleClearAllFilters = () => {
-        setCheckedItemsAvailabity([]);
-        setCheckItemTaxonsAllProduct([]);
-        setCheckItemCollectonsAllProduct([]);
+        setCheckedItemsAvailabity(filterAvailabity.map((type) => type.id));
+        setCheckItemTaxonsAllProduct(filterTaxonsAllProduct.map((type) => type.id));
+        setCheckItemCollectonsAllProduct(filterCollectonsAllProduct.map((type) => type.id));
+        setCheckItemTaxonsFashion(filterTaxonsFashion.map((type) => type.id))
+        setCheckItemTaxonsWellness(filterTaxonsWellness.map((type) => type.id))
+        setCheckItemTaxonsMen(filterFashionMen!.map((type) => Number(type.id)))
+        setCheckItemTaxonsWomen(filterFashionWomen!.map((type) => Number(type.id)))
+        setCheckItemTaxonsAccessories(filterFashionAccessories!.map((type) => Number(type.id)))
+        setCheckItemTaxonsFitness(filterWellnessFitness!.map((type) => Number(type.id)))
+        setCheckItemTaxonsRelaxation(filterWellnessRelaxation!.map((type) => Number(type.id)))
+        setCheckItemTaxonsMentalStimulation(filterWellnessMentalStimulation!.map((type) => Number(type.id)))
+        setCheckItemTaxonsNutrition(filterWellnessNutrition!.map((type) => Number(type.id)))
+
         setCheckedColor([]);
         setCheckedSize([]);
         setPriceMin(0);
         setPriceMax(200);
     }
+
+
+    const filteredProducts = useMemo(() => {
+        let result = [...filteredReleases];
+
+        // 5️⃣ Availability
+        if (checkedItemsAvailabity.length > 0) {
+            result = result.filter((p) => {
+                return checkedItemsAvailabity.some((id) => {
+                    const selected = filterAvailabity.find((f) => f.id === id);
+                    if (!selected) return false;
+
+                    const key = selected.title.toLowerCase();
+                    if (key.includes("in stock")) return p.attributes.in_stock;
+                    if (key.includes("available")) return p.attributes.available;
+                    if (key.includes("backorder")) return p.attributes.backorderable;
+                    return false;
+                });
+            });
+        }
+
+        // 6️⃣ Price
+        result = result.filter((p) => {
+            const price = parseFloat(p.attributes.price || "0");
+            return price >= priceMin && price <= priceMax;
+        });
+
+        // 1️⃣ Category
+
+
+        // 2️⃣ Collections
+
+
+        // 3️⃣ Color
+
+
+        // 4️⃣ Size
+
+        return result;
+    }, [
+        filteredReleases,
+        checkedItemsTaxonsAllProduct,
+        checkedItemsCollectonsAllProduct,
+        checkedColor,
+        checkedSize,
+        checkedItemsAvailabity,
+        priceMin,
+        priceMax,
+        included,
+    ]);
 
     return (
         <>
@@ -1588,7 +1648,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                 </Menu>
                             </div>
                             <div className="grid grid-cols-1  xl:grid-cols-4 gap-6">
-                                <ListProductCard products={filteredReleases ?? []} included={included ?? []} />
+                                <ListProductCard products={filteredProducts ?? []} included={included ?? []} />
                             </div>
                             {loadingReadMore && <p className="text-center py-4 text-gray-500">loading more...</p>}
 
