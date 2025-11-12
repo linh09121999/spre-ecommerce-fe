@@ -110,9 +110,10 @@ const ProductDetail: React.FC = () => {
   return (
     <>
       <ProductDetailCompoment data={resProduct_Retrieve?.data ?? undefined} included={resProduct_Retrieve?.included ?? []} />
-      <div className='flex-grow gap-5 flex flex-col max-w-[1535px] mx-auto px-5 py-10'>
-        <div className="flex css-next items-center w-full transition-all duration-300 ease">
-          <h3 className="text-xl uppercase font-semibold bg-clip-text tracking-wide">You might also like</h3>
+      <div className="max-w-[1536px] mx-auto px-5 py-10 flex flex-col gap-6">
+        <div className="flex items-center justify-between w-full">
+          <h3 className="text-2xl font-semibold tracking-wide text-gray-900 relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-16 after:h-[3px] after:bg-green-500">
+            You might also like</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           <ListProductCard products={resDataProducts_Related ?? []} included={resDataIcludes_Related ?? []} />

@@ -236,17 +236,24 @@ const Home: React.FC = () => {
             {resPosts_List?.data.slice(0, 4).map((res, id) => (
               <>
                 {res.attributes.content &&
-                  <div className="relative group overflow-hidden rounded-md shadow-lg" key={id}
-                    onClick={() => {
-                      router.push(`/post/${res.id}`)
-                    }}
+                  <div
+                    key={id}
+                    className="relative group overflow-hidden rounded-xl shadow-md cursor-pointer"
+                    onClick={() => router.push(`/post/${res.id}`)}
                   >
-                    <img src={res.attributes.image_url!} alt={res.attributes.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-b-md">
-                      <h3 className="text-xl text-white font-semibold mt-1">{res.attributes.title}</h3>
+                    <img
+                      src={res.attributes.image_url!}
+                      alt={res.attributes.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 via-transparent to-transparent">
+                      <h3 className="text-lg text-white font-semibold group-hover:text-green-300 transition-colors">
+                        {res.attributes.title}
+                      </h3>
                       <p className="text-white/70 text-sm mt-1">
-                        {res.attributes.author_name} | Published: {new Date(res.attributes.published_at).toLocaleDateString()}
+                        {res.attributes.author_name} •{" "}
+                        {new Date(res.attributes.published_at).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
@@ -268,8 +275,9 @@ const Home: React.FC = () => {
                         </div>
                         <div className=" ">
                           <h3 className="text-xl  font-semibold mt-1 mb-2">{res.attributes.title}</h3>
-                          <p className="text-black/70 text-sm mt-1">
-                            {res.attributes.author_name} | Published: {new Date(res.attributes.published_at).toLocaleDateString()}
+                          <p className="text-white/70 text-sm mt-1">
+                            {res.attributes.author_name} •{" "}
+                            {new Date(res.attributes.published_at).toLocaleDateString()}
                           </p>
                         </div>
                       </div>

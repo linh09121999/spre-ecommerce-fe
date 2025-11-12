@@ -35,15 +35,15 @@ const Posts: React.FC = () => {
 
     return (
         <>
-            <div className="flex items-center gap-3 px-5 max-w-[1535px] mx-auto py-2 text-lg">
+            <div className="flex items-center gap-3 px-5 max-w-[1535px] mx-auto py-4 text-lg">
                 <button
                     onClick={() => router.back()}
-                    className="flex items-center gap-2 group"
+                    className="flex items-center gap-2 group transition-all duration-300"
                 >
-                    <span className="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full shadow hover:shadow-md transition-all">
-                        <FaArrowLeft />
+                    <span className="inline-flex items-center justify-center w-9 h-9 bg-white rounded-full shadow hover:shadow-lg transition-all">
+                        <FaArrowLeft className="text-green-600 group-hover:-translate-x-1 transition-transform duration-300" />
                     </span>
-                    <span className="font-medium text-gray-700 group-hover:text-green-600 transition">
+                    <span className="font-medium text-gray-700 group-hover:text-green-600 transition-colors duration-300">
                         Posts
                     </span>
                 </button>

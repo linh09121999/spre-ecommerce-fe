@@ -189,6 +189,6 @@
 
 .attachment img {
     /* width: 100%; */
-
+    border-radius: var(--radius-md);
     aspect-ratio: 16/9;
 }
