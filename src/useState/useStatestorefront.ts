@@ -195,6 +195,11 @@ interface State_ResProducts {
     setResDataProduct_NewList: React.Dispatch<React.SetStateAction<Product[]>>
     resDataIcludes_NewList: IncludedItem[]
     setResDataIcludes_NewList: React.Dispatch<React.SetStateAction<IncludedItem[]>>
+
+    resDataProducts_Related: Product[];
+    setResDataProducts_Related: React.Dispatch<React.SetStateAction<Product[]>>
+    resDataIcludes_Related: IncludedItem[]
+    setResDataIcludes_Related: React.Dispatch<React.SetStateAction<IncludedItem[]>>
 }
 
 export const useState_ResProducts = create<State_ResProducts>((set) => ({
@@ -238,6 +243,19 @@ export const useState_ResProducts = create<State_ResProducts>((set) => ({
         set((state) => ({
             resDataIcludes_NewList:
                 typeof value === "function" ? value(state.resDataIcludes_NewList) : value,
+        })),
+
+    resDataProducts_Related: [],
+    setResDataProducts_Related: (value) =>
+        set((state) => ({
+            resDataProducts_Related:
+                typeof value === "function" ? value(state.resDataProducts_Related) : value,
+        })),
+    resDataIcludes_Related: [],
+    setResDataIcludes_Related: (value) =>
+        set((state) => ({
+            resDataIcludes_Related:
+                typeof value === "function" ? value(state.resDataIcludes_Related) : value,
         })),
 }))
 

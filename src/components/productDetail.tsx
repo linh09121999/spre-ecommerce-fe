@@ -160,7 +160,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
     return (
         <>
-            <div className="w-full bg-gradient-to-br from-gray-50 via-white to-green-50 min-h-screen">
+            <div className="w-full">
                 {/* Header Navigation */}
                 <div className="flex items-center gap-3 px-5 max-w-[1535px] mx-auto py-2 text-lg">
                     <button

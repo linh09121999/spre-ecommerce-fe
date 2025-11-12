@@ -195,7 +195,6 @@ const Home: React.FC = () => {
         <div className='flex-grow gap-5 flex flex-col '>
           <div className="flex justify-center css-next items-center w-full transition-all duration-300 ease">
             <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">Sale</h3>
-
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             <ListProductCard products={resDataProducts_SaleList ?? []} included={resDataIcludes_SaleList ?? []} />
