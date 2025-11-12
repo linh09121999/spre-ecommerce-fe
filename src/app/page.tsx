@@ -173,7 +173,7 @@ const Home: React.FC = () => {
           {resTaxons_List?.data.map((res, id) => (
             <>
               {(res.attributes.name === 'Men' || res.attributes.name === 'Women') &&
-                <button key={res.id} className="relative group overflow-hidden rounded-2xl shadow-xl"
+                <button key={res.id} className="relative group overflow-hidden rounded-md shadow-xl"
                   onClick={() => {
                     router.push(`/${res.attributes.name.toLocaleLowerCase()}`)
                   }}

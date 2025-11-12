@@ -1,4 +1,5 @@
 "use client"
+
 import ListProduct from "@/components/listProduct";
 import { ListAllProducts } from "@/service/storefront/products";
 import { RetrieveATaxon } from "@/service/storefront/taxons";

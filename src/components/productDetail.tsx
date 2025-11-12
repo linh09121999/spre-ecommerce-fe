@@ -5,7 +5,7 @@ import type { SxProps, Theme } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
-import { FaRegHeart } from 'react-icons/fa';
+import { FaArrowLeft, FaCaretSquareLeft, FaRegHeart } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 
 const fly1 = keyframes`
@@ -159,211 +159,208 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
     return (
         <>
-            <div className='w-full'>
-                <div className='flex gap-2 px-5 max-w-[1535px] mx-auto items-center py-[10px] text-xl max-md:text-lg '>
-                    <a onClick={() => {
-                        router.back()
-                    }} className='text-lg'>
-                        {longestPrettyName}
-                    </a>
+            <div className="w-full bg-gradient-to-br from-gray-50 via-white to-green-50 min-h-screen">
+                {/* Header Navigation */}
+                <div className="flex items-center gap-3 px-5 max-w-[1535px] mx-auto py-2 text-lg">
+                    <button
+                        // onClick={() => router.back()}
+                        className="flex items-center gap-2 group"
+                    >
+                        <span className="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full shadow hover:shadow-md transition-all">
+                            <FaArrowLeft />
+                        </span>
+                        <span className="font-medium text-gray-700 group-hover:text-green-600 transition">
+                            {longestPrettyName}
+                        </span>
+                    </button>
                 </div>
-            </div>
 
-            <div className="max-w-[1535px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 py-5 gap-5 px-5">
-                {/* Product Images */}
-                <div className="space-y-4">
-                    <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
-                        {mainImage && (
-                            <img
-                                src={mainImage.attributes.original_url}
-                                alt={data?.attributes.name}
-                                className="w-full aspect-[1/1] h-full object-cover object-center"
-                            />
-                        )}
-                    </div>
-                    <div className="flex space-x-2 overflow-x-auto pb-2">
-                        {displayImages.map((image, index) => (
-                            <button
-                                key={image.id}
-                                className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 transition-all ${index === selectedImageIndex
-                                    ? 'border-blue-500 ring-2 ring-blue-200'
-                                    : 'border-gray-200 hover:border-gray-300'
-                                    }`}
-                                onClick={() => setSelectedImageIndex(index)}
-                            >
+                {/* Product Section */}
+                <div className="max-w-[1535px] mx-auto grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10 px-5 py-5">
+
+                    {/* Left: Images */}
+                    <div className="space-y-4">
+                        <div
+                            className="aspect-square rounded-md overflow-hidden relative group shadow-lg"
+                            data-aos="fade-up"
+                        >
+                            {mainImage && (
                                 <img
-                                    src={image.attributes.styles[2]?.url || image.attributes.original_url}
-                                    alt={`${data?.attributes.name} ${index + 1}`}
-                                    className="w-full aspect-[1/1] h-full object-cover"
+                                    src={mainImage.attributes.original_url}
+                                    alt={data?.attributes.name}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
-                            </button>
-                        ))}
-                    </div>
-                </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
 
-                {/* Product Info */}
-                <div className="space-y-6">
-                    <h1 className="text-3xl font-bold text-gray-900">{data?.attributes.name}</h1>
-
-                    <div className="flex items-center space-x-4">
-                        {data && data.attributes && priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 && (
-                            <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-rose-500 to-red-700 text-white shadow-md backdrop-blur-md">
-                                -{priceInfo(data.attributes.price, data.attributes.compare_at_price)}%
-                            </span>
-                        )}
-                    </div>
-
-                    <div className="flex justify-between items-center mt-auto">
-                        <div className="flex items-center gap-2">
-                            {data && data.attributes && priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 ?
-                                (
-                                    <>
-                                        <span className="text-lg font-bold text-green-700">
-                                            ${data.attributes.price}
-                                        </span>
-                                        <span className="text-sm text-gray-400 line-through">
-                                            ${data.attributes.compare_at_price}
-                                        </span>
-                                    </>
-                                ) : (
-                                    <span className="text-lg font-bold text-green-700">
-                                        ${data!.attributes.price}
-                                    </span>
-                                )}
+                        <div className="flex gap-3 overflow-x-auto pb-2">
+                            {displayImages.map((image, index) => (
+                                <button
+                                    key={image.id}
+                                    className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 transition-all duration-300 ${index === selectedImageIndex
+                                        ? "border-green-500 ring-2 ring-green-200"
+                                        : "border-gray-200 hover:border-green-300"
+                                        }`}
+                                    onClick={() => setSelectedImageIndex(index)}
+                                >
+                                    <img
+                                        src={image.attributes.styles[2]?.url || image.attributes.original_url}
+                                        alt={`${data?.attributes.name} ${index + 1}`}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </button>
+                            ))}
                         </div>
                     </div>
 
-                    {/* Options */}
+                    {/* Right: Product Info */}
                     <div className="space-y-4">
-                        {optionTypes.map(optionType => (
-                            <div key={optionType.id} className="space-y-3">
-                                <label className="block text-sm font-medium text-gray-700">
-                                    {optionType.attributes.presentation}:
-                                </label>
-                                <div className="flex flex-wrap gap-3">
-                                    {Array.from(availableOptions[optionType.attributes.name] || []).map(optionValue => {
-                                        const option = variants
-                                            .flatMap(v => v.attributes.options)
-                                            .find(o => o.name === optionType.attributes.name && o.value === optionValue);
+                        <h1 className="text-4xl font-bold text-gray-900 leading-tight" data-aos="fade-left">
+                            {data?.attributes.name}
+                        </h1>
 
-                                        const isSelected = selectedOptions[optionType.attributes.name] === optionValue;
-                                        const optionName = optionType.attributes.name.toLowerCase();
+                        {/* Price + Discount */}
+                        {data && data.attributes && priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 && (
+                            <div className="flex items-center gap-4" data-aos="fade-left" data-aos-delay="100">
 
-                                        // Nếu là loại màu sắc
-                                        if (optionName === 'color' || optionName === 'màu sắc') {
+                                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-red-600 text-white shadow">
+                                    -{priceInfo(data.attributes.price, data.attributes.compare_at_price)}%
+                                </span>
+
+                                <div className="flex items-end gap-2">
+                                    <span className="text-2xl font-bold text-green-700">
+                                        ${data.attributes.price}
+                                    </span>
+                                    {data.attributes.compare_at_price && (
+                                        <span className="text-sm text-gray-400 line-through">
+                                            ${data.attributes.compare_at_price}
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Options */}
+                        <div className="space-y-5" data-aos="fade-left" data-aos-delay="200">
+                            {optionTypes.map(optionType => (
+                                <div key={optionType.id}>
+                                    <label className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                                        {optionType.attributes.presentation}
+                                    </label>
+                                    <div className="flex flex-wrap gap-3 mt-2">
+                                        {Array.from(availableOptions[optionType.attributes.name] || []).map(optionValue => {
+                                            const option = variants
+                                                .flatMap(v => v.attributes.options)
+                                                .find(o => o.name === optionType.attributes.name && o.value === optionValue);
+                                            const isSelected = selectedOptions[optionType.attributes.name] === optionValue;
+                                            const optionName = optionType.attributes.name.toLowerCase();
+
+                                            if (optionName === "color" || optionName === "màu sắc") {
+                                                return (
+                                                    <button
+                                                        key={optionValue}
+                                                        onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
+                                                        title={optionValue}
+                                                        className={`w-9 h-9 rounded-full border-2 transition-transform duration-300 ${isSelected ? "border-green-500 scale-110" : "border-gray-300 hover:scale-105"
+                                                            }`}
+                                                        style={{ backgroundColor: option?.presentation || optionValue }}
+                                                    />
+                                                );
+                                            }
+
                                             return (
                                                 <button
                                                     key={optionValue}
                                                     onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
-                                                    className={`w-8 h-8 rounded-full border-2 transition-all 
-            ${isSelected ? 'border-blue-500 scale-110' : 'border-gray-300 hover:scale-105'}
-          `}
-                                                    style={{
-                                                        backgroundColor: option?.presentation || optionValue, // dùng giá trị màu
-                                                    }}
-                                                    title={optionValue} // hiển thị tooltip khi hover
-                                                />
+                                                    className={`px-4 py-2 rounded-lg border text-sm  transition-all duration-300 ${isSelected
+                                                        ? "text-green-600 border-green-600 shadow-lg font-bold"
+                                                        : "bg-white border-gray-300 text-gray-800 hover:border-green-300 font-medium"
+                                                        }`}
+                                                >
+                                                    {option?.presentation || optionValue}
+                                                </button>
                                             );
-                                        }
-
-                                        // Các loại khác (như size, dung tích, ...)
-                                        return (
-                                            <button
-                                                key={optionValue}
-                                                onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
-                                                className={`px-4 py-2 border rounded-md text-sm font-medium transition-all
-          ${isSelected
-                                                        ? 'bg-blue-500 text-white border-blue-500'
-                                                        : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-50'}
-        `}
-                                            >
-                                                <span className="font-semibold text-sm">{option?.presentation || optionValue}</span>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Stock Status */}
-                    <div className="flex items-center">
-                        {selectedVariant?.attributes.in_stock ? (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                In Stock
-                            </span>
-                        ) : (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                Out of Stock
-                            </span>
-                        )}
-                    </div>
-
-                    {/* Quantity and Add to Cart */}
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                            <button
-                                className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                onClick={() => handleQuantityChange(quantity - 1)}
-                                disabled={quantity <= 1}
-                            >
-                                -
-                            </button>
-                            <span className="px-4 py-2 bg-white min-w-12 text-center font-medium">{quantity}</span>
-                            <button
-                                className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
-                                onClick={() => handleQuantityChange(quantity + 1)}
-                            >
-                                +
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className='flex gap-4'>
-                        <button
-                            className=" w-fit px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
-                            onClick={handleAddToCart}
-                            disabled={!selectedVariant?.attributes.in_stock || !selectedVariant?.attributes.purchasable}
-                        >
-                            {selectedVariant?.attributes.in_stock ? 'Add to Cart' : 'Out of Stock'}
-                        </button>
-                        <button
-                            aria-label="click heart"
-                            className=" bg-white/90 hover:bg-green-600 text-gray-800 hover:text-white  py-2 px-4 shadow-md rounded-lg group-hover:opacity-100 transition-all duration-500 hover:scale-110"
-                        >
-                            <FaRegHeart className="text-lg" />
-                        </button>
-                    </div>
-
-                    {/* Product Properties */}
-                    {productProperties.length > 0 && (
-                        <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                            <h3 className="text-lg font-medium text-gray-900">Product Details</h3>
-                            {productProperties.map(property => (
-                                <div key={property.id} className="flex justify-between items-center py-2 border-b border-gray-200 last:border-b-0">
-                                    <span className="text-sm font-medium text-gray-600">
-                                        {property.attributes.description}:
-                                    </span>
-                                    <span className="text-sm text-gray-900">
-                                        {property.attributes.value}
-                                    </span>
+                                        })}
+                                    </div>
                                 </div>
                             ))}
                         </div>
-                    )}
 
-                    {/* Description */}
-                    <div className="prose prose-sm max-w-none">
-                        <h3 className="text-lg font-medium text-gray-900 mb-3">Description</h3>
-                        {data &&
-                            <div
-                                className="text-gray-600 leading-relaxed"
-                                dangerouslySetInnerHTML={{ __html: data.attributes.description }}
-                            />}
+                        {/* Stock Status */}
+                        <div className="">
+                            {selectedVariant?.attributes.in_stock ? (
+                                <span className="inline-block px-3 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded-full">
+                                    In Stock
+                                </span>
+                            ) : (
+                                <span className="inline-block px-3 py-1 text-xs font-semibold bg-red-100 text-red-700 rounded-full">
+                                    Out of Stock
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Quantity & Add to Cart */}
+                        <div className="flex items-center gap-4 flex-wrap">
+                            <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
+                                <button
+                                    className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors"
+                                    onClick={() => handleQuantityChange(quantity - 1)}
+                                    disabled={quantity <= 1}
+                                >
+                                    −
+                                </button>
+                                <span className="px-5 py-2 bg-white text-center font-semibold">{quantity}</span>
+                                <button
+                                    className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors"
+                                    onClick={() => handleQuantityChange(quantity + 1)}
+                                >
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className='flex gap-5 items-center'>
+                            <button
+                                onClick={handleAddToCart}
+                                disabled={!selectedVariant?.attributes.in_stock}
+                                className="px-16 h-[50px] rounded-md bg-green-600 hover:bg-green-700 text-white font-semibold transition-transform hover:scale-105 disabled:opacity-60"
+                            >
+                                {selectedVariant?.attributes.in_stock ? "Add to Cart" : "Out of Stock"}
+                            </button>
+
+                            <button
+                                aria-label="Add to Wishlist"
+                                className="group px-4 h-[50px] bg-white border rounded-md border-gray-600 hover:border-green-600 transition-all hover:scale-110"
+                            >
+                                <FaRegHeart className="text-gray-600 text-lg group-hover:text-green-600" />
+                            </button>
+                        </div>
+
+                        {/* Product Details */}
+                        {productProperties.length > 0 && (
+                            <div className="bg-white/70 backdrop-blur-md rounded-md p-5 shadow-sm space-y-3">
+                                <h3 className="text-lg font-semibold text-gray-900">Product Details</h3>
+                                {productProperties.map(property => (
+                                    <div key={property.id} className="flex justify-between py-2 border-b last:border-0 border-gray-200">
+                                        <span className="text-sm text-gray-600">{property.attributes.description}</span>
+                                        <span className="text-sm font-medium text-gray-900">
+                                            {property.attributes.value}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Description */}
+                        <div className="pt-3">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+                            {data && <div className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: data.attributes.description }} />}
+                        </div>
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

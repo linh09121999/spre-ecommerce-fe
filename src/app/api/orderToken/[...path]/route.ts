@@ -1,10 +1,12 @@
 // app/api/spree/[...path]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+// import { useRouter } from 'next/navigation';
 
 const API_BASE = "https://demo.spreecommerce.org/api/v2";
 
 export async function GET(req: NextRequest, context: { params: any }) {
+    // const router = useRouter();
     // 1. Unwrap params vì nó là Promise
     const params = await context.params;
 
@@ -27,6 +29,11 @@ export async function GET(req: NextRequest, context: { params: any }) {
         return NextResponse.json(response.data);
     } catch (err: any) {
         console.error("Spree API error:", err.response?.data || err.message);
-        return NextResponse.json({ error: err.message }, { status: err.response?.status || 500 });
+        return {
+            redirect: {
+                destination: '/503',
+                permanent: false,
+            },
+        };
     }
 }
