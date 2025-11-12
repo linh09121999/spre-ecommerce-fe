@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import "../assets/css/index.css"
+import "../globals.css";
+import "../../assets/css/index.css"
 import BackToTop from "@/components/BackToTop";
 import ContentWrapper from "@/components/LayoutWrapper";
 import Loading from "@/components/loadling";
+import HeaderWeb from "@/components/Web/Header";
+import FooterWeb from "@/components/Web/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +38,9 @@ const RootLayout = ({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col w-full h-full`}
       >
         <BackToTop />
-        <ContentWrapper>{children}</ContentWrapper>
+        <HeaderWeb />
+        <main className="min-h-[60vh]">{children}</main>
+        <FooterWeb />
         <Loading />
       </body>
     </html>

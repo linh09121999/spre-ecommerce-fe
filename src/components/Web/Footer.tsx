@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { useStateGeneral } from "@/useState/useStateGeneral";;
 import { useState_ResStores } from '@/useState/useStatestorefront';

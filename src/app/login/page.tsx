@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 const Login: React.FC = () => {
     return (
         <>
-            <div className="text-white">Login</div>
+            <div className="">Login</div>
         </>
     );
 }

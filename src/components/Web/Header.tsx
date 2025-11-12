@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Nav from './Nav';
 import {
