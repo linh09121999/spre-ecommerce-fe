@@ -190,7 +190,7 @@ const HeaderWeb: React.FC = () => {
             const res = await ListAllTaxons()
             setResTaxons_List(res.data)
         } catch (error: any) {
-            toast.error(`Stores: ` + error.response.error)
+            toast.error(`Taxons: ` + error.response.error)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
@@ -544,7 +544,7 @@ const HeaderWeb: React.FC = () => {
                                             {filter?.map((data, id) => (
                                                 <a key={id}
                                                     onClick={() => {
-                                                        router.push(toPath(data.attributes.name))
+                                                        router.push(`/${toPath(data.attributes.name)}`)
                                                     }}
                                                     className='cursor-pointer transiton-all duration-300 hover:text-green-400'
                                                 >
@@ -555,7 +555,7 @@ const HeaderWeb: React.FC = () => {
                                             ))}
                                             <a
                                                 onClick={() => {
-                                                    router.push(toPath(title))
+                                                    router.push(`/${toPath(title)}`)
                                                 }}
                                                 className='cursor-pointer transiton-all duration-300 hover:text-green-400'
                                             >
@@ -589,7 +589,7 @@ const HeaderWeb: React.FC = () => {
                                             {filter?.map((data, id) => (
                                                 <a key={id}
                                                     onClick={() => {
-                                                        router.push(toPath(data.attributes.name))
+                                                        router.push(`/${toPath(data.attributes.name)}`)
                                                     }}
                                                     className='cursor-pointer transiton-all duration-300 hover:text-green-400'
                                                 >
@@ -600,7 +600,7 @@ const HeaderWeb: React.FC = () => {
                                             ))}
                                             <a
                                                 onClick={() => {
-                                                    router.push(toPath(title))
+                                                    router.push(`/${toPath(title)}`)
                                                 }}
                                                 className='cursor-pointer transiton-all duration-300 hover:text-green-400'
                                             >

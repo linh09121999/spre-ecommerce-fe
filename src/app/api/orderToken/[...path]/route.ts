@@ -29,11 +29,6 @@ export async function GET(req: NextRequest, context: { params: any }) {
         return NextResponse.json(response.data);
     } catch (err: any) {
         console.error("Spree API error:", err.response?.data || err.message);
-        return {
-            redirect: {
-                destination: '/503',
-                permanent: false,
-            },
-        };
+        return NextResponse.json({ error: err.message }, { status: err.response?.status || 500 });
     }
 }
