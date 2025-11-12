@@ -236,7 +236,11 @@ const Home: React.FC = () => {
             {resPosts_List?.data.slice(0, 4).map((res, id) => (
               <>
                 {res.attributes.content &&
-                  <div className="relative group overflow-hidden rounded-md shadow-lg">
+                  <div className="relative group overflow-hidden rounded-md shadow-lg" key={id}
+                    onClick={() => {
+                      router.push(`/post/${res.id}`)
+                    }}
+                  >
                     <img src={res.attributes.image_url!} alt={res.attributes.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-b-md">
@@ -254,7 +258,10 @@ const Home: React.FC = () => {
                 {resPosts_List?.data.slice(0, 4).map((res, id) => (
                   <>
                     {!res.attributes.content &&
-                      <div className=" flex flex-col gap-2  ">
+                      <div className=" flex flex-col gap-2  " key={id}
+                        onClick={() => {
+                          router.push(`/post/${res.id}`)
+                        }}>
                         <div className="relative w-fill group overflow-hidden rounded-md">
                           <img src={res.attributes.image_url!} alt={res.attributes.title} className="w-full  h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                           <div className="absolute  inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity"></div>

@@ -270,17 +270,17 @@ const ListProductCard: React.FC<ProductCardProps> = ({ products, included }) => 
                             {/* Premium badges */}
                             <div className="absolute top-3 left-3 flex flex-col gap-2">
                                 {isNew && (
-                                    <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-emerald-500 to-green-700 text-white shadow-md backdrop-blur-md">
+                                    <span className="text-md font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-emerald-500 to-green-700 text-white shadow-md backdrop-blur-md">
                                         New
                                     </span>
                                 )}
                                 {priceInfo.discount > 0 && (
-                                    <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-rose-500 to-red-700 text-white shadow-md backdrop-blur-md">
+                                    <span className="text-md font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-rose-500 to-red-700 text-white shadow-md backdrop-blur-md">
                                         -{priceInfo.discount}%
                                     </span>
                                 )}
                                 {!product.attributes.in_stock && (
-                                    <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-gray-400 to-gray-700 text-white shadow-md backdrop-blur-md">
+                                    <span className="text-md font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-gray-400 to-gray-700 text-white shadow-md backdrop-blur-md">
                                         Out of Stock
                                     </span>
                                 )}

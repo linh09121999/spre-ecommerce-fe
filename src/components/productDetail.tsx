@@ -160,244 +160,241 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
     return (
         <>
-            <div className="w-full">
-                {/* Header Navigation */}
-                <div className="flex items-center gap-3 px-5 max-w-[1535px] mx-auto py-2 text-lg">
-                    <button
-                        onClick={() => router.back()}
-                        className="flex items-center gap-2 group"
+            {/* Header Navigation */}
+            <div className="flex items-center gap-3 px-5 max-w-[1535px] mx-auto py-2 text-lg">
+                <button
+                    onClick={() => router.back()}
+                    className="flex items-center gap-2 group"
+                >
+                    <span className="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full shadow hover:shadow-md transition-all">
+                        <FaArrowLeft />
+                    </span>
+                    <span className="font-medium text-gray-700 group-hover:text-green-600 transition">
+                        {taxons && taxons.length > 0 && (
+                            <span>{longestPrettyName.replace(/\s*->\s*/g, " / ")}</span>
+                        )}
+                    </span>
+                </button>
+            </div>
+
+            {/* Product Section */}
+            <div className="max-w-[1535px] mx-auto grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10 px-5 py-5">
+
+                {/* Left: Images */}
+                <div className="space-y-4">
+                    <div
+                        className="aspect-square rounded-md overflow-hidden relative group shadow-lg"
+                        rounded-md="fade-up"
                     >
-                        <span className="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full shadow hover:shadow-md transition-all">
-                            <FaArrowLeft />
-                        </span>
-                        <span className="font-medium text-gray-700 group-hover:text-green-600 transition">
-                            {taxons && taxons.length > 0 && (
-                                <span>{longestPrettyName.replace(/\s*->\s*/g, " / ")}</span>
-                            )}
-                        </span>
-                    </button>
-                </div>
-
-                {/* Product Section */}
-                <div className="max-w-[1535px] mx-auto grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10 px-5 py-5">
-
-                    {/* Left: Images */}
-                    <div className="space-y-4">
-                        <div
-                            className="aspect-square rounded-md overflow-hidden relative group shadow-lg"
-                            rounded-md="fade-up"
-                        >
-                            {mainImage && (
-                                <img
-                                    src={mainImage.attributes.original_url}
-                                    alt={data?.attributes.name}
-                                    className="w-full h-full aspect-[1/1] object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-
-                        <div className="flex gap-3 overflow-x-auto pb-2">
-                            {displayImages.map((image, index) => (
-                                <button
-                                    key={image.id}
-                                    className={`flex-shrink-0 w-20 h-20 rounded-md overflow-x-auto scroll-x border-2 transition-all duration-300 ${index === selectedImageIndex
-                                        ? "border-green-500 ring-2 ring-green-200"
-                                        : "border-gray-200 hover:border-green-300"
-                                        }`}
-                                    onClick={() => setSelectedImageIndex(index)}
-                                >
-                                    <img
-                                        src={image.attributes.styles[2]?.url || image.attributes.original_url}
-                                        alt={`${data?.attributes.name} ${index + 1}`}
-                                        className="w-full h-full object-cover aspect-[1/1]"
-                                    />
-                                </button>
-                            ))}
-                        </div>
+                        {mainImage && (
+                            <img
+                                src={mainImage.attributes.original_url}
+                                alt={data?.attributes.name}
+                                className="w-full h-full aspect-[1/1] object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
 
-                    {/* Right: Product Info */}
-                    <div className="flex flex-col gap-5">
-                        <h1 className="text-4xl font-bold text-gray-900 leading-tight" >
-                            {data?.attributes.name}
-                        </h1>
+                    <div className="flex gap-3 overflow-x-auto pb-2">
+                        {displayImages.map((image, index) => (
+                            <button
+                                key={image.id}
+                                className={`flex-shrink-0 w-20 h-20 rounded-md overflow-x-auto scroll-x border-2 transition-all duration-300 ${index === selectedImageIndex
+                                    ? "border-green-500 ring-2 ring-green-200"
+                                    : "border-gray-200 hover:border-green-300"
+                                    }`}
+                                onClick={() => setSelectedImageIndex(index)}
+                            >
+                                <img
+                                    src={image.attributes.styles[2]?.url || image.attributes.original_url}
+                                    alt={`${data?.attributes.name} ${index + 1}`}
+                                    className="w-full h-full object-cover aspect-[1/1]"
+                                />
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
-                        {/* Price + Discount */}
-                        {data && data.attributes && (
-                            <div className="flex items-center gap-4" >
+                {/* Right: Product Info */}
+                <div className="flex flex-col gap-5">
+                    <h1 className="text-4xl font-bold text-gray-900 leading-tight" >
+                        {data?.attributes.name}
+                    </h1>
 
-                                <div className="flex items-end gap-2">
-                                    <span className="text-2xl font-bold text-green-700">
-                                        ${data.attributes.price}
-                                    </span>
-                                    {data.attributes.compare_at_price && (
-                                        <span className="text-lg text-gray-400 line-through">
-                                            ${data.attributes.compare_at_price}
-                                        </span>
-                                    )}
-                                </div>
-                                {priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 &&
-                                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-red-600 text-white shadow">
-                                        -{priceInfo(data.attributes.price, data.attributes.compare_at_price)}%
-                                    </span>
-                                }
-                            </div>
-                        )}
+                    {/* Price + Discount */}
+                    {data && data.attributes && (
+                        <div className="flex items-center gap-4" >
 
-                        {/* Options */}
-                        <div className="flex flex-col gap-5" rounded-md="fade-left" rounded-md-delay="200">
-                            {optionTypes.map(optionType => (
-                                <div key={optionType.id} className='flex flex-col gap-3'>
-                                    <label className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                                        {optionType.attributes.presentation}
-                                    </label>
-                                    <div className="flex flex-wrap gap-3">
-                                        {Array.from(availableOptions[optionType.attributes.name] || []).map(optionValue => {
-                                            const option = variants
-                                                .flatMap(v => v.attributes.options)
-                                                .find(o => o.name === optionType.attributes.name && o.value === optionValue);
-                                            const isSelected = selectedOptions[optionType.attributes.name] === optionValue;
-                                            const optionName = optionType.attributes.name.toLowerCase();
-
-                                            if (optionName === "color" || optionName === "màu sắc") {
-                                                return (
-                                                    <button
-                                                        key={optionValue}
-                                                        onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
-                                                        title={optionValue}
-                                                        className={`w-9 h-9 rounded-full border-2 transition-transform duration-300 ${isSelected ? "border-green-500 scale-110" : "border-gray-300 hover:scale-105"
-                                                            }`}
-                                                        style={{ backgroundColor: option?.presentation || optionValue }}
-                                                    />
-                                                );
-                                            }
-
-                                            return (
-                                                <button
-                                                    disabled={!selectedVariant?.attributes.in_stock}
-                                                    key={optionValue}
-                                                    onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
-                                                    className={`px-4 py-2 rounded-lg border-[1px] text-sm  transition-all duration-300 ${isSelected
-                                                        ? "text-green-600 border-green-600 shadow-lg font-bold"
-                                                        : "bg-white border-gray-300 text-gray-800 hover:border-green-300 font-medium"
-                                                        } 
-                                                         `}
-                                                >
-                                                    {option?.presentation || optionValue}
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {(data && data.attributes) &&
-                            <div className="flex flex-wrap gap-4">
-
-                                <div className="flex items-center gap-2 text-sm">
-                                    <FaBox className='text-green-500' />
-                                    <span>SKU: <strong>{data.attributes.sku}</strong></span>
-                                </div>
-
-                                {productProperties.length > 0 &&
-                                    <div className="flex items-center gap-2 text-sm">
-                                        <FaTag className='text-green-500' />
-                                        <span className='flex items-center'>Material:
-                                            <strong>
-                                                {productProperties.map(property => (
-                                                    <div key={property.id} className="flex justify-between py-2 border-b last:border-0 border-gray-200">
-                                                        <span className="text-sm font-bold text-gray-900">
-                                                            {property.attributes.value}
-                                                        </span>
-                                                    </div>
-                                                ))}
-                                            </strong>
-                                        </span>
-                                    </div>
-                                }
-
-                                {selectedVariant?.attributes.in_stock ? (
-                                    <span className="text-success flex gap-2 font-semibold items-center">
-                                        <FaCheckCircle className='text-green-700' />
-                                        <span className="inline-block text-xs font-semibold text-green-700">
-                                            In Stock
-                                        </span>
-                                    </span>
-                                ) : (
-                                    <span className="text-success flex gap-2 font-semibold items-center">
-                                        <FaExclamationCircle className='text-red-700' />
-                                        <span className="inline-block text-xs font-semibold text-red-700 ">
-                                            Out of Stock
-                                        </span>
+                            <div className="flex items-end gap-2">
+                                <span className="text-2xl font-bold text-green-700">
+                                    ${data.attributes.price}
+                                </span>
+                                {data.attributes.compare_at_price && (
+                                    <span className="text-lg text-gray-400 line-through">
+                                        ${data.attributes.compare_at_price}
                                     </span>
                                 )}
                             </div>
-                        }
+                            {priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 &&
+                                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-red-600 text-white shadow">
+                                    -{priceInfo(data.attributes.price, data.attributes.compare_at_price)}%
+                                </span>
+                            }
+                        </div>
+                    )}
 
-                        {/* Quantity & Add to Cart */}
-                        <div className="flex items-center gap-4 flex-wrap" >
-                            <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
-                                <button
-                                    className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors"
-                                    onClick={() => handleQuantityChange(quantity - 1)}
-                                    disabled={quantity <= 1 && !selectedVariant?.attributes.in_stock}
-                                >
-                                    −
-                                </button>
-                                <span className={` ${!selectedVariant?.attributes.in_stock ? "text-gray-300 disabled:cursor-not-allowed" : ""} px-5 py-2 bg-white text-center font-semibold `}>{quantity}</span>
-                                <button
-                                    disabled={!selectedVariant?.attributes.in_stock}
-                                    className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors"
-                                    onClick={() => handleQuantityChange(quantity + 1)}
-                                >
-                                    +
-                                </button>
+                    {/* Options */}
+                    <div className="flex flex-col gap-5" rounded-md="fade-left" rounded-md-delay="200">
+                        {optionTypes.map(optionType => (
+                            <div key={optionType.id} className='flex flex-col gap-3'>
+                                <label className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+                                    {optionType.attributes.presentation}
+                                </label>
+                                <div className="flex flex-wrap gap-3">
+                                    {Array.from(availableOptions[optionType.attributes.name] || []).map(optionValue => {
+                                        const option = variants
+                                            .flatMap(v => v.attributes.options)
+                                            .find(o => o.name === optionType.attributes.name && o.value === optionValue);
+                                        const isSelected = selectedOptions[optionType.attributes.name] === optionValue;
+                                        const optionName = optionType.attributes.name.toLowerCase();
+
+                                        if (optionName === "color" || optionName === "màu sắc") {
+                                            return (
+                                                <button
+                                                    key={optionValue}
+                                                    onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
+                                                    title={optionValue}
+                                                    className={`w-9 h-9 rounded-full border-2 transition-transform duration-300 ${isSelected ? "border-green-500 scale-110" : "border-gray-300 hover:scale-105"
+                                                        }`}
+                                                    style={{ backgroundColor: option?.presentation || optionValue }}
+                                                />
+                                            );
+                                        }
+
+                                        return (
+                                            <button
+                                                disabled={!selectedVariant?.attributes.in_stock}
+                                                key={optionValue}
+                                                onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
+                                                className={`px-4 py-2 rounded-lg border-[1px] text-sm  transition-all duration-300 ${isSelected
+                                                    ? "text-green-600 border-green-600 shadow-lg font-bold"
+                                                    : "bg-white border-gray-300 text-gray-800 hover:border-green-300 font-medium"
+                                                    } 
+                                                         `}
+                                            >
+                                                {option?.presentation || optionValue}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
+                        ))}
+                    </div>
 
-                        <div className='flex gap-5 items-center'>
-                            <button
-                                onClick={handleAddToCart}
-                                disabled={!selectedVariant?.attributes.in_stock}
-                                className={`px-16 h-[50px] rounded-md bg-green-600  text-white font-semibold transition-transform ${!selectedVariant?.attributes.in_stock ? 'disabled:opacity-60' : 'hover:bg-green-700 hover:scale-105 '} `}
-                            >
-                                {selectedVariant?.attributes.in_stock ? "Add to Cart" : "Out of Stock"}
-                            </button>
-
-                            <button
-                                aria-label="Add to Wishlist"
-                                className="group px-4 h-[50px] bg-white border rounded-md border-gray-600 hover:border-green-600 transition-all hover:scale-110"
-                            >
-                                <FaRegHeart className="text-gray-600 text-lg group-hover:text-green-600" />
-                            </button>
-                        </div>
-
-                        {/* Description */}
-                        <div className="pt-3">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
-                            {data && <div className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: data.attributes.description }} />}
-                        </div>
-
+                    {(data && data.attributes) &&
                         <div className="flex flex-wrap gap-4">
-                            <div className="flex items-center gap-2 ">
-                                <FaShippingFast className='text-green-500' />
-                                <span className='text-sm'>Free shipping on orders over $50</span>
+
+                            <div className="flex items-center gap-2 text-sm">
+                                <FaBox className='text-green-500' />
+                                <span>SKU: <strong>{data.attributes.sku}</strong></span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <FaUndo className='text-green-500' />
-                                <span className='text-sm'>30-day return policy</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <FaShieldAlt className='text-green-500' />
-                                <span className='text-sm'>2-year warranty</span>
-                            </div>
+
+                            {productProperties.length > 0 &&
+                                <div className="flex items-center gap-2 text-sm">
+                                    <FaTag className='text-green-500' />
+                                    <span className='flex items-center'>Material:
+                                        <strong>
+                                            {productProperties.map(property => (
+                                                <div key={property.id} className="flex justify-between py-2 border-b last:border-0 border-gray-200">
+                                                    <span className="text-sm font-bold text-gray-900">
+                                                        {property.attributes.value}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </strong>
+                                    </span>
+                                </div>
+                            }
+
+                            {selectedVariant?.attributes.in_stock ? (
+                                <span className="text-success flex gap-2 font-semibold items-center">
+                                    <FaCheckCircle className='text-green-700' />
+                                    <span className="inline-block text-xs font-semibold text-green-700">
+                                        In Stock
+                                    </span>
+                                </span>
+                            ) : (
+                                <span className="text-success flex gap-2 font-semibold items-center">
+                                    <FaExclamationCircle className='text-red-700' />
+                                    <span className="inline-block text-xs font-semibold text-red-700 ">
+                                        Out of Stock
+                                    </span>
+                                </span>
+                            )}
+                        </div>
+                    }
+
+                    {/* Quantity & Add to Cart */}
+                    <div className="flex items-center gap-4 flex-wrap" >
+                        <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+                            <button
+                                className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors"
+                                onClick={() => handleQuantityChange(quantity - 1)}
+                                disabled={quantity <= 1 && !selectedVariant?.attributes.in_stock}
+                            >
+                                −
+                            </button>
+                            <span className={` ${!selectedVariant?.attributes.in_stock ? "text-gray-300 disabled:cursor-not-allowed" : ""} px-5 py-2 bg-white text-center font-semibold `}>{quantity}</span>
+                            <button
+                                disabled={!selectedVariant?.attributes.in_stock}
+                                className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors"
+                                onClick={() => handleQuantityChange(quantity + 1)}
+                            >
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className='flex gap-5 items-center'>
+                        <button
+                            onClick={handleAddToCart}
+                            disabled={!selectedVariant?.attributes.in_stock}
+                            className={`px-16 h-[50px] rounded-md bg-green-600  text-white font-semibold transition-transform ${!selectedVariant?.attributes.in_stock ? 'disabled:opacity-60' : 'hover:bg-green-700 hover:scale-105 '} `}
+                        >
+                            {selectedVariant?.attributes.in_stock ? "Add to Cart" : "Out of Stock"}
+                        </button>
+
+                        <button
+                            aria-label="Add to Wishlist"
+                            className="group px-4 h-[50px] bg-white border rounded-md border-gray-600 hover:border-green-600 transition-all hover:scale-110"
+                        >
+                            <FaRegHeart className="text-gray-600 text-lg group-hover:text-green-600" />
+                        </button>
+                    </div>
+
+                    {/* Description */}
+                    <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+                        {data && <div className="text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: data.attributes.description }} />}
+                    </div>
+
+                    <div className="flex flex-wrap gap-4">
+                        <div className="flex items-center gap-2 ">
+                            <FaShippingFast className='text-green-500' />
+                            <span className='text-sm'>Free shipping on orders over $50</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <FaUndo className='text-green-500' />
+                            <span className='text-sm'>30-day return policy</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <FaShieldAlt className='text-green-500' />
+                            <span className='text-sm'>2-year warranty</span>
                         </div>
                     </div>
                 </div>
             </div>
-
         </>
     )
 }

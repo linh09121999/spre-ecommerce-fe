@@ -182,3 +182,7 @@
 .react-multiple-carousel__arrow::before {
     color: var(--color-cyan-300) !important;
 }
+
+.attachment img{
+    width: 100%;
+}

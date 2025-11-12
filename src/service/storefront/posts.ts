@@ -25,7 +25,7 @@ export const ListAllPost = (
     return api.get(`/storefront/posts?${decodeURIComponent(params.toString())}`)
 }
 export const RetrieveAPost = (
-    id: number,
+    id: string,
     paramsObj?: {
         include?: string,
     }
