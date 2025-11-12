@@ -722,7 +722,15 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         setPriceMax(max);
     };
 
-
+    const handleClearAllFilters = () => {
+        setCheckedItemsAvailabity([]);
+        setCheckItemTaxonsAllProduct([]);
+        setCheckItemCollectonsAllProduct([]);
+        setCheckedColor([]);
+        setCheckedSize([]);
+        setPriceMin(0);
+        setPriceMax(200);
+    }
 
     return (
         <>
@@ -1509,6 +1517,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                     Apply
                                 </button>
                                 <button className=" h-10 border border-gray-100 justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                                    onClick={handleClearAllFilters}
                                 >
                                     Clear All Filters
                                 </button>
