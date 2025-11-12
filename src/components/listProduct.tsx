@@ -224,7 +224,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
     const Category = (name: string) => {
         if (!name) return undefined
-        return name.substring(0, name.lastIndexOf('/'))
+        return name.substring(0, name.lastIndexOf('->'))
     }
 
     const [anchorElSortBy, setAnchorElSortBy] = useState<null | HTMLElement>(null);
@@ -748,7 +748,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
                                 {/* Nội dung chữ overlay */}
                                 <div className="absolute left-0 bottom-0  p-10 text-white z-10 w-3/4 grid gap-3">
-                                    <span className="text-xl uppercase text-gray-300">{Category(taxonsRetrieve?.data.attributes.permalink)}</span>
+                                    <span className="text-lg text-gray-300">{Category(taxonsRetrieve?.data.attributes.pretty_name)?.replace(/\s*->\s*/g, " / ")}</span>
                                     <h3 className="text-4xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-400 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
                                         {taxonsRetrieve?.data.attributes.name}
                                     </h3>
@@ -767,7 +767,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                             <>
                                 {/* Nội dung chữ overlay */}
                                 <div className=" border-b-[2px] border-b-gray-200 grid gap-3 pb-5 w-full">
-                                    <span className="text-xl  uppercase text-gray-500">{Category(taxonsRetrieve?.data.attributes.permalink!)}</span>
+                                    <span className="text-md text-gray-500">{Category(taxonsRetrieve?.data.attributes.pretty_name)?.replace(/\s*->\s*/g, " / ")}</span>
                                     <h3 className="text-3xl font-bold uppercase tracking-wide bg-gradient-to-r from-green-500 to-emerald-200 bg-clip-text text-transparent drop-shadow-lg">
                                         {taxonsRetrieve?.data.attributes.name}
                                     </h3>
