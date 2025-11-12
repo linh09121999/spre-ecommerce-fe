@@ -86,7 +86,7 @@ const Fashion: React.FC = () => {
 
     return (
         <>
-            <ListProduct included={resDataIcludes_List ?? []} products={resDataProducts_List ?? []} taxonsRetrieve={resTaxons_Retrieve!} />
+            <ListProduct included={resDataIcludes_List ?? []} products={resDataProducts_List ?? []} taxonsRetrieve={resTaxons_Retrieve!}/>
             <ToastContainer position="top-right" autoClose={3000} />
         </>
     );
