@@ -5,7 +5,7 @@ import type { SxProps, Theme } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
-import { FaArrowLeft, FaCaretSquareLeft, FaRegHeart } from 'react-icons/fa';
+import { FaArrowLeft, FaBox, FaCaretSquareLeft, FaCheckCircle, FaRegHeart, FaTag } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 
 const fly1 = keyframes`
@@ -170,7 +170,9 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                             <FaArrowLeft />
                         </span>
                         <span className="font-medium text-gray-700 group-hover:text-green-600 transition">
-                            {longestPrettyName}
+                            {taxons && taxons.length > 0 && (
+                                <span>{longestPrettyName.replace(/\s*->\s*/g, " / ")}</span>
+                            )}
                         </span>
                     </button>
                 </div>
@@ -182,7 +184,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                     <div className="space-y-4">
                         <div
                             className="aspect-square rounded-md overflow-hidden relative group shadow-lg"
-                            data-aos="fade-up"
+                            rounded-md="fade-up"
                         >
                             {mainImage && (
                                 <img
@@ -216,33 +218,34 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
                     {/* Right: Product Info */}
                     <div className="space-y-4">
-                        <h1 className="text-4xl font-bold text-gray-900 leading-tight" data-aos="fade-left">
+                        <h1 className="text-4xl font-bold text-gray-900 leading-tight" >
                             {data?.attributes.name}
                         </h1>
 
                         {/* Price + Discount */}
-                        {data && data.attributes && priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 && (
-                            <div className="flex items-center gap-4" data-aos="fade-left" data-aos-delay="100">
-
-                                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-red-600 text-white shadow">
-                                    -{priceInfo(data.attributes.price, data.attributes.compare_at_price)}%
-                                </span>
+                        {data && data.attributes && (
+                            <div className="flex items-center gap-4" >
 
                                 <div className="flex items-end gap-2">
                                     <span className="text-2xl font-bold text-green-700">
                                         ${data.attributes.price}
                                     </span>
                                     {data.attributes.compare_at_price && (
-                                        <span className="text-sm text-gray-400 line-through">
+                                        <span className="text-lg text-gray-400 line-through">
                                             ${data.attributes.compare_at_price}
                                         </span>
                                     )}
                                 </div>
+                                {priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 &&
+                                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-red-600 text-white shadow">
+                                        -{priceInfo(data.attributes.price, data.attributes.compare_at_price)}%
+                                    </span>
+                                }
                             </div>
                         )}
 
                         {/* Options */}
-                        <div className="space-y-5" data-aos="fade-left" data-aos-delay="200">
+                        <div className="space-y-5" rounded-md="fade-left" rounded-md-delay="200">
                             {optionTypes.map(optionType => (
                                 <div key={optionType.id}>
                                     <label className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
@@ -271,6 +274,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
                                             return (
                                                 <button
+                                                    disabled={!selectedVariant?.attributes.in_stock}
                                                     key={optionValue}
                                                     onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
                                                     className={`px-4 py-2 rounded-lg border text-sm  transition-all duration-300 ${isSelected
@@ -287,17 +291,40 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                             ))}
                         </div>
 
-                        {/* Stock Status */}
-                        <div className="">
-                            {selectedVariant?.attributes.in_stock ? (
-                                <span className="inline-block px-3 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded-full">
-                                    In Stock
-                                </span>
-                            ) : (
-                                <span className="inline-block px-3 py-1 text-xs font-semibold bg-red-100 text-red-700 rounded-full">
-                                    Out of Stock
-                                </span>
-                            )}
+                        <div className="mb-6 flex flex-wrap gap-4">
+                            <div className="flex items-center gap-2 text-sm">
+                                <FaBox className='text-green-500' />
+                                <span>SKU: <strong>{data!.attributes.sku}</strong></span>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                                <FaTag className='text-green-500' />
+                                <span className='flex items-center'>Material: <strong>
+                                    {productProperties.map(property => (
+                                        <div key={property.id} className="flex justify-between py-2 border-b last:border-0 border-gray-200">
+                                            <span className="text-sm font-bold text-gray-900">
+                                                {property.attributes.value}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </strong></span>
+                            </div>
+                            <span className="text-success flex gap-2 font-semibold items-center">
+                                {selectedVariant?.attributes.in_stock ? (
+                                    <>
+                                        <FaCheckCircle className='text-green-700' />
+                                        <span className="inline-block text-xs font-semibold text-green-700">
+                                            In Stock
+                                        </span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FaCheckCircle className='text-red-700' />
+                                        <span className="inline-block text-xs font-semibold text-red-700 ">
+                                            Out of Stock
+                                        </span>
+                                    </>
+                                )}
+                            </span>
                         </div>
 
                         {/* Quantity & Add to Cart */}
@@ -337,20 +364,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                             </button>
                         </div>
 
-                        {/* Product Details */}
-                        {productProperties.length > 0 && (
-                            <div className="bg-white/70 backdrop-blur-md rounded-md p-5 shadow-sm space-y-3">
-                                <h3 className="text-lg font-semibold text-gray-900">Product Details</h3>
-                                {productProperties.map(property => (
-                                    <div key={property.id} className="flex justify-between py-2 border-b last:border-0 border-gray-200">
-                                        <span className="text-sm text-gray-600">{property.attributes.description}</span>
-                                        <span className="text-sm font-medium text-gray-900">
-                                            {property.attributes.value}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+
 
                         {/* Description */}
                         <div className="pt-3">
