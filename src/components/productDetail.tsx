@@ -141,7 +141,6 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
     const mainImage = displayImages[selectedImageIndex];
 
-
     const priceInfo = (price: string, comparePrice: string | null) => {
         return comparePrice && comparePrice > price
             ? Math.round(((parseFloat(comparePrice) - parseFloat(price)) / parseFloat(comparePrice)) * 100)
@@ -178,7 +177,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                             <img
                                 src={mainImage.attributes.original_url}
                                 alt={data?.attributes.name}
-                                className="w-full h-full object-cover object-center"
+                                className="w-full aspect-[1/1] h-full object-cover object-center"
                             />
                         )}
                     </div>
@@ -195,7 +194,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                                 <img
                                     src={image.attributes.styles[2]?.url || image.attributes.original_url}
                                     alt={`${data?.attributes.name} ${index + 1}`}
-                                    className="w-full h-full object-cover"
+                                    className="w-full aspect-[1/1] h-full object-cover"
                                 />
                             </button>
                         ))}
@@ -206,25 +205,6 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                 <div className="space-y-6">
                     <h1 className="text-3xl font-bold text-gray-900">{data?.attributes.name}</h1>
 
-                    {/* Price */}
-                    {/* <div className="flex items-center space-x-4">
-                                {hasDiscount && (
-                                    <span className="text-xl text-gray-500 line-through">
-                                        {data.attributes.display_compare_at_price}
-                                    </span>
-                                )}
-                                <span className="text-2xl font-bold text-red-600">
-                                    {selectedVariant?.attributes.display_price || data.attributes.display_price}
-                                </span>
-                                {hasDiscount && (
-                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Save {(
-                                            (parseFloat(data.attributes.compare_at_price) - parseFloat(data.attributes.price)) /
-                                            parseFloat(data.attributes.compare_at_price) * 100
-                                        ).toFixed(0)}%
-                                    </span>
-                                )}
-                            </div> */}
                     <div className="flex items-center space-x-4">
                         {data && data.attributes && priceInfo(data.attributes.price, data.attributes.compare_at_price) > 0 && (
                             <span className="text-[11px] font-semibold px-3 py-[4px] rounded-full bg-gradient-to-r from-rose-500 to-red-700 text-white shadow-md backdrop-blur-md">
@@ -260,26 +240,49 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                                 <label className="block text-sm font-medium text-gray-700">
                                     {optionType.attributes.presentation}:
                                 </label>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-3">
                                     {Array.from(availableOptions[optionType.attributes.name] || []).map(optionValue => {
                                         const option = variants
                                             .flatMap(v => v.attributes.options)
                                             .find(o => o.name === optionType.attributes.name && o.value === optionValue);
 
+                                        const isSelected = selectedOptions[optionType.attributes.name] === optionValue;
+                                        const optionName = optionType.attributes.name.toLowerCase();
+
+                                        // Nếu là loại màu sắc
+                                        if (optionName === 'color' || optionName === 'màu sắc') {
+                                            return (
+                                                <button
+                                                    key={optionValue}
+                                                    onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
+                                                    className={`w-8 h-8 rounded-full border-2 transition-all 
+            ${isSelected ? 'border-blue-500 scale-110' : 'border-gray-300 hover:scale-105'}
+          `}
+                                                    style={{
+                                                        backgroundColor: option?.presentation || optionValue, // dùng giá trị màu
+                                                    }}
+                                                    title={optionValue} // hiển thị tooltip khi hover
+                                                />
+                                            );
+                                        }
+
+                                        // Các loại khác (như size, dung tích, ...)
                                         return (
                                             <button
                                                 key={optionValue}
-                                                className={`px-4 py-2 border rounded-md text-sm font-medium transition-all ${selectedOptions[optionType.attributes.name] === optionValue
-                                                    ? 'bg-blue-500 text-white border-blue-500'
-                                                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                                                    }`}
                                                 onClick={() => handleOptionChange(optionType.attributes.name, optionValue)}
+                                                className={`px-4 py-2 border rounded-md text-sm font-medium transition-all
+          ${isSelected
+                                                        ? 'bg-blue-500 text-white border-blue-500'
+                                                        : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-50'}
+        `}
                                             >
-                                                {option?.presentation || optionValue}
+                                                <span className="font-semibold text-sm">{option?.presentation || optionValue}</span>
                                             </button>
                                         );
                                     })}
                                 </div>
+
                             </div>
                         ))}
                     </div>
@@ -315,13 +318,21 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                                 +
                             </button>
                         </div>
+                    </div>
 
+                    <div className='flex gap-4'>
                         <button
-                            className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                            className=" w-fit px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
                             onClick={handleAddToCart}
                             disabled={!selectedVariant?.attributes.in_stock || !selectedVariant?.attributes.purchasable}
                         >
                             {selectedVariant?.attributes.in_stock ? 'Add to Cart' : 'Out of Stock'}
+                        </button>
+                        <button
+                            aria-label="click heart"
+                            className=" bg-white/90 hover:bg-green-600 text-gray-800 hover:text-white  py-2 px-4 shadow-md rounded-lg group-hover:opacity-100 transition-all duration-500 hover:scale-110"
+                        >
+                            <FaRegHeart className="text-lg" />
                         </button>
                     </div>
 
