@@ -184,10 +184,10 @@ const HeaderWeb: React.FC = () => {
         }
     }
 
-    const getApiTaxons = async () => {
+    const getApiTaxons = async (page: number, per_page:number) => {
         try {
             setLoading(true);
-            const res = await ListAllTaxons()
+            const res = await ListAllTaxons({page, per_page})
             setResTaxons_List(res.data)
         } catch (error: any) {
             toast.error(`Taxons: ` + error.response.error)
@@ -199,7 +199,7 @@ const HeaderWeb: React.FC = () => {
 
     useEffect(() => {
         getApiStores()
-        getApiTaxons()
+        getApiTaxons(1,100)
     }, [])
 
     const [anchorElCurrency, setAnchorElCurrency] = useState<null | HTMLElement>(null);

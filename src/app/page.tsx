@@ -275,7 +275,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className=" ">
                           <h3 className="text-xl  font-semibold mt-1 mb-2">{res.attributes.title}</h3>
-                          <p className="text-white/70 text-sm mt-1">
+                          <p className="text-black/70 text-sm mt-1">
                             {res.attributes.author_name} •{" "}
                             {new Date(res.attributes.published_at).toLocaleDateString()}
                           </p>
