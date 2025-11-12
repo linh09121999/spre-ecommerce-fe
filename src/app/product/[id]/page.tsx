@@ -14,9 +14,12 @@ const ProductDetail: React.FC = () => {
   const { id } = params; //id: la slug
 
   const {
-    setLoading, setSelectNav
+    setLoading, setSelectNav, prePage, loadingReadMore, setLoadingReadMore,
+    currentPage, setCurrentPage, totalDatas, totalPages, setTotalDatas, setTotalPages,
+    setSortBy, setSortOption, sortBy, sortOption
   } = useStateGeneral()
 
+  const [getIdTaxon, setGetIdTaxon] = useState<number>(0)
 
   const {
     resProduct_Retrieve, setResProduct_Retrieve,
@@ -26,17 +29,30 @@ const ProductDetail: React.FC = () => {
 
   const getApiProducts = async (filter_taxons: string, page: number, per_page: number, include: string) => {
     try {
-      setLoading(true)
+      { page === 1 ? setLoading(true) : setLoadingReadMore(true) }
+      setLoadingReadMore(true)
       const res = await ListAllProducts({ filter_taxons, page, per_page, include })
-      setResDataProducts_Related(res.data.data);
-      setResDataIcludes_Related(res.data.included)
+      setTotalDatas(res.data.meta.total_count)
+      setTotalPages(res.data.meta.total_pages)
+      setCurrentPage(page);
+
+      if (page === 1) {
+        setResDataProducts_Related(res.data.data);
+        setResDataIcludes_Related(res.data.included)
+      } else {
+        setResDataProducts_Related((prev) => [...prev, ...res.data.data]);
+        setResDataIcludes_Related((prev) => [...prev, ...res.data.included])
+      }
+
     } catch (error: any) {
       toast.error(`Products: ` + error.response.error)
       setResDataProducts_Related([])
       setResDataIcludes_Related([])
+      setCurrentPage(0)
     }
     finally {
       setLoading(false);
+      setLoadingReadMore(false)
     }
   }
 
@@ -58,7 +74,7 @@ const ProductDetail: React.FC = () => {
         const idNum = Number(item.id); // đảm bảo chuyển sang number
         return idNum > max ? idNum : max;
       }, 0);
-
+      setGetIdTaxon(maxId)
       getApiProducts(String(maxId), 1, 10, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
 
     } catch (error: any) {
@@ -73,6 +89,23 @@ const ProductDetail: React.FC = () => {
     getApiProductRetrieve(String(id), "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
     setSelectNav(null)
   }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (loadingReadMore) return;
+
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        if (currentPage < totalPages) {
+          if (sortBy !== "Relevance") setSortBy("Relevance");
+          if (sortOption !== "relevance") setSortOption("relevance");
+          getApiProducts(String(getIdTaxon), currentPage + 1, 10, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loadingReadMore, currentPage, totalDatas, getApiProducts]);
 
   return (
     <>
