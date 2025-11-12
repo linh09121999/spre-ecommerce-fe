@@ -793,7 +793,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                     <div className="grid lg:grid-cols-[300px_1fr] gap-10">
                         {/* lg:sticky lg:top-[105px] */}
                         <aside className="grid h-fit max-lg:hidden  gap-10 ">
-                            <div className="items-center pb-2 border-b-[2px] border-b-gray-200">
+                            <div className="items-center h-[50px] border-b-[2px] border-b-gray-200">
                                 <h3 className="text-xl uppercase tracking-wide text-black/70">Filter</h3>
                             </div>
                             <div className="flex flex-col gap-5">
@@ -1504,31 +1504,30 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                     </div>
                                 )}
                             </div>
-
-                            <button className=" h-10 border border-gray-100 justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                            >
-                                Clear All Filters
-                            </button>
+                            <div className="grid grid-cols-2 gap-5 items-center">
+                                <button className="h-10 bg-green-600 justify-center text-white items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                    Apply
+                                </button>
+                                <button className=" h-10 border border-gray-100 justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                                >
+                                    Clear All Filters
+                                </button>
+                            </div>
                         </aside >
                         <section className="flex flex-col gap-4 md:gap-6">
-                            <div className="items-center pb-2 border-b-[2px] border-b-gray-200 flex justify-between ">
-                                <div>
-                                    <h3 className="text-xl uppercase tracking-wide text-black/70">
-                                        PRODUCTS
-                                    </h3>
-                                    <p className="text-sm text-black/50 flex gap-1 items-end">Show
-                                        <span className="text-lg text-green-600 font-bold">
-                                            {products.length === 0 ?
-                                                0 :
-                                                (currentPage * prePage) > totalDatas
-                                                    ?
-                                                    totalDatas
-                                                    : (currentPage * prePage)
-                                            }
-                                        </span> items for {totalDatas}
-                                    </p>
-
-                                </div>
+                            <div className="items-center h-[50px] border-b-[2px] border-b-gray-200 flex justify-between ">
+                                <h3 className="text-xl flex gap-2 uppercase tracking-wide text-black/70">
+                                    PRODUCTS
+                                    (<span className=" text-green-600 font-bold">
+                                        {products.length === 0 ?
+                                            0 :
+                                            (currentPage * prePage) > totalDatas
+                                                ?
+                                                totalDatas
+                                                : (currentPage * prePage)
+                                        }
+                                    </span> / {totalDatas})
+                                </h3>
                                 <button
                                     className={`
                     ${openSortBy ? "shadow-xl " : ""} 
