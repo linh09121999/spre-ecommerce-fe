@@ -113,29 +113,29 @@ export const useStateGeneral = create<State>((set) => ({
     sortOption: "relevance",
     setSortOption: (sort) => set({ sortOption: sort }),
     filterTaxonsAllProduct: [
-        { id: 0, title: "Categories" },
-        { id: 1, title: "Brands" },
-        { id: 2, title: "Wellness" },
-        { id: 3, title: "Beauty" }
+        { id: 170, title: "Categories" },
+        { id: 171, title: "Brands" },
+        { id: 185, title: "Wellness" },
+        { id: 186, title: "Beauty" }
     ],
     filterCollectonsAllProduct: [
-        { id: 0, title: "On sale" },
-        { id: 1, title: "New arrivals" }
+        { id: 173, title: "On sale" },
+        { id: 174, title: "New arrivals" }
     ],
     filterAvailabity: [
         { id: 0, title: "In stock" },
         { id: 1, title: "Out of stock" }
     ],
     filterTaxonsFashion: [
-        { id: 0, title: "Men" },
-        { id: 1, title: "Women" },
-        { id: 2, title: "Accessories" }
+        { id: 176, title: "Men" },
+        { id: 180, title: "Women" },
+        { id: 179, title: "Accessories" }
     ],
     filterTaxonsWellness: [
-        { id: 0, title: "Fitness" },
-        { id: 1, title: "Relaxation" },
-        { id: 2, title: "Mental Stimulation" },
-        { id: 3, title: "Nutrition" }
+        { id: 187, title: "Fitness" },
+        { id: 190, title: "Relaxation" },
+        { id: 191, title: "Mental Stimulation" },
+        { id: 193, title: "Nutrition" }
     ],
 
     filterSize: [
