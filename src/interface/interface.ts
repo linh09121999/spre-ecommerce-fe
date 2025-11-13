@@ -77,20 +77,16 @@ interface VariantAttributes {
     display_compare_at_price: string | null;
 }
 
-interface RelationshipData {
-    id: string;
-    type: string;
-}
 
 interface Relationships {
     metafields: { data: unknown[] };
-    product?: { data: RelationshipData };
-    images: { data: RelationshipData[] };
-    option_values?: { data: RelationshipData[] };
-    parent?: { data: RelationshipData | null };
-    taxonomy?: { data: RelationshipData };
-    children?: { data: RelationshipData[] };
-    image?: { data: RelationshipData | null };
+    product?: { data: Type };
+    images: { data: Type[] };
+    option_values?: { data: Type[] };
+    parent?: { data: Type | null };
+    taxonomy?: { data: Type };
+    children?: { data: Type[] };
+    image?: { data: Type | null };
 }
 
 export interface IncludedVariant extends Type {

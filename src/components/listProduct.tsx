@@ -374,7 +374,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // 
-    const [checkedItemsCollectonsAllProduct, setCheckItemCollectonsAllProduct] = useState<number[]>(filterCollectonsAllProduct.map((type) => type.id) ?? [])
+    const [checkedItemsCollectonsAllProduct, setCheckItemCollectonsAllProduct] = useState<number[]>(filterCollectonsAllProduct.length ? filterCollectonsAllProduct.map((type) => type.id) : [])
     const allCheckedCollectonsAllProduct = checkedItemsCollectonsAllProduct.length === filterCollectonsAllProduct.length
     const isIndeterminateCollectonsAllProduct = checkedItemsCollectonsAllProduct.length > 0 && checkedItemsCollectonsAllProduct.length < filterCollectonsAllProduct.length
 
@@ -768,6 +768,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             return price >= priceMin && price <= priceMax;
         });
 
+
         // 2️⃣ Collections
         if (checkedItemsCollectonsAllProduct.length > 0) {
             result = result.filter((p) => {
@@ -777,13 +778,15 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         }
 
         // all product
-        
+        if (checkedItemsTaxonsAllProduct.length > 0 && !taxonsRetrieve) {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsAllProduct.some((id) => productTaxons.includes(id));
+            });
+        }
 
         // 3️⃣ Color
-
-
         // 4️⃣ Size
-
         return result;
     }, [
         products,
@@ -1020,22 +1023,28 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </div>
                                         }
                                     </div>
+
+                                </>
+                            }
+
+                            {taxonsRetrieve?.data.attributes.name === 'Fashion' &&
+                                <>
                                     <div className="flex flex-col gap-5">
                                         <button className="flex justify-between items-center w-full transition-all duration-300 ease"
                                             onClick={() => {
-                                                setShowCollectons(!showCollectons)
+                                                setShowTaxons(!showTaxons)
                                             }}
                                         >
-                                            <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Collectons</h3>
-                                            <span className="">{showCollectons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                            <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
+                                            <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
                                         </button>
-                                        {showCollectons &&
+                                        {showTaxons &&
                                             <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
                                                 <FormControlLabel control={
                                                     <Checkbox
-                                                        indeterminate={isIndeterminateCollectonsAllProduct}
-                                                        checked={allCheckedCollectonsAllProduct}
-                                                        onChange={handleCheckAllCollectonsAllProduct}
+                                                        indeterminate={isIndeterminateTaxonsFashion}
+                                                        checked={allCheckedTaxonsFashion}
+                                                        onChange={handleCheckAllTaxonsFashion}
                                                         icon={<FaRegCircle />}
                                                         indeterminateIcon={<FaMinusCircle />}
                                                         checkedIcon={<FaCheckCircle />}
@@ -1045,11 +1054,11 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                     label="All"
                                                     sx={sxControlLabel}
                                                 />
-                                                {filterCollectonsAllProduct.map((filter) => (
+                                                {filterTaxonsFashion.map((filter) => (
                                                     <FormControlLabel key={filter.id} control={
                                                         <Checkbox
-                                                            checked={checkedItemsCollectonsAllProduct.includes(filter.id)}
-                                                            onChange={() => handleCheckItemCollectonsAllProduct(filter.id)}
+                                                            checked={checkedItemsTaxonsFashion.includes(filter.id)}
+                                                            onChange={() => handleCheckItemTaxonsFashion(filter.id)}
                                                             icon={<FaRegCircle />}
                                                             checkedIcon={<FaCheckCircle />}
                                                             sx={sxCheckBox}
@@ -1062,52 +1071,8 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </div>
                                         }
                                     </div>
-                                </>
-                            }
 
-                            {taxonsRetrieve?.data.attributes.name === 'Fashion' &&
-                                <div className="flex flex-col gap-5">
-                                    <button className="flex justify-between items-center w-full transition-all duration-300 ease"
-                                        onClick={() => {
-                                            setShowTaxons(!showTaxons)
-                                        }}
-                                    >
-                                        <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Categories</h3>
-                                        <span className="">{showTaxons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
-                                    </button>
-                                    {showTaxons &&
-                                        <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
-                                            <FormControlLabel control={
-                                                <Checkbox
-                                                    indeterminate={isIndeterminateTaxonsFashion}
-                                                    checked={allCheckedTaxonsFashion}
-                                                    onChange={handleCheckAllTaxonsFashion}
-                                                    icon={<FaRegCircle />}
-                                                    indeterminateIcon={<FaMinusCircle />}
-                                                    checkedIcon={<FaCheckCircle />}
-                                                    sx={sxCheckBoxMinate}
-                                                />
-                                            }
-                                                label="All"
-                                                sx={sxControlLabel}
-                                            />
-                                            {filterTaxonsFashion.map((filter) => (
-                                                <FormControlLabel key={filter.id} control={
-                                                    <Checkbox
-                                                        checked={checkedItemsTaxonsFashion.includes(filter.id)}
-                                                        onChange={() => handleCheckItemTaxonsFashion(filter.id)}
-                                                        icon={<FaRegCircle />}
-                                                        checkedIcon={<FaCheckCircle />}
-                                                        sx={sxCheckBox}
-                                                    />
-                                                }
-                                                    label={filter.title}
-                                                    sx={sxControlLabel}
-                                                />
-                                            ))}
-                                        </div>
-                                    }
-                                </div>
+                                </>
                             }
 
                             {taxonsRetrieve?.data.attributes.name === 'Wellness' &&
@@ -1463,6 +1428,49 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         </div>)}
                                 </div>
                             }
+
+                            <div className="flex flex-col gap-5">
+                                <button className="flex justify-between items-center w-full transition-all duration-300 ease"
+                                    onClick={() => {
+                                        setShowCollectons(!showCollectons)
+                                    }}
+                                >
+                                    <h3 className="text-sm uppercase  bg-clip-text tracking-wide">Collectons</h3>
+                                    <span className="">{showCollectons ? <FaChevronUp size={14} /> : <FaChevronDown size={14} />}</span>
+                                </button>
+                                {showCollectons &&
+                                    <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                        <FormControlLabel control={
+                                            <Checkbox
+                                                indeterminate={isIndeterminateCollectonsAllProduct}
+                                                checked={allCheckedCollectonsAllProduct}
+                                                onChange={handleCheckAllCollectonsAllProduct}
+                                                icon={<FaRegCircle />}
+                                                indeterminateIcon={<FaMinusCircle />}
+                                                checkedIcon={<FaCheckCircle />}
+                                                sx={sxCheckBoxMinate}
+                                            />
+                                        }
+                                            label="All"
+                                            sx={sxControlLabel}
+                                        />
+                                        {filterCollectonsAllProduct.map((filter) => (
+                                            <FormControlLabel key={filter.id} control={
+                                                <Checkbox
+                                                    checked={checkedItemsCollectonsAllProduct.includes(filter.id)}
+                                                    onChange={() => handleCheckItemCollectonsAllProduct(filter.id)}
+                                                    icon={<FaRegCircle />}
+                                                    checkedIcon={<FaCheckCircle />}
+                                                    sx={sxCheckBox}
+                                                />
+                                            }
+                                                label={filter.title}
+                                                sx={sxControlLabel}
+                                            />
+                                        ))}
+                                    </div>
+                                }
+                            </div>
 
                             <div className="flex flex-col gap-5">
                                 <button className="flex justify-between items-center w-full transition-all duration-300 ease"
