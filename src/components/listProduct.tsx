@@ -1694,10 +1694,10 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                     (<span className=" text-green-600 font-bold">
                                         {products.length === 0 ?
                                             0 :
-                                            (currentPage * prePage) > totalDatas
+                                            filteredProducts.length > totalDatas
                                                 ?
                                                 totalDatas
-                                                : (currentPage * prePage)
+                                                : filteredProducts.length
                                         }
                                     </span> / {totalDatas})
                                 </h3>

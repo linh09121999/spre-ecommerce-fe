@@ -113,8 +113,13 @@ export const useStateGeneral = create<State>((set) => ({
     sortOption: "relevance",
     setSortOption: (sort) => set({ sortOption: sort }),
     filterTaxonsAllProduct: [
-        { id: 175, title: "Fashion" },
-        { id: 185, title: "Wellness" },
+        { id: 176, title: "Men" },
+        { id: 180, title: "Women" },
+        { id: 179, title: "Accessories" },
+        { id: 187, title: "Fitness" },
+        { id: 190, title: "Relaxation" },
+        { id: 191, title: "Mental Stimulation" },
+        { id: 193, title: "Nutrition" }
     ],
     filterCollectonsAllProduct: [
         { id: 173, title: "On sale" },
