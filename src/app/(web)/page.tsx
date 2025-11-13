@@ -172,7 +172,7 @@ const Home: React.FC = () => {
         <div className="grid grid-cols-2 gap-5">
           {resTaxons_List?.data.map((res, id) => (
             <>
-              {(res.attributes.name === 'Men' || res.attributes.name === 'Women') &&
+              {(res.attributes.permalink === 'categories/fashion/men' || res.attributes.permalink === 'categories/fashion/women') &&
                 <button key={res.id} className="relative group overflow-hidden rounded-md shadow-xl"
                   onClick={() => {
                     router.push(`/${res.attributes.name.toLocaleLowerCase()}`)
