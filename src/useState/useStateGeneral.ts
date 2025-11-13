@@ -40,7 +40,6 @@ interface State {
     filterCollectonsAllProduct: FilterProduct[];
     filterAvailabity: FilterProduct[];
     filterTaxonsFashion: FilterProduct[];
-    filterTaxonsWellness: FilterProduct[];
 
     filterSize: FilterProduct[];
     checkedSize: number[];
@@ -133,12 +132,6 @@ export const useStateGeneral = create<State>((set) => ({
         { id: 176, title: "Men" },
         { id: 180, title: "Women" },
         { id: 179, title: "Accessories" }
-    ],
-    filterTaxonsWellness: [
-        { id: 187, title: "Fitness" },
-        { id: 190, title: "Relaxation" },
-        { id: 191, title: "Mental Stimulation" },
-        { id: 193, title: "Nutrition" }
     ],
 
     filterSize: [

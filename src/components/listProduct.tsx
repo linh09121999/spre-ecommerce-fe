@@ -170,10 +170,9 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         }
     }
 
-    const { prePage, loadingReadMore,
-        currentPage, totalDatas,
+    const { loadingReadMore, totalDatas,
         sortOption, setSortOption, sortBy, setSortBy,
-        filterAvailabity, filterTaxonsFashion, filterTaxonsWellness,
+        filterAvailabity, filterTaxonsFashion,
         filterTaxonsAllProduct, filterCollectonsAllProduct,
         filterSize, checkedSize, setCheckedSize,
         filterColor, checkedColor, setCheckedColor
@@ -223,6 +222,21 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             r.attributes.permalink.toLowerCase().includes("categories/wellness/nutrition/".toLowerCase())
         );
     }, [resTaxons_List?.data]);
+
+    const allWellnessData = useMemo(() => {
+        return [
+            ...(filterWellnessFitness || []),
+            ...(filterWellnessRelaxation || []),
+            ...(filterWellnessMentalStimulation || []),
+            ...(filterWellnessNutrition || [])
+        ];
+    }, [
+        filterWellnessFitness,
+        filterWellnessRelaxation,
+        filterWellnessMentalStimulation,
+        filterWellnessNutrition,
+        resTaxons_List?.data
+    ]);
 
     const Category = (name: string) => {
         if (!name) return undefined
@@ -423,15 +437,15 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
     // wellness
     const [checkedItemsTaxonsWellness, setCheckItemTaxonsWellness] = useState<number[]>([])
-    const allCheckedTaxonsWellness = checkedItemsTaxonsWellness.length === filterTaxonsWellness.length
-    const isIndeterminateTaxonsWellness = checkedItemsTaxonsWellness.length > 0 && checkedItemsTaxonsWellness.length < filterTaxonsWellness.length
+    const allCheckedTaxonsWellness = checkedItemsTaxonsWellness.length === allWellnessData.length
+    const isIndeterminateTaxonsWellness = checkedItemsTaxonsWellness.length > 0 && checkedItemsTaxonsWellness.length < allWellnessData.length
 
     // Khi click vào "All"
     const handleCheckAllTaxonsWellness = () => {
         allCheckedTaxonsWellness ?
             setCheckItemTaxonsWellness([])
             :
-            setCheckItemTaxonsWellness(filterTaxonsWellness.map((type) => type.id))
+            setCheckItemTaxonsWellness(allWellnessData.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -1133,17 +1147,17 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {filterTaxonsWellness.map((filter) => (
+                                                    {allWellnessData.map((filter) => (
                                                         <FormControlLabel key={filter.id} control={
                                                             <Checkbox
-                                                                checked={checkedItemsTaxonsWellness.includes(filter.id)}
-                                                                onChange={() => handleCheckItemTaxonsWellness(filter.id)}
+                                                                checked={checkedItemsTaxonsWellness.includes(Number(filter.id))}
+                                                                onChange={() => handleCheckItemTaxonsWellness(Number(filter.id))}
                                                                 icon={<FaRegCircle />}
                                                                 checkedIcon={<FaCheckCircle />}
                                                                 sx={sxCheckBox}
                                                             />
                                                         }
-                                                            label={filter.title}
+                                                            label={filter.attributes.name}
                                                             sx={sxControlLabel}
                                                         />
                                                     ))}
