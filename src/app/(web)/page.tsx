@@ -70,6 +70,14 @@ const Home: React.FC = () => {
     getApiPosts()
   }, [])
 
+  const toPath = (text: string): string => {
+    return text
+      .toLowerCase()        // chuyển hết về chữ thường
+      .trim()               // bỏ khoảng trắng đầu/cuối
+      .replace(/\s+/g, '-') // thay khoảng trắng bằng dấu gạch ngang
+      .replace(/[^\w-]/g, ''); // loại bỏ ký tự đặc biệt
+  };
+
   return (
     <>
       <section className="relative w-full h-[480px] overflow-hidden">
@@ -98,9 +106,13 @@ const Home: React.FC = () => {
       <div className="max-w-[1535px] mx-auto flex flex-col gap-15 px-5 py-10">
         <div className="flex flex-wrap justify-center gap-8 py-10">
           {[
-            { title: "Categories", icon: <FiTag size={28} /> },
-            { title: "Collections", icon: <FiLayers size={28} /> },
-            { title: "Wellness", icon: <FiHeart size={28} /> },
+            { title: "Men", icon: <FiTag size={28} /> },
+            { title: "Women", icon: <FiLayers size={28} /> },
+            { title: "Accessories", icon: <FiHeart size={28} /> },
+            { title: "Fitness", icon: <FiHeart size={28} /> },
+            { title: "Relaxation", icon: <FiHeart size={28} /> },
+            { title: "Mental Stimulation", icon: <FiHeart size={28} /> },
+            { title: "Nutrition", icon: <FiHeart size={28} /> },
           ].map(({ title, icon }) => (
             <button
               key={title}
@@ -112,6 +124,9 @@ const Home: React.FC = () => {
     hover:scale-110 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
     overflow-hidden group
   "
+              onClick={() => {
+                router.push(`/${toPath(title)}`)
+              }}
             >
               {/* Vầng sáng chuyển động mạnh hơn */}
               <div

@@ -930,6 +930,60 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
         // 3️⃣ Color
         // 4️⃣ Size
+
+        if (checkedColor.length > 0) {
+            result = result.filter((product) => {
+                // lấy danh sách variant id của product
+                const productVariantIds = product.relationships?.variants?.data?.map((v: any) => v.id) || [];
+
+                // lấy danh sách variant có trong included
+                const variantList = included?.filter(
+                    (i: any) => i.type === "variant" && productVariantIds.includes(i.id)
+                );
+
+                // lấy danh sách option_value từ variant
+                const optionValueIds = variantList.flatMap(
+                    (v: any) => v.relationships?.option_values?.data?.map((o: any) => o.id) || []
+                );
+
+                // lấy danh sách option_value chi tiết
+                const optionValues = included?.filter(
+                    (i: any) => i.type === "option_value" && optionValueIds.includes(i.id)
+                );
+                
+                console.log(optionValues)
+
+                // kiểm tra xem variant có chứa color đã chọn không
+                return optionValues.some((ov: any) => {
+                    const optionTypeId = ov.relationships?.option_type?.data?.id;
+                    const isColor = optionTypeId === "22"; // id của Color
+                    return isColor && checkedColor.includes(Number(ov.id));
+                });
+            });
+        }
+
+        // 4️⃣ Size
+        if (checkedSize.length > 0) {
+            result = result.filter((product) => {
+                const productVariantIds = product.relationships?.variants?.data?.map((v: any) => v.id) || [];
+                const variantList = included?.filter(
+                    (i: any) => i.type === "variant" && productVariantIds.includes(i.id)
+                );
+                const optionValueIds = variantList.flatMap(
+                    (v: any) => v.relationships?.option_values?.data?.map((o: any) => o.id) || []
+                );
+                const optionValues = included?.filter(
+                    (i: any) => i.type === "option_value" && optionValueIds.includes(i.id)
+                );
+
+                return optionValues.some((ov: any) => {
+                    const optionTypeId = ov.relationships?.option_type?.data?.id;
+                    const isSize = optionTypeId === "23"; // id của Size
+                    return isSize && checkedSize.includes(Number(ov.id));
+                });
+            });
+        }
+
         return result;
     }, [
         resTaxons_List?.data,
