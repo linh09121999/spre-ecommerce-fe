@@ -364,16 +364,26 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // all
+    const [inputValueAllProject, setInputValueAllProject] = useState<string>("");
+    const filterSearchAllProject = useMemo(() => {
+        if (!inputValueAllProject.trim()) return filterTaxonsAllProduct;
+        return filterTaxonsAllProduct.filter((r) =>
+            r.title.toLowerCase().includes(inputValueAllProject.toLowerCase())
+        );
+    }, [inputValueAllProject,
+        filterTaxonsAllProduct
+    ])
+
     const [checkedItemsTaxonsAllProduct, setCheckItemTaxonsAllProduct] = useState<number[]>([])
-    const allCheckedTaxonsAllProduct = checkedItemsTaxonsAllProduct.length === filterTaxonsAllProduct.length
-    const isIndeterminateTaxonsAllProduct = checkedItemsTaxonsAllProduct.length > 0 && checkedItemsTaxonsAllProduct.length < filterTaxonsAllProduct.length
+    const allCheckedTaxonsAllProduct = checkedItemsTaxonsAllProduct.length === filterSearchAllProject.length
+    const isIndeterminateTaxonsAllProduct = checkedItemsTaxonsAllProduct.length > 0 && checkedItemsTaxonsAllProduct.length < filterSearchAllProject.length
 
     // Khi click vào "All"
     const handleCheckAllTaxonsAllProduct = () => {
         allCheckedTaxonsAllProduct ?
             setCheckItemTaxonsAllProduct([])
             :
-            setCheckItemTaxonsAllProduct(filterTaxonsAllProduct.map((type) => type.id))
+            setCheckItemTaxonsAllProduct(filterSearchAllProject.map((type) => type.id))
     }
 
     // Khi click vào từng item
@@ -412,16 +422,26 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // fashion
+    const [inputValueTaxonsFashion, setInputValueTaxonsFashion] = useState<string>("");
+    const filterSearchTaxonsFashion = useMemo(() => {
+        if (!inputValueTaxonsFashion.trim()) return filterTaxonsFashion;
+        return filterTaxonsFashion.filter((r) =>
+            r.title.toLowerCase().includes(inputValueTaxonsFashion.toLowerCase())
+        );
+    }, [inputValueTaxonsFashion,
+        filterTaxonsFashion
+    ])
+
     const [checkedItemsTaxonsFashion, setCheckItemTaxonsFashion] = useState<number[]>([])
-    const allCheckedTaxonsFashion = checkedItemsTaxonsFashion.length === filterTaxonsFashion.length
-    const isIndeterminateTaxonsFashion = checkedItemsTaxonsFashion.length > 0 && checkedItemsTaxonsFashion.length < filterTaxonsFashion.length
+    const allCheckedTaxonsFashion = checkedItemsTaxonsFashion.length === filterSearchTaxonsFashion.length
+    const isIndeterminateTaxonsFashion = checkedItemsTaxonsFashion.length > 0 && checkedItemsTaxonsFashion.length < filterSearchTaxonsFashion.length
 
     // Khi click vào "All"
     const handleCheckAllTaxonsFashion = () => {
         allCheckedTaxonsFashion ?
             setCheckItemTaxonsFashion([])
             :
-            setCheckItemTaxonsFashion(filterTaxonsFashion.map((type) => type.id))
+            setCheckItemTaxonsFashion(filterSearchTaxonsFashion.map((type) => type.id))
     }
 
     // Khi click vào từng item
@@ -436,16 +456,31 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // wellness
+
+    const [inputValueWellness, setInputValueWellness] = useState<string>("");
+    const filterSearchWellness = useMemo(() => {
+        if (!inputValueWellness.trim()) return allWellnessData;
+        return allWellnessData.filter((r) =>
+            r.attributes.name.toLowerCase().includes(inputValueWellness.toLowerCase())
+        );
+    }, [inputValueWellness,
+        allWellnessData,
+        filterWellnessFitness,
+        filterWellnessRelaxation,
+        filterWellnessMentalStimulation,
+        filterWellnessNutrition,
+        resTaxons_List?.data]);
+
     const [checkedItemsTaxonsWellness, setCheckItemTaxonsWellness] = useState<number[]>([])
-    const allCheckedTaxonsWellness = checkedItemsTaxonsWellness.length === allWellnessData.length
-    const isIndeterminateTaxonsWellness = checkedItemsTaxonsWellness.length > 0 && checkedItemsTaxonsWellness.length < allWellnessData.length
+    const allCheckedTaxonsWellness = checkedItemsTaxonsWellness.length === filterSearchWellness.length
+    const isIndeterminateTaxonsWellness = checkedItemsTaxonsWellness.length > 0 && checkedItemsTaxonsWellness.length < filterSearchWellness.length
 
     // Khi click vào "All"
     const handleCheckAllTaxonsWellness = () => {
         allCheckedTaxonsWellness ?
             setCheckItemTaxonsWellness([])
             :
-            setCheckItemTaxonsWellness(allWellnessData.map((type) => Number(type.id)))
+            setCheckItemTaxonsWellness(filterSearchWellness.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -460,23 +495,34 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // men
+    const [inputValueTaxonsMen, setInputValueTaxonsMen] = useState<string>("");
+    const filterSearchTaxonsMen = useMemo(() => {
+        if (!inputValueTaxonsMen.trim()) return filterFashionMen;
+        if (!filterFashionMen) return []
+        return filterFashionMen.filter((r) =>
+            r.attributes.name.toLowerCase().includes(inputValueTaxonsMen.toLowerCase())
+        );
+    }, [inputValueTaxonsMen,
+        filterFashionMen
+    ])
+
     const [checkedItemsTaxonsMen, setCheckItemTaxonsMen] = useState<number[]>([])
     const allCheckedTaxonsMen =
-        filterFashionMen && filterFashionMen.length > 0
-            ? checkedItemsTaxonsMen.length === filterFashionMen.length
+        filterSearchTaxonsMen && filterSearchTaxonsMen.length > 0
+            ? checkedItemsTaxonsMen.length === filterSearchTaxonsMen.length
             : false;
 
     const isIndeterminateTaxonsMen =
-        filterFashionMen && filterFashionMen.length > 0
+        filterSearchTaxonsMen && filterSearchTaxonsMen.length > 0
             ? checkedItemsTaxonsMen.length > 0 &&
-            checkedItemsTaxonsMen.length < filterFashionMen.length
+            checkedItemsTaxonsMen.length < filterSearchTaxonsMen.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsMen = () => {
         allCheckedTaxonsMen ?
             setCheckItemTaxonsMen([])
             :
-            setCheckItemTaxonsMen(filterFashionMen!.map((type) => Number(type.id)))
+            setCheckItemTaxonsMen(filterSearchTaxonsMen!.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -491,23 +537,34 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // women
+    const [inputValueTaxonsWomen, setInputValueTaxonsWomen] = useState<string>("");
+    const filterSearchTaxonsWomen = useMemo(() => {
+        if (!inputValueTaxonsWomen.trim()) return filterFashionWomen;
+        if (!filterFashionWomen) return []
+        return filterFashionWomen.filter((r) =>
+            r.attributes.name.toLowerCase().includes(inputValueTaxonsWomen.toLowerCase())
+        );
+    }, [inputValueTaxonsWomen,
+        filterFashionWomen
+    ])
+
     const [checkedItemsTaxonsWomen, setCheckItemTaxonsWomen] = useState<number[]>([])
     const allCheckedTaxonsWomen =
-        filterFashionWomen && filterFashionWomen.length > 0
-            ? checkedItemsTaxonsWomen.length === filterFashionWomen.length
+        filterSearchTaxonsWomen && filterSearchTaxonsWomen.length > 0
+            ? checkedItemsTaxonsWomen.length === filterSearchTaxonsWomen.length
             : false;
 
     const isIndeterminateTaxonsWomen =
-        filterFashionWomen && filterFashionWomen.length > 0
+        filterSearchTaxonsWomen && filterSearchTaxonsWomen.length > 0
             ? checkedItemsTaxonsWomen.length > 0 &&
-            checkedItemsTaxonsWomen.length < filterFashionWomen.length
+            checkedItemsTaxonsWomen.length < filterSearchTaxonsWomen.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsWomen = () => {
         allCheckedTaxonsWomen ?
             setCheckItemTaxonsWomen([])
             :
-            setCheckItemTaxonsWomen(filterFashionWomen!.map((type) => Number(type.id)))
+            setCheckItemTaxonsWomen(filterSearchTaxonsWomen!.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -522,23 +579,34 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // accessories
+    const [inputValueTaxonsAccessories, setInputValueTaxonsAccessories] = useState<string>("");
+    const filterSearchTaxonsAccessories = useMemo(() => {
+        if (!inputValueTaxonsAccessories.trim()) return filterFashionAccessories;
+        if (!filterFashionAccessories) return []
+        return filterFashionAccessories.filter((r) =>
+            r.attributes.name.toLowerCase().includes(inputValueTaxonsAccessories.toLowerCase())
+        );
+    }, [inputValueTaxonsAccessories,
+        filterFashionAccessories
+    ])
+
     const [checkedItemsTaxonsAccessories, setCheckItemTaxonsAccessories] = useState<number[]>([])
     const allCheckedTaxonsAccessories =
-        filterFashionAccessories && filterFashionAccessories.length > 0
-            ? checkedItemsTaxonsAccessories.length === filterFashionAccessories.length
+        filterSearchTaxonsAccessories && filterSearchTaxonsAccessories.length > 0
+            ? checkedItemsTaxonsAccessories.length === filterSearchTaxonsAccessories.length
             : false;
 
     const isIndeterminateTaxonsAccessories =
-        filterFashionAccessories && filterFashionAccessories.length > 0
+        filterSearchTaxonsAccessories && filterSearchTaxonsAccessories.length > 0
             ? checkedItemsTaxonsAccessories.length > 0 &&
-            checkedItemsTaxonsAccessories.length < filterFashionAccessories.length
+            checkedItemsTaxonsAccessories.length < filterSearchTaxonsAccessories.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsAccessories = () => {
         allCheckedTaxonsAccessories ?
             setCheckItemTaxonsAccessories([])
             :
-            setCheckItemTaxonsAccessories(filterFashionAccessories!.map((type) => Number(type.id)))
+            setCheckItemTaxonsAccessories(filterSearchTaxonsAccessories!.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -553,23 +621,33 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // Fitness
+    const [inputValueTaxonsFitness, setInputValueTaxonsFitness] = useState<string>("");
+    const filterSearchTaxonsFitness = useMemo(() => {
+        if (!inputValueTaxonsFitness.trim()) return filterWellnessFitness;
+        if (!filterWellnessFitness) return []
+        return filterWellnessFitness.filter((r) =>
+            r.attributes.name.toLowerCase().includes(inputValueTaxonsFitness.toLowerCase())
+        );
+    }, [inputValueTaxonsFitness,
+        filterWellnessFitness
+    ])
     const [checkedItemsTaxonsFitness, setCheckItemTaxonsFitness] = useState<number[]>([])
     const allCheckedTaxonsFitness =
-        filterWellnessFitness && filterWellnessFitness.length > 0
-            ? checkedItemsTaxonsFitness.length === filterWellnessFitness.length
+        filterSearchTaxonsFitness && filterSearchTaxonsFitness.length > 0
+            ? checkedItemsTaxonsFitness.length === filterSearchTaxonsFitness.length
             : false;
 
     const isIndeterminateTaxonsFitness =
-        filterWellnessFitness && filterWellnessFitness.length > 0
+        filterSearchTaxonsFitness && filterSearchTaxonsFitness.length > 0
             ? checkedItemsTaxonsFitness.length > 0 &&
-            checkedItemsTaxonsFitness.length < filterWellnessFitness.length
+            checkedItemsTaxonsFitness.length < filterSearchTaxonsFitness.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsFitness = () => {
         allCheckedTaxonsFitness ?
             setCheckItemTaxonsFitness([])
             :
-            setCheckItemTaxonsFitness(filterWellnessFitness!.map((type) => Number(type.id)))
+            setCheckItemTaxonsFitness(filterSearchTaxonsFitness!.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -584,23 +662,33 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // Relaxation
+    const [inputValueTaxonsRelaxation, setInputValueTaxonsRelaxation] = useState<string>("");
+    const filterSearchTaxonsRelaxation = useMemo(() => {
+        if (!inputValueTaxonsRelaxation.trim()) return filterWellnessRelaxation;
+        if (!filterWellnessRelaxation) return []
+        return filterWellnessRelaxation.filter((r) =>
+            r.attributes.name.toLowerCase().includes(inputValueTaxonsRelaxation.toLowerCase())
+        );
+    }, [inputValueTaxonsRelaxation,
+        filterWellnessRelaxation
+    ])
     const [checkedItemsTaxonsRelaxation, setCheckItemTaxonsRelaxation] = useState<number[]>([])
     const allCheckedTaxonsRelaxation =
-        filterWellnessRelaxation && filterWellnessRelaxation.length > 0
-            ? checkedItemsTaxonsRelaxation.length === filterWellnessRelaxation.length
+        filterSearchTaxonsRelaxation && filterSearchTaxonsRelaxation.length > 0
+            ? checkedItemsTaxonsRelaxation.length === filterSearchTaxonsRelaxation.length
             : false;
 
     const isIndeterminateTaxonsRelaxation =
-        filterWellnessRelaxation && filterWellnessRelaxation.length > 0
+        filterSearchTaxonsRelaxation && filterSearchTaxonsRelaxation.length > 0
             ? checkedItemsTaxonsRelaxation.length > 0 &&
-            checkedItemsTaxonsRelaxation.length < filterWellnessRelaxation.length
+            checkedItemsTaxonsRelaxation.length < filterSearchTaxonsRelaxation.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsRelaxation = () => {
         allCheckedTaxonsRelaxation ?
             setCheckItemTaxonsRelaxation([])
             :
-            setCheckItemTaxonsRelaxation(filterWellnessRelaxation!.map((type) => Number(type.id)))
+            setCheckItemTaxonsRelaxation(filterSearchTaxonsRelaxation!.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -615,23 +703,33 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // Mental Stimulation
+    const [inputValueTaxonsMentalStimulation, setInputValueTaxonsMentalStimulation] = useState<string>("");
+    const filterSearchTaxonsMentalStimulation = useMemo(() => {
+        if (!inputValueTaxonsMentalStimulation.trim()) return filterWellnessMentalStimulation;
+        if (!filterWellnessMentalStimulation) return []
+        return filterWellnessMentalStimulation.filter((r) =>
+            r.attributes.name.toLowerCase().includes(inputValueTaxonsMentalStimulation.toLowerCase())
+        );
+    }, [inputValueTaxonsMentalStimulation,
+        filterWellnessMentalStimulation
+    ])
     const [checkedItemsTaxonsMentalStimulation, setCheckItemTaxonsMentalStimulation] = useState<number[]>([])
     const allCheckedTaxonsMentalStimulation =
-        filterWellnessMentalStimulation && filterWellnessMentalStimulation.length > 0
-            ? checkedItemsTaxonsMentalStimulation.length === filterWellnessMentalStimulation.length
+        filterSearchTaxonsMentalStimulation && filterSearchTaxonsMentalStimulation.length > 0
+            ? checkedItemsTaxonsMentalStimulation.length === filterSearchTaxonsMentalStimulation.length
             : false;
 
     const isIndeterminateTaxonsMentalStimulation =
-        filterWellnessMentalStimulation && filterWellnessMentalStimulation.length > 0
+        filterSearchTaxonsMentalStimulation && filterSearchTaxonsMentalStimulation.length > 0
             ? checkedItemsTaxonsMentalStimulation.length > 0 &&
-            checkedItemsTaxonsMentalStimulation.length < filterWellnessMentalStimulation.length
+            checkedItemsTaxonsMentalStimulation.length < filterSearchTaxonsMentalStimulation.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsMentalStimulation = () => {
         allCheckedTaxonsMentalStimulation ?
             setCheckItemTaxonsMentalStimulation([])
             :
-            setCheckItemTaxonsMentalStimulation(filterWellnessMentalStimulation!.map((type) => Number(type.id)))
+            setCheckItemTaxonsMentalStimulation(filterSearchTaxonsMentalStimulation!.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -645,23 +743,33 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             )
     }
     // Nutrition
+    const [inputValueTaxonsNutrition, setInputValueTaxonsNutrition] = useState<string>("");
+    const filterSearchTaxonsNutrition = useMemo(() => {
+        if (!inputValueTaxonsNutrition.trim()) return filterWellnessNutrition;
+        if (!filterWellnessNutrition) return []
+        return filterWellnessNutrition.filter((r) =>
+            r.attributes.name.toLowerCase().includes(inputValueTaxonsNutrition.toLowerCase())
+        );
+    }, [inputValueTaxonsNutrition,
+        filterWellnessNutrition
+    ])
     const [checkedItemsTaxonsNutrition, setCheckItemTaxonsNutrition] = useState<number[]>([])
     const allCheckedTaxonsNutrition =
-        filterWellnessNutrition && filterWellnessNutrition.length > 0
-            ? checkedItemsTaxonsNutrition.length === filterWellnessNutrition.length
+        filterSearchTaxonsNutrition && filterSearchTaxonsNutrition.length > 0
+            ? checkedItemsTaxonsNutrition.length === filterSearchTaxonsNutrition.length
             : false;
 
     const isIndeterminateTaxonsNutrition =
-        filterWellnessNutrition && filterWellnessNutrition.length > 0
+        filterSearchTaxonsNutrition && filterSearchTaxonsNutrition.length > 0
             ? checkedItemsTaxonsNutrition.length > 0 &&
-            checkedItemsTaxonsNutrition.length < filterWellnessNutrition.length
+            checkedItemsTaxonsNutrition.length < filterSearchTaxonsNutrition.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsNutrition = () => {
         allCheckedTaxonsNutrition ?
             setCheckItemTaxonsNutrition([])
             :
-            setCheckItemTaxonsNutrition(filterWellnessNutrition!.map((type) => Number(type.id)))
+            setCheckItemTaxonsNutrition(filterSearchTaxonsNutrition!.map((type) => Number(type.id)))
     }
 
     // Khi click vào từng item
@@ -1037,6 +1145,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                         </button>
                                         {showTaxons &&
                                             <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                <TextField
+                                                    type="search"
+                                                    placeholder="Search of Taxons..."
+                                                    sx={sxTextField}
+                                                    onChange={(e) => setInputValueAllProject(e.target.value)}
+                                                    value={inputValueAllProject}
+                                                    InputProps={{
+                                                        endAdornment: (
+                                                            <InputAdornment position="end">
+                                                                <IconButton
+                                                                    sx={{ color: 'var(--color-gray-300)' }}
+                                                                >
+                                                                    <IoMdSearch className="mx-auto" />
+                                                                </IconButton>
+                                                            </InputAdornment>
+                                                        ),
+                                                    }}
+                                                />
                                                 <FormControlLabel control={
                                                     <Checkbox
                                                         indeterminate={isIndeterminateTaxonsAllProduct}
@@ -1051,7 +1177,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                     label="All"
                                                     sx={sxControlLabel}
                                                 />
-                                                {filterTaxonsAllProduct.map((filter) => (
+                                                {filterSearchAllProject.map((filter) => (
                                                     <FormControlLabel key={filter.id} control={
                                                         <Checkbox
                                                             checked={checkedItemsTaxonsAllProduct.includes(filter.id)}
@@ -1086,6 +1212,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                 </button>
                                                 {showTaxons &&
                                                     <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                        <TextField
+                                                            type="search"
+                                                            placeholder="Search of Taxons..."
+                                                            sx={sxTextField}
+                                                            onChange={(e) => setInputValueTaxonsFashion(e.target.value)}
+                                                            value={inputValueTaxonsFashion}
+                                                            InputProps={{
+                                                                endAdornment: (
+                                                                    <InputAdornment position="end">
+                                                                        <IconButton
+                                                                            sx={{ color: 'var(--color-gray-300)' }}
+                                                                        >
+                                                                            <IoMdSearch className="mx-auto" />
+                                                                        </IconButton>
+                                                                    </InputAdornment>
+                                                                ),
+                                                            }}
+                                                        />
                                                         <FormControlLabel control={
                                                             <Checkbox
                                                                 indeterminate={isIndeterminateTaxonsFashion}
@@ -1100,7 +1244,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                             label="All"
                                                             sx={sxControlLabel}
                                                         />
-                                                        {filterTaxonsFashion.map((filter) => (
+                                                        {filterSearchTaxonsFashion.map((filter) => (
                                                             <FormControlLabel key={filter.id} control={
                                                                 <Checkbox
                                                                     checked={checkedItemsTaxonsFashion.includes(filter.id)}
@@ -1133,6 +1277,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </button>
                                             {showTaxons && (
                                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                    <TextField
+                                                        type="search"
+                                                        placeholder="Search of Wellness..."
+                                                        sx={sxTextField}
+                                                        onChange={(e) => setInputValueWellness(e.target.value)}
+                                                        value={inputValueWellness}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                                    >
+                                                                        <IoMdSearch className="mx-auto" />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
                                                     <FormControlLabel control={
                                                         <Checkbox
                                                             indeterminate={isIndeterminateTaxonsWellness}
@@ -1147,7 +1309,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {allWellnessData.map((filter) => (
+                                                    {filterSearchWellness.map((filter) => (
                                                         <FormControlLabel key={filter.id} control={
                                                             <Checkbox
                                                                 checked={checkedItemsTaxonsWellness.includes(Number(filter.id))}
@@ -1178,6 +1340,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </button>
                                             {showTaxons && (
                                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                    <TextField
+                                                        type="search"
+                                                        placeholder="Search of Taxons..."
+                                                        sx={sxTextField}
+                                                        onChange={(e) => setInputValueTaxonsMen(e.target.value)}
+                                                        value={inputValueTaxonsMen}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                                    >
+                                                                        <IoMdSearch className="mx-auto" />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
                                                     <FormControlLabel control={
                                                         <Checkbox
                                                             indeterminate={isIndeterminateTaxonsMen}
@@ -1192,7 +1372,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {filterFashionMen!.map((filter, id) => (
+                                                    {filterSearchTaxonsMen!.map((filter, id) => (
                                                         <FormControlLabel key={id} control={
                                                             <Checkbox
                                                                 checked={checkedItemsTaxonsMen.includes(Number(filter.id))}
@@ -1223,6 +1403,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </button>
                                             {showTaxons && (
                                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                    <TextField
+                                                        type="search"
+                                                        placeholder="Search of Taxons..."
+                                                        sx={sxTextField}
+                                                        onChange={(e) => setInputValueTaxonsWomen(e.target.value)}
+                                                        value={inputValueTaxonsWomen}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                                    >
+                                                                        <IoMdSearch className="mx-auto" />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
                                                     <FormControlLabel control={
                                                         <Checkbox
                                                             indeterminate={isIndeterminateTaxonsWomen}
@@ -1237,7 +1435,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {filterFashionWomen!.map((filter, id) => (
+                                                    {filterSearchTaxonsWomen!.map((filter, id) => (
                                                         <FormControlLabel key={id} control={
                                                             <Checkbox
                                                                 checked={checkedItemsTaxonsWomen.includes(Number(filter.id))}
@@ -1267,6 +1465,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </button>
                                             {showTaxons && (
                                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                    <TextField
+                                                        type="search"
+                                                        placeholder="Search of Taxons..."
+                                                        sx={sxTextField}
+                                                        onChange={(e) => setInputValueTaxonsAccessories(e.target.value)}
+                                                        value={inputValueTaxonsAccessories}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                                    >
+                                                                        <IoMdSearch className="mx-auto" />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
                                                     <FormControlLabel control={
                                                         <Checkbox
                                                             indeterminate={isIndeterminateTaxonsAccessories}
@@ -1281,7 +1497,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {filterFashionAccessories!.map((filter, id) => (
+                                                    {filterSearchTaxonsAccessories!.map((filter, id) => (
                                                         <FormControlLabel key={id} control={
                                                             <Checkbox
                                                                 checked={checkedItemsTaxonsAccessories.includes(Number(filter.id))}
@@ -1311,6 +1527,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </button>
                                             {showTaxons && (
                                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                    <TextField
+                                                        type="search"
+                                                        placeholder="Search of Taxons..."
+                                                        sx={sxTextField}
+                                                        onChange={(e) => setInputValueTaxonsFitness(e.target.value)}
+                                                        value={inputValueTaxonsFitness}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                                    >
+                                                                        <IoMdSearch className="mx-auto" />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
                                                     <FormControlLabel control={
                                                         <Checkbox
                                                             indeterminate={isIndeterminateTaxonsFitness}
@@ -1325,7 +1559,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {filterWellnessFitness!.map((filter, id) => (
+                                                    {filterSearchTaxonsFitness!.map((filter, id) => (
                                                         <FormControlLabel key={id} control={
                                                             <Checkbox
                                                                 checked={checkedItemsTaxonsFitness.includes(Number(filter.id))}
@@ -1355,6 +1589,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </button>
                                             {showTaxons && (
                                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                    <TextField
+                                                        type="search"
+                                                        placeholder="Search of Taxons..."
+                                                        sx={sxTextField}
+                                                        onChange={(e) => setInputValueTaxonsRelaxation(e.target.value)}
+                                                        value={inputValueTaxonsRelaxation}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                                    >
+                                                                        <IoMdSearch className="mx-auto" />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
                                                     <FormControlLabel control={
                                                         <Checkbox
                                                             indeterminate={isIndeterminateTaxonsRelaxation}
@@ -1369,7 +1621,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {filterWellnessRelaxation!.map((filter, id) => (
+                                                    {filterSearchTaxonsRelaxation!.map((filter, id) => (
                                                         <FormControlLabel key={id} control={
                                                             <Checkbox
                                                                 checked={checkedItemsTaxonsRelaxation.includes(Number(filter.id))}
@@ -1399,6 +1651,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </button>
                                             {showTaxons && (
                                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                    <TextField
+                                                        type="search"
+                                                        placeholder="Search of Taxons..."
+                                                        sx={sxTextField}
+                                                        onChange={(e) => setInputValueTaxonsMentalStimulation(e.target.value)}
+                                                        value={inputValueTaxonsMentalStimulation}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                                    >
+                                                                        <IoMdSearch className="mx-auto" />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
                                                     <FormControlLabel control={
                                                         <Checkbox
                                                             indeterminate={isIndeterminateTaxonsMentalStimulation}
@@ -1413,7 +1683,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {filterWellnessMentalStimulation!.map((filter, id) => (
+                                                    {filterSearchTaxonsMentalStimulation!.map((filter, id) => (
                                                         <FormControlLabel key={id} control={
                                                             <Checkbox
                                                                 checked={checkedItemsTaxonsMentalStimulation.includes(Number(filter.id))}
@@ -1443,6 +1713,24 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                             </button>
                                             {showTaxons && (
                                                 <div className="text-lg  text-black/70 gap-4 flex flex-col transition-all duration-300 ease">
+                                                    <TextField
+                                                        type="search"
+                                                        placeholder="Search of Taxons..."
+                                                        sx={sxTextField}
+                                                        onChange={(e) => setInputValueTaxonsNutrition(e.target.value)}
+                                                        value={inputValueTaxonsNutrition}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        sx={{ color: 'var(--color-gray-300)' }}
+                                                                    >
+                                                                        <IoMdSearch className="mx-auto" />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
                                                     <FormControlLabel control={
                                                         <Checkbox
                                                             indeterminate={isIndeterminateTaxonsNutrition}
@@ -1457,7 +1745,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                         label="All"
                                                         sx={sxControlLabel}
                                                     />
-                                                    {filterWellnessNutrition!.map((filter, id) => (
+                                                    {filterSearchTaxonsNutrition!.map((filter, id) => (
                                                         <FormControlLabel key={id} control={
                                                             <Checkbox
                                                                 checked={checkedItemsTaxonsNutrition.includes(Number(filter.id))}
