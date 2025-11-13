@@ -94,7 +94,7 @@ const ProductDetail: React.FC = () => {
     const handleScroll = () => {
       if (loadingReadMore) return;
 
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400) {
         if (currentPage < totalPages) {
           if (sortBy !== "Relevance") setSortBy("Relevance");
           if (sortOption !== "relevance") setSortOption("relevance");

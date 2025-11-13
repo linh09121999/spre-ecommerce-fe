@@ -74,7 +74,7 @@ const Accessories: React.FC = () => {
         const handleScroll = () => {
             if (loadingReadMore) return;
 
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400) {
                 if (currentPage < totalPages) {
                     getApiProducts("179", currentPage + 1, prePage, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
                 }
