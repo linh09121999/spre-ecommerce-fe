@@ -374,7 +374,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }
 
     // 
-    const [checkedItemsCollectonsAllProduct, setCheckItemCollectonsAllProduct] = useState<number[]>(filterCollectonsAllProduct.length ? filterCollectonsAllProduct.map((type) => type.id) : [])
+    const [checkedItemsCollectonsAllProduct, setCheckItemCollectonsAllProduct] = useState<number[]>([])
     const allCheckedCollectonsAllProduct = checkedItemsCollectonsAllProduct.length === filterCollectonsAllProduct.length
     const isIndeterminateCollectonsAllProduct = checkedItemsCollectonsAllProduct.length > 0 && checkedItemsCollectonsAllProduct.length < filterCollectonsAllProduct.length
 
