@@ -1489,26 +1489,40 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                 }}
                                             />
                                             {filterSearchColor.length > 0 ? (
-                                                <div className="flex flex-wrap gap-3">
+                                                <div className="flex flex-wrap gap-4">
                                                     {filterSearchColor.map((res) => (
                                                         <button
                                                             key={res.id}
                                                             onClick={() => handleSelectColor(res.id)}
-                                                            className={`flex items-center gap-2 px-2 py-2 rounded-3xl group border `}
-                                                            style={{
-                                                                borderColor: `${checkedColor.includes(res.id) ? `${toLowerNoSpace(res.title)}` : 'var(--color-gray-300) '}`,
-                                                                color: `${checkedColor.includes(res.id) ? `${toLowerNoSpace(res.title)}` : 'var(--color-gray-300)'}`
-                                                            }}
+                                                            className={`flex items-center gap-2 p-2 rounded-3xl transition-all duration-300
+                                                            ${checkedColor.includes(res.id)
+                                                                    ? 'bg-white shadow-lg scale-[1.03]'
+                                                                    : 'bg-gray-50 hover:bg-gray-100 shadow-sm'}
+                                                             `}
                                                         >
-                                                            <div className="flex items-center gap-2">
-                                                                <span style={{
-                                                                    background: `${toLowerNoSpace(res.title)}`
-                                                                }}
-                                                                    className="w-6 h-6 rounded-full border-2 transition-transform hover:scale-110"
+                                                            <div className="flex items-center gap-3">
+                                                                <span
+                                                                    style={{
+                                                                        background: toLowerNoSpace(res.title),
+                                                                        border: toLowerNoSpace(res.title) === 'white' ? '1px solid #ccc' : 'none',
+                                                                        boxShadow:
+                                                                            toLowerNoSpace(res.title) === 'white'
+                                                                                ? 'inset 0 0 3px rgba(0,0,0,0.1)'
+                                                                                : '0 0 4px rgba(0,0,0,0.08)',
+                                                                    }}
+                                                                    className={`w-6 h-6 rounded-full ${checkedColor.includes(res.id) ? 'opacity-100' : 'opacity-70'}`}
                                                                 ></span>
-                                                                <p className="text-sm group-hover:text-gray-500 text-start">{res.title}</p>
+                                                                <p
+                                                                    className={`text-sm transition-colors ${checkedColor.includes(res.id)
+                                                                        ? 'text-gray-800 font-medium'
+                                                                        : 'text-gray-400 font-medium group-hover:text-gray-500'
+                                                                        }`}
+                                                                >
+                                                                    {res.title}
+                                                                </p>
                                                             </div>
                                                         </button>
+
                                                     ))}
                                                 </div>
                                             ) : (
@@ -1556,10 +1570,14 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                     <button
                                                         key={res.id}
                                                         onClick={() => handleSelectSize(res.id)}
-                                                        className={`flex items-center gap-2 px-4 py-2 rounded-lg group border ${checkedSize.includes(res.id) ? " border-green-500 text-green-500" : "border-gray-300 text-gray-300"}`}
+                                                        className={`flex items-center gap-2 px-4 py-2 rounded-lg group ${checkedSize.includes(res.id) ? 'bg-white shadow-lg scale-[1.03]'
+                                                            : 'bg-gray-50 hover:bg-gray-100 shadow-sm'}`}
                                                     >
                                                         <div className="flex items-center gap-4">
-                                                            <p className="text-sm group-hover:text-green-500 text-start">{res.title}</p>
+                                                            <p className={`text-sm text-start ${checkedSize.includes(res.id)
+                                                                        ? 'text-gray-800 font-medium'
+                                                                        : 'text-gray-400 font-medium group-hover:text-gray-500'
+                                                                        }`}>{res.title}</p>
                                                         </div>
                                                     </button>
                                                 ))}
