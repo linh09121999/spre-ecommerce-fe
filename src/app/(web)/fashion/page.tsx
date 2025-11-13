@@ -49,7 +49,7 @@ const Fashion: React.FC = () => {
                 setResDataIcludes_List((prev) => [...prev, ...res.data.included])
             }
         } catch (error: any) {
-            toast.error(`Products: ` + error.response.error)
+            toast.error(`Products: ` + error.response.statusText)
             setResDataProduct_List([])
             setResDataIcludes_List([])
             setCurrentPage(0)
