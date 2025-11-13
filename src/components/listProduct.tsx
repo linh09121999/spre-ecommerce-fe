@@ -19,6 +19,32 @@ interface ListProduct extends ProductCardProps {
     taxonsRetrieve: ResTaxons_Retrieve;
 }
 
+function normalizeSize(size: string): string {
+    const sizeMap: { [key: string]: string } = {
+        's': 'small',
+        'm': 'medium',
+        'l': 'large',
+        'xl': 'extra large',
+        'xs': 'extra small',
+        'xxl': 'extra extra large'
+    };
+    return sizeMap[size.toLowerCase()] || size.toLowerCase();
+}
+
+// Hàm hỗ trợ chuẩn hóa tên màu
+function normalizeColorName(color: string): string {
+    const colorMap: { [key: string]: string } = {
+        'navy': 'blue',
+        'burgundy': 'red',
+        'maroon': 'red',
+        'beige': 'tan',
+        'khaki': 'tan',
+        'turquoise': 'blue green',
+        'teal': 'blue green'
+    };
+    return colorMap[color.toLowerCase()] || color.toLowerCase();
+}
+
 const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve }) => {
     const PaperProps: SxProps<Theme> = {
         sx: {
@@ -864,7 +890,6 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         setPriceMax(200);
     }
 
-
     const filteredProducts = useMemo(() => {
         let result = [...filteredReleases];
 
@@ -928,59 +953,124 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             }
         });
 
-        // 3️⃣ Color
-        // 4️⃣ Size
-
+        // 6️⃣ Color Filter
         if (checkedColor.length > 0) {
             result = result.filter((product) => {
-                // lấy danh sách variant id của product
-                const productVariantIds = product.relationships?.variants?.data?.map((v: any) => v.id) || [];
+                // Lấy tất cả variants của sản phẩm
+                const variantIds = product.relationships.variants?.data?.map((v: any) => v.id) || [];
+                const productVariants = included?.filter((item: any) =>
+                    item.type === 'variant' && variantIds.includes(item.id)
+                ) || [];
 
-                // lấy danh sách variant có trong included
-                const variantList = included?.filter(
-                    (i: any) => i.type === "variant" && productVariantIds.includes(i.id)
-                );
+                // Kiểm tra xem có variant nào có màu được chọn không
+                const hasMatchingColor = productVariants.some((variant: any) => {
+                    const variantOptions = variant.attributes.options || [];
+                    const colorOption = variantOptions.find((opt: any) => opt.name === 'color');
 
-                // lấy danh sách option_value từ variant
-                const optionValueIds = variantList.flatMap(
-                    (v: any) => v.relationships?.option_values?.data?.map((o: any) => o.id) || []
-                );
+                    if (!colorOption) return false;
 
-                // lấy danh sách option_value chi tiết
-                const optionValues = included?.filter(
-                    (i: any) => i.type === "option_value" && optionValueIds.includes(i.id)
-                );
-                
-                console.log(optionValues)
+                    const variantColor = colorOption.value.toLowerCase();
+                    const variantColorPresentation = colorOption.presentation.toLowerCase();
 
-                // kiểm tra xem variant có chứa color đã chọn không
-                return optionValues.some((ov: any) => {
-                    const optionTypeId = ov.relationships?.option_type?.data?.id;
-                    const isColor = optionTypeId === "22"; // id của Color
-                    return isColor && checkedColor.includes(Number(ov.id));
+                    return checkedColor.some((colorId) => {
+                        const selectedColor = filterColor.find((f: any) => f.id === colorId);
+                        if (!selectedColor) return false;
+
+                        const selectedColorName = selectedColor.title.toLowerCase();
+
+                        // So khớp màu sắc (có thể so khớp theo value hoặc presentation)
+                        return variantColor.includes(selectedColorName) ||
+                            variantColorPresentation.includes(selectedColorName) ||
+                            normalizeColorName(selectedColorName) === normalizeColorName(variantColor);
+                    });
                 });
+
+                return hasMatchingColor;
             });
         }
 
-        // 4️⃣ Size
+        // 7️⃣ Size Filter
         if (checkedSize.length > 0) {
             result = result.filter((product) => {
-                const productVariantIds = product.relationships?.variants?.data?.map((v: any) => v.id) || [];
-                const variantList = included?.filter(
-                    (i: any) => i.type === "variant" && productVariantIds.includes(i.id)
-                );
-                const optionValueIds = variantList.flatMap(
-                    (v: any) => v.relationships?.option_values?.data?.map((o: any) => o.id) || []
-                );
-                const optionValues = included?.filter(
-                    (i: any) => i.type === "option_value" && optionValueIds.includes(i.id)
-                );
+                // Lấy tất cả variants của sản phẩm
+                const variantIds = product.relationships.variants?.data?.map((v: any) => v.id) || [];
+                const productVariants = included?.filter((item: any) =>
+                    item.type === 'variant' && variantIds.includes(item.id)
+                ) || [];
 
-                return optionValues.some((ov: any) => {
-                    const optionTypeId = ov.relationships?.option_type?.data?.id;
-                    const isSize = optionTypeId === "23"; // id của Size
-                    return isSize && checkedSize.includes(Number(ov.id));
+                // Kiểm tra xem có variant nào có kích thước được chọn không
+                const hasMatchingSize = productVariants.some((variant: any) => {
+                    const variantOptions = variant.attributes.options || [];
+                    const sizeOption = variantOptions.find((opt: any) => opt.name === 'size');
+
+                    if (!sizeOption) return false;
+
+                    const variantSize = sizeOption.value.toLowerCase();
+                    const variantSizePresentation = sizeOption.presentation.toLowerCase();
+
+                    return checkedSize.some((sizeId) => {
+                        const selectedSize = filterSize.find((f: any) => f.id === sizeId);
+                        if (!selectedSize) return false;
+
+                        const selectedSizeName = selectedSize.title.toLowerCase();
+
+                        // So khớp kích thước (chuẩn hóa để so sánh)
+                        return variantSize.includes(selectedSizeName) ||
+                            variantSizePresentation.includes(selectedSizeName) ||
+                            normalizeSize(selectedSizeName) === normalizeSize(variantSize);
+                    });
                 });
+
+                return hasMatchingSize;
+            });
+        }
+
+        // 8️⃣ Combined Color & Size Filter (nếu cả hai đều được chọn)
+        if (checkedColor.length > 0 && checkedSize.length > 0) {
+            result = result.filter((product) => {
+                const variantIds = product.relationships.variants?.data?.map((v: any) => v.id) || [];
+                const productVariants = included?.filter((item: any) =>
+                    item.type === 'variant' && variantIds.includes(item.id)
+                ) || [];
+
+                // Kiểm tra xem có variant nào thỏa mãn cả màu VÀ kích thước
+                const hasMatchingVariant = productVariants.some((variant: any) => {
+                    const variantOptions = variant.attributes.options || [];
+
+                    const colorOption = variantOptions.find((opt: any) => opt.name === 'color');
+                    const sizeOption = variantOptions.find((opt: any) => opt.name === 'size');
+
+                    if (!colorOption || !sizeOption) return false;
+
+                    const variantColor = colorOption.value.toLowerCase();
+                    const variantColorPresentation = colorOption.presentation.toLowerCase();
+                    const variantSize = sizeOption.value.toLowerCase();
+                    const variantSizePresentation = sizeOption.presentation.toLowerCase();
+
+                    // Kiểm tra màu
+                    const colorMatch = checkedColor.some((colorId) => {
+                        const selectedColor = filterColor.find((f: any) => f.id === colorId);
+                        if (!selectedColor) return false;
+                        const selectedColorName = selectedColor.title.toLowerCase();
+                        return variantColor.includes(selectedColorName) ||
+                            variantColorPresentation.includes(selectedColorName) ||
+                            normalizeColorName(selectedColorName) === normalizeColorName(variantColor);
+                    });
+
+                    // Kiểm tra kích thước
+                    const sizeMatch = checkedSize.some((sizeId) => {
+                        const selectedSize = filterSize.find((f: any) => f.id === sizeId);
+                        if (!selectedSize) return false;
+                        const selectedSizeName = selectedSize.title.toLowerCase();
+                        return variantSize.includes(selectedSizeName) ||
+                            variantSizePresentation.includes(selectedSizeName) ||
+                            normalizeSize(selectedSizeName) === normalizeSize(variantSize);
+                    });
+
+                    return colorMatch && sizeMatch;
+                });
+
+                return hasMatchingVariant;
             });
         }
 
@@ -1006,6 +1096,17 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         checkedItemsTaxonsNutrition,
         checkedColor,
         checkedSize,
+        filterColor,
+        filterSize,
+        filterAvailabity,
+        taxonsRetrieve,
+        filterFashionMen,
+        filterFashionWomen,
+        filterFashionAccessories,
+        filterWellnessFitness,
+        filterWellnessRelaxation,
+        filterWellnessMentalStimulation,
+        filterWellnessNutrition
     ]);
 
     return (
