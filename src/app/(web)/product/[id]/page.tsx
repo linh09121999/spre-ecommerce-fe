@@ -96,8 +96,6 @@ const ProductDetail: React.FC = () => {
 
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400) {
         if (currentPage < totalPages) {
-          if (sortBy !== "Relevance") setSortBy("Relevance");
-          if (sortOption !== "relevance") setSortOption("relevance");
           getApiProducts(String(getIdTaxon), currentPage + 1, 10, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
         }
       }

@@ -133,7 +133,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
         if (selectedVariant) {
             // Implement add to cart logic here
             console.log('Adding to cart:', {
-                variant: selectedVariant,
+                variant: selectedVariant.id,
                 quantity,
                 options: selectedOptions
             });
