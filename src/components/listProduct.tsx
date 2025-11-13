@@ -768,11 +768,16 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             return price >= priceMin && price <= priceMax;
         });
 
-        // 1️⃣ Category
-
-
         // 2️⃣ Collections
+        if (checkedItemsCollectonsAllProduct.length > 0) {
+            result = result.filter((p) => {
+                const productCollections = p.relationships.taxons?.data?.map((c: any) => Number(c.id)) || [];
+                return checkedItemsCollectonsAllProduct.some((id) => productCollections.includes(id));
+            });
+        }
 
+        // all product
+        
 
         // 3️⃣ Color
 
@@ -781,6 +786,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
 
         return result;
     }, [
+        products,
         filteredReleases,
         checkedItemsTaxonsAllProduct,
         checkedItemsCollectonsAllProduct,
@@ -1575,9 +1581,9 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                                     >
                                                         <div className="flex items-center gap-4">
                                                             <p className={`text-sm text-start ${checkedSize.includes(res.id)
-                                                                        ? 'text-gray-800 font-medium'
-                                                                        : 'text-gray-400 font-medium group-hover:text-gray-500'
-                                                                        }`}>{res.title}</p>
+                                                                ? 'text-gray-800 font-medium'
+                                                                : 'text-gray-400 font-medium group-hover:text-gray-500'
+                                                                }`}>{res.title}</p>
                                                         </div>
                                                     </button>
                                                 ))}
