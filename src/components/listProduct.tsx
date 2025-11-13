@@ -723,18 +723,18 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     };
 
     const handleClearAllFilters = () => {
-        setCheckedItemsAvailabity(filterAvailabity.map((type) => type.id));
-        setCheckItemTaxonsAllProduct(filterTaxonsAllProduct.map((type) => type.id));
-        setCheckItemCollectonsAllProduct(filterCollectonsAllProduct.map((type) => type.id));
-        setCheckItemTaxonsFashion(filterTaxonsFashion.map((type) => type.id))
-        setCheckItemTaxonsWellness(filterTaxonsWellness.map((type) => type.id))
-        setCheckItemTaxonsMen(filterFashionMen!.map((type) => Number(type.id)))
-        setCheckItemTaxonsWomen(filterFashionWomen!.map((type) => Number(type.id)))
-        setCheckItemTaxonsAccessories(filterFashionAccessories!.map((type) => Number(type.id)))
-        setCheckItemTaxonsFitness(filterWellnessFitness!.map((type) => Number(type.id)))
-        setCheckItemTaxonsRelaxation(filterWellnessRelaxation!.map((type) => Number(type.id)))
-        setCheckItemTaxonsMentalStimulation(filterWellnessMentalStimulation!.map((type) => Number(type.id)))
-        setCheckItemTaxonsNutrition(filterWellnessNutrition!.map((type) => Number(type.id)))
+        setCheckedItemsAvailabity([]);
+        setCheckItemTaxonsAllProduct([]);
+        setCheckItemCollectonsAllProduct([]);
+        setCheckItemTaxonsFashion([])
+        setCheckItemTaxonsWellness([])
+        setCheckItemTaxonsMen([])
+        setCheckItemTaxonsWomen([])
+        setCheckItemTaxonsAccessories([])
+        setCheckItemTaxonsFitness([])
+        setCheckItemTaxonsRelaxation([])
+        setCheckItemTaxonsMentalStimulation([])
+        setCheckItemTaxonsNutrition([])
 
         setCheckedColor([]);
         setCheckedSize([]);
