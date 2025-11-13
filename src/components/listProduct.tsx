@@ -801,6 +801,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             });
         }
 
+        // theo list taxon
         // men
         if (checkedItemsTaxonsMen.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Men' && filterFashionMen!.length > 0)) {
             result = result.filter((p) => {
@@ -871,6 +872,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         priceMin,
         priceMax,
         included,
+        resTaxons_List?.data
     ]);
 
     return (
