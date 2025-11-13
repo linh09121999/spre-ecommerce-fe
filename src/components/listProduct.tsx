@@ -785,95 +785,26 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             });
         }
 
-        // fashion
-        if (checkedItemsTaxonsFashion.length > 0 && taxonsRetrieve?.data.attributes.name === 'Fashion') {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-                console.log('Fashion taxons structure:', p.relationships.taxons);
-                return checkedItemsTaxonsFashion.some((id) => productTaxons.includes(id));
-            });
-        }
+        const taxonConfigs = [
+            { condition: taxonsRetrieve?.data.attributes.name === 'Fashion', items: checkedItemsTaxonsFashion },
+            { condition: taxonsRetrieve?.data.attributes.name === 'Wellness', items: checkedItemsTaxonsWellness },
+            { condition: taxonsRetrieve?.data.attributes.name === 'Men' && filterFashionMen!.length > 0, items: checkedItemsTaxonsMen },
+            { condition: taxonsRetrieve?.data.attributes.name === 'Women' && filterFashionWomen!.length > 0, items: checkedItemsTaxonsWomen },
+            { condition: taxonsRetrieve?.data.attributes.name === 'Accessories' && filterFashionAccessories!.length > 0, items: checkedItemsTaxonsAccessories },
+            { condition: taxonsRetrieve?.data.attributes.name === 'Fitness' && filterWellnessFitness!.length > 0, items: checkedItemsTaxonsFitness },
+            { condition: taxonsRetrieve?.data.attributes.name === 'Relaxation' && filterWellnessRelaxation!.length > 0, items: checkedItemsTaxonsRelaxation },
+            { condition: taxonsRetrieve?.data.attributes.name === 'Mental Stimulation' && filterWellnessMentalStimulation!.length > 0, items: checkedItemsTaxonsMentalStimulation },
+            { condition: taxonsRetrieve?.data.attributes.name === 'Nutrition' && filterWellnessNutrition!.length > 0, items: checkedItemsTaxonsNutrition }
+        ];
 
-        // wellness
-        if (checkedItemsTaxonsWellness.length > 0 && taxonsRetrieve?.data.attributes.name === 'Wellness') {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-
-                return checkedItemsTaxonsWellness.some((id) => productTaxons.includes(id));
-            });
-        }
-
-        // theo list taxon
-        // men
-        if (checkedItemsTaxonsMen.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Men' && filterFashionMen!.length > 0)) {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-
-                return checkedItemsTaxonsMen.some((id) => productTaxons.includes(id));
-            });
-        }
-
-        // women
-        if (checkedItemsTaxonsWomen.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Women' && filterFashionWomen!.length > 0)) {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-
-                return checkedItemsTaxonsWomen.some((id) => productTaxons.includes(id));
-            });
-        }
-
-        // accessories
-        if (checkedItemsTaxonsAccessories.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Accessories' && filterFashionAccessories!.length > 0)) {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-
-                return checkedItemsTaxonsAccessories.some((id) => productTaxons.includes(id));
-            });
-        }
-
-        // Fitness
-        if (checkedItemsTaxonsFitness.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Fitness' && filterWellnessFitness!.length > 0)) {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-                return checkedItemsTaxonsFitness.some((id) => productTaxons.includes(id));
-            });
-        }
-
-        // Relaxation
-        if (checkedItemsTaxonsRelaxation.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Relaxation' && filterWellnessRelaxation!.length > 0)) {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-
-                return checkedItemsTaxonsRelaxation.some((id) => productTaxons.includes(id));
-            });
-        }
-
-        // Mental Stimulation
-        if (checkedItemsTaxonsMentalStimulation.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Mental Stimulation' && filterWellnessMentalStimulation!.length > 0)) {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-
-                return checkedItemsTaxonsMentalStimulation.some((id) => productTaxons.includes(id));
-            });
-        }
-
-        // Nutrition
-        if (checkedItemsTaxonsNutrition.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Nutrition' && filterWellnessNutrition!.length > 0)) {
-            result = result.filter((p) => {
-                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
-                console.log(productTaxons)
-
-                return checkedItemsTaxonsNutrition.some((id) => productTaxons.includes(id));
-            });
-        }
+        taxonConfigs.forEach(config => {
+            if (config.items.length > 0 && config.condition) {
+                result = result.filter((p) => {
+                    const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                    return config.items.some((id) => productTaxons.includes(id));
+                });
+            }
+        });
 
         // 3️⃣ Color
         // 4️⃣ Size
@@ -881,6 +812,7 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     }, [
         resTaxons_List?.data,
         products,
+        included,
         filteredReleases,
         checkedItemsAvailabity,
         priceMin,
@@ -898,7 +830,6 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
         checkedItemsTaxonsNutrition,
         checkedColor,
         checkedSize,
-        included,
     ]);
 
     return (
