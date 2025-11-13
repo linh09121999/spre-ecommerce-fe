@@ -511,13 +511,13 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     const [checkedItemsTaxonsAccessories, setCheckItemTaxonsAccessories] = useState<number[]>([])
     const allCheckedTaxonsAccessories =
         filterFashionAccessories && filterFashionAccessories.length > 0
-            ? checkedItemsTaxonsWomen.length === filterFashionAccessories.length
+            ? checkedItemsTaxonsAccessories.length === filterFashionAccessories.length
             : false;
 
     const isIndeterminateTaxonsAccessories =
         filterFashionAccessories && filterFashionAccessories.length > 0
-            ? checkedItemsTaxonsWomen.length > 0 &&
-            checkedItemsTaxonsWomen.length < filterFashionAccessories.length
+            ? checkedItemsTaxonsAccessories.length > 0 &&
+            checkedItemsTaxonsAccessories.length < filterFashionAccessories.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsAccessories = () => {
@@ -542,13 +542,13 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     const [checkedItemsTaxonsFitness, setCheckItemTaxonsFitness] = useState<number[]>([])
     const allCheckedTaxonsFitness =
         filterWellnessFitness && filterWellnessFitness.length > 0
-            ? checkedItemsTaxonsWomen.length === filterWellnessFitness.length
+            ? checkedItemsTaxonsFitness.length === filterWellnessFitness.length
             : false;
 
     const isIndeterminateTaxonsFitness =
         filterWellnessFitness && filterWellnessFitness.length > 0
-            ? checkedItemsTaxonsWomen.length > 0 &&
-            checkedItemsTaxonsWomen.length < filterWellnessFitness.length
+            ? checkedItemsTaxonsFitness.length > 0 &&
+            checkedItemsTaxonsFitness.length < filterWellnessFitness.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsFitness = () => {
@@ -573,13 +573,13 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     const [checkedItemsTaxonsRelaxation, setCheckItemTaxonsRelaxation] = useState<number[]>([])
     const allCheckedTaxonsRelaxation =
         filterWellnessRelaxation && filterWellnessRelaxation.length > 0
-            ? checkedItemsTaxonsWomen.length === filterWellnessRelaxation.length
+            ? checkedItemsTaxonsRelaxation.length === filterWellnessRelaxation.length
             : false;
 
     const isIndeterminateTaxonsRelaxation =
         filterWellnessRelaxation && filterWellnessRelaxation.length > 0
-            ? checkedItemsTaxonsWomen.length > 0 &&
-            checkedItemsTaxonsWomen.length < filterWellnessRelaxation.length
+            ? checkedItemsTaxonsRelaxation.length > 0 &&
+            checkedItemsTaxonsRelaxation.length < filterWellnessRelaxation.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsRelaxation = () => {
@@ -604,13 +604,13 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     const [checkedItemsTaxonsMentalStimulation, setCheckItemTaxonsMentalStimulation] = useState<number[]>([])
     const allCheckedTaxonsMentalStimulation =
         filterWellnessMentalStimulation && filterWellnessMentalStimulation.length > 0
-            ? checkedItemsTaxonsWomen.length === filterWellnessMentalStimulation.length
+            ? checkedItemsTaxonsMentalStimulation.length === filterWellnessMentalStimulation.length
             : false;
 
     const isIndeterminateTaxonsMentalStimulation =
         filterWellnessMentalStimulation && filterWellnessMentalStimulation.length > 0
-            ? checkedItemsTaxonsWomen.length > 0 &&
-            checkedItemsTaxonsWomen.length < filterWellnessMentalStimulation.length
+            ? checkedItemsTaxonsMentalStimulation.length > 0 &&
+            checkedItemsTaxonsMentalStimulation.length < filterWellnessMentalStimulation.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsMentalStimulation = () => {
@@ -634,13 +634,13 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
     const [checkedItemsTaxonsNutrition, setCheckItemTaxonsNutrition] = useState<number[]>([])
     const allCheckedTaxonsNutrition =
         filterWellnessNutrition && filterWellnessNutrition.length > 0
-            ? checkedItemsTaxonsWomen.length === filterWellnessNutrition.length
+            ? checkedItemsTaxonsNutrition.length === filterWellnessNutrition.length
             : false;
 
     const isIndeterminateTaxonsNutrition =
         filterWellnessNutrition && filterWellnessNutrition.length > 0
-            ? checkedItemsTaxonsWomen.length > 0 &&
-            checkedItemsTaxonsWomen.length < filterWellnessNutrition.length
+            ? checkedItemsTaxonsNutrition.length > 0 &&
+            checkedItemsTaxonsNutrition.length < filterWellnessNutrition.length
             : false;
     // Khi click vào "All"
     const handleCheckAllTaxonsNutrition = () => {
