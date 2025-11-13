@@ -785,6 +785,78 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
             });
         }
 
+        // fashion
+        if (checkedItemsTaxonsFashion.length > 0 && taxonsRetrieve?.data.attributes.name === 'Fashion') {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsFashion.some((id) => productTaxons.includes(id));
+            });
+        }
+
+        // wellness
+        if (checkedItemsTaxonsWellness.length > 0 && taxonsRetrieve?.data.attributes.name === 'Wellness') {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsWellness.some((id) => productTaxons.includes(id));
+            });
+        }
+
+        // men
+        if (checkedItemsTaxonsMen.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Men' && filterFashionMen!.length > 0)) {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsMen.some((id) => productTaxons.includes(id));
+            });
+        }
+
+        // women
+        if (checkedItemsTaxonsWomen.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Women' && filterFashionWomen!.length > 0)) {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsWomen.some((id) => productTaxons.includes(id));
+            });
+        }
+
+        // accessories
+        if (checkedItemsTaxonsAccessories.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Accessories' && filterFashionAccessories!.length > 0)) {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsAccessories.some((id) => productTaxons.includes(id));
+            });
+        }
+
+        // Fitness
+        if (checkedItemsTaxonsFitness.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Fitness' && filterWellnessFitness!.length > 0)) {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsFitness.some((id) => productTaxons.includes(id));
+            });
+        }
+
+        // Relaxation
+        if (checkedItemsTaxonsRelaxation.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Relaxation' && filterWellnessRelaxation!.length > 0)) {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsRelaxation.some((id) => productTaxons.includes(id));
+            });
+        }
+
+        // Mental Stimulation
+        if (checkedItemsTaxonsMentalStimulation.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Mental Stimulation' && filterWellnessMentalStimulation!.length > 0)) {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsMentalStimulation.some((id) => productTaxons.includes(id));
+            });
+        }
+
+        // Nutrition
+        if (checkedItemsTaxonsNutrition.length > 0 && (taxonsRetrieve?.data.attributes.name === 'Nutrition' && filterWellnessNutrition!.length > 0)) {
+            result = result.filter((p) => {
+                const productTaxons = p.relationships.taxons?.data?.map((t: any) => Number(t.id)) || [];
+                return checkedItemsTaxonsNutrition.some((id) => productTaxons.includes(id));
+            });
+        }
+
         // 3️⃣ Color
         // 4️⃣ Size
         return result;
