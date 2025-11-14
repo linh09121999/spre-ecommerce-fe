@@ -10,7 +10,7 @@ import type { SxProps, Theme } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
 
 import { useStateGeneral } from '@/useState/useStateGeneral';
-import { useState_ResAccount, useState_ResStores, useState_ResTaxons } from '@/useState/useStatestorefront';
+import { useState_ResAccount, useState_ResCart, useState_ResStores, useState_ResTaxons } from '@/useState/useStatestorefront';
 import { FaRegHeart, FaRegUser } from 'react-icons/fa';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { IoMdSearch } from 'react-icons/io';
@@ -22,7 +22,7 @@ import { ListAllTaxons } from '@/service/storefront/taxons';
 import { GrFormNextLink } from 'react-icons/gr';
 import { useRouter } from "next/navigation";
 import { Cart } from '@/interface/sendData/interfaceStorefront';
-import { CreateACart } from '@/service/storefront/cart';
+import { CreateACart, RetrieveACart } from '@/service/storefront/cart';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     width: '35px',
@@ -132,16 +132,15 @@ const HeaderWeb: React.FC = () => {
 
     const sxBadge: SxProps<Theme> = {
         "& .MuiBadge-badge": {
-            background: 'back',
-            color: "var(--color-orange-700)",
+            background: 'var(--color-green-700)',
+            color: "white",
             fontWeight: 'bold',
-            fontSize: 'var(--text-sm)'
+            fontSize: 'var(--text-sm)',
         }
     }
 
     const sxButton: SxProps<Theme> = {
         color: 'var(--color-green-500)',
-        borderRadius: '100%',
         fontWeight: '600',
         fontSize: 'var(--text-xl)',
         position: "relative",
@@ -168,6 +167,7 @@ const HeaderWeb: React.FC = () => {
     const { setResStores, resStores } = useState_ResStores()
     const { resTaxons_List, setResTaxons_List } = useState_ResTaxons()
     const { resAccount } = useState_ResAccount()
+    const { resCart, setResCart } = useState_ResCart()
 
     const {
         setLoading, ordersNumber, heartNumber,
@@ -218,6 +218,7 @@ const HeaderWeb: React.FC = () => {
         };
 
         try {
+            setLoading(true)
             const response = await CreateACart(data);
             console.log("Cart created:", response.data);
 
@@ -231,14 +232,30 @@ const HeaderWeb: React.FC = () => {
         } catch (error: any) {
             toast.error(`Error creating cart: ` + error.response || error.message)
             throw error;
+        } finally {
+            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
         }
     };
 
+    const getApiRetrieveCart = async (include: string) => {
+        try {
+            setLoading(true)
+            const response = await RetrieveACart({ include });
+            console.log("Cart created:", response.data);
+            setResCart(response.data)
+        } catch (error: any) {
+            toast.error(`Error creating item cart: ` + error.response.statusText)
+            throw error;
+        } finally {
+            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
+        }
+    }
 
     useEffect(() => {
         getApiStores()
         getApiTaxons(1, 100)
         postApiCart()
+        getApiRetrieveCart("line_items")
     }, [])
 
     const [anchorElCurrency, setAnchorElCurrency] = useState<null | HTMLElement>(null);
@@ -383,35 +400,33 @@ const HeaderWeb: React.FC = () => {
                     />
                     <div className='flex justify-between gap-4 items-center'>
                         {/* search */}
-                        < IconButton
-                            sx={sxButton}
+                        <button className='p-2 css-icon' aria-label='search'
                             onClick={() => setIsSearch(true)}
                         >
                             <span className='text-black text-2xl max-md:text-xl svgWrapper'>
                                 <IoMdSearch className="mx-auto" />
                             </span>
-                        </IconButton>
+                        </button>
 
                         {/* cart */}
-                        < IconButton
-                            sx={sxButton} >
-                            <Badge badgeContent={ordersNumber} sx={sxBadge}>
+                        <button className='p-2 css-icon' aria-label='cart'
+                            onClick={() => router.push('/cart')}
+                        >
+                            <Badge badgeContent={resCart?.data.relationships.line_items.data.length} sx={sxBadge}>
                                 <span className='text-black text-2xl max-md:text-xl svgWrapper'>
                                     <MdOutlineShoppingCart className="mx-auto" />
                                 </span>
                             </Badge >
-                        </IconButton>
-                        < IconButton
-                            sx={sxButton} >
+                        </button>
+                        <button className='p-2 css-icon' aria-label='heart'>
                             <Badge badgeContent={heartNumber} sx={sxBadge}>
                                 <span className='text-black text-2xl max-md:text-xl svgWrapper'>
                                     <FaRegHeart className="mx-auto" />
                                 </span>
                             </Badge >
-                        </IconButton>
+                        </button>
                         {/* user */}
-                        < IconButton
-                            sx={sxButton}
+                        <button className='p-2 css-icon' aria-label='user'
                             onClick={handleClickAccount}
                         >
                             <Stack direction="row" spacing={2}>
@@ -427,7 +442,7 @@ const HeaderWeb: React.FC = () => {
                                     </Avatar>
                                 </StyledBadge >
                             </Stack>
-                        </IconButton>
+                        </button>
                         {resAccount?.data.attributes.email &&
                             <Menu
                                 anchorEl={anchorElAccount}

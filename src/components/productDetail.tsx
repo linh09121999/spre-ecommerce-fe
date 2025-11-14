@@ -1,5 +1,6 @@
 import { ColorOption, IncludedImage, IncludedItem, IncludedVariant, IncludedTaxon, PriceInfo, IncludedOptionType, IncludedProductProperty } from '@/interface/interface';
 import { Product, ResProduct_Retrieve } from '@/interface/responseData/interfaceStorefront';
+import { AddAnItemToCart } from '@/service/storefront/cartLineItems';
 import { IconButton } from '@mui/material';
 import type { SxProps, Theme } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
@@ -8,6 +9,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FaArrowLeft, FaBox, FaCaretSquareLeft, FaCheckCircle, FaExclamationCircle, FaRegHeart, FaShieldAlt, FaShippingFast, FaTag, FaUndo } from 'react-icons/fa';
 import { FaShield } from 'react-icons/fa6';
 import { MdOutlineShoppingCart } from 'react-icons/md';
+import { toast, ToastContainer } from 'react-toastify';
 
 const fly1 = keyframes`
   from { transform: translateY(0.1em); }
@@ -129,6 +131,29 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
         }
     };
 
+    const addItemToCart = async (variant_id: string, quantity: number) => {
+        const data = {
+            variant_id: variant_id,
+            quantity: quantity,
+            public_metadata: {
+                first_item_order: true
+            },
+            private_metadata: {
+                recommended_by_us: false
+            }
+        }
+
+        try {
+            const response = await AddAnItemToCart(data);
+            console.log("Cart created:", response.data);
+
+            return response.data; // trả về dữ liệu nếu cần
+        } catch (error: any) {
+            toast.error(`Error creating item cart: ` +  error.response.statusText)
+            throw error;
+        }
+    }
+
     const handleAddToCart = () => {
         if (selectedVariant) {
             // Implement add to cart logic here
@@ -137,6 +162,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                 quantity,
                 options: selectedOptions
             });
+            addItemToCart(selectedVariant.id, quantity)
         }
     };
 
@@ -395,6 +421,8 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                     </div>
                 </div>
             </div>
+            <ToastContainer position="top-right" autoClose={3000} />
+
         </>
     )
 }

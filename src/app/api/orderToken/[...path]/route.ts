@@ -40,9 +40,11 @@ export async function POST(req: NextRequest, context: { params: any }) {
 
     try {
         const body = await req.json(); // lấy body JSON
+        const orderToken = req.headers.get("x-spree-order-token");
         const response = await axios.post(url, body, {
             headers: {
                 "Content-Type": "application/vnd.api+json",
+                ...(orderToken ? { "X-Spree-Order-Token": orderToken } : {}),
             },
         });
         return NextResponse.json(response.data);
