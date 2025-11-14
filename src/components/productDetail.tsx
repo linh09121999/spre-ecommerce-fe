@@ -218,7 +218,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
                 {/* Right: Product Info */}
                 <div className="flex flex-col gap-5">
-                    <h1 className="text-4xl font-bold text-gray-900 leading-tight" >
+                    <h1 className="text-3xl font-bold text-gray-900 leading-tight" >
                         {data?.attributes.name}
                     </h1>
 
@@ -227,7 +227,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                         <div className="flex items-center gap-4" >
 
                             <div className="flex items-end gap-2">
-                                <span className="text-2xl font-bold text-green-700">
+                                <span className="text-4xl font-bold text-green-700">
                                     ${data.attributes.price}
                                 </span>
                                 {data.attributes.compare_at_price && (
@@ -297,13 +297,13 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
                             <div className="flex items-center gap-2 text-sm">
                                 <FaBox className='text-green-500' />
-                                <span>SKU: <strong>{data.attributes.sku}</strong></span>
+                                <span className='flex items-center gap-1'>SKU: <strong>{data.attributes.sku}</strong></span>
                             </div>
 
                             {productProperties.length > 0 &&
                                 <div className="flex items-center gap-2 text-sm">
                                     <FaTag className='text-green-500' />
-                                    <span className='flex items-center'>Material:
+                                    <span className='flex items-center gap-1'>Material:
                                         <strong>
                                             {productProperties.map(property => (
                                                 <div key={property.id} className="flex justify-between py-2 border-b last:border-0 border-gray-200">
