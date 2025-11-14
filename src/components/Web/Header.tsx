@@ -180,7 +180,7 @@ const HeaderWeb: React.FC = () => {
             const res = await ReturnTheCurrentStore()
             setResStores(res.data)
         } catch (error: any) {
-            toast.error(`Stores: `  + error.response || error.message)
+            toast.error(`Stores: ` + error.response || error.message)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
@@ -193,7 +193,7 @@ const HeaderWeb: React.FC = () => {
             const res = await ListAllTaxons({ page, per_page })
             setResTaxons_List(res.data)
         } catch (error: any) {
-            toast.error(`Taxons: `  + error.response || error.message)
+            toast.error(`Taxons: ` + error.response || error.message)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
@@ -201,6 +201,13 @@ const HeaderWeb: React.FC = () => {
     }
 
     const postApiCart = async () => {
+        const existingToken = localStorage.getItem("order_token");
+        if (existingToken) {
+            // token đã có, có thể fetch cart hiện tại nếu muốn
+            setLoading(false);
+            return;
+        }
+
         const data: Cart = {
             public_metadata: {
                 total_weight: 3250,
