@@ -1,6 +1,9 @@
 import { ColorOption, IncludedImage, IncludedItem, IncludedVariant, IncludedTaxon, PriceInfo, IncludedOptionType, IncludedProductProperty } from '@/interface/interface';
 import { Product, ResProduct_Retrieve } from '@/interface/responseData/interfaceStorefront';
+import { RetrieveACart } from '@/service/storefront/cart';
 import { AddAnItemToCart } from '@/service/storefront/cartLineItems';
+import { useStateGeneral } from '@/useState/useStateGeneral';
+import { useState_ResCart } from '@/useState/useStatestorefront';
 import { IconButton } from '@mui/material';
 import type { SxProps, Theme } from "@mui/material/styles";
 import { keyframes } from "@mui/system";
@@ -131,6 +134,9 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
         }
     };
 
+    const {
+        setLoading } = useStateGeneral()
+
     const addItemToCart = async (variant_id: string, quantity: number) => {
         const data = {
             variant_id: variant_id,
@@ -149,7 +155,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
 
             return response.data; // trả về dữ liệu nếu cần
         } catch (error: any) {
-            toast.error(`Error creating item cart: ` +  error.response.statusText)
+            toast.error(`Error creating item cart: ` + error.response.statusText)
             throw error;
         }
     }
@@ -163,8 +169,33 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                 options: selectedOptions
             });
             addItemToCart(selectedVariant.id, quantity)
+            getApiRetrieveCart("line_items")
         }
-    };
+    }
+
+    const { resCart, setResCart } = useState_ResCart()
+
+    const getApiRetrieveCart = async (include: string) => {
+        try {
+            setLoading(true)
+            const response = await RetrieveACart({ include });
+            const cartNumber = response.data.data?.relationships.line_items.data
+            if (cartNumber) {
+                localStorage.setItem("cart_number", cartNumber.length);
+            }
+
+            setResCart(response.data)
+        } catch (error: any) {
+            toast.error(`Error creating item cart: ` + error.response.statusText)
+            throw error;
+        } finally {
+            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
+        }
+    }
+
+    // useEffect(() => {
+    //     getApiRetrieveCart("line_items")
+    // }, [handleAddToCart])
 
     const mainImage = displayImages[selectedImageIndex];
 

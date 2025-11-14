@@ -28,6 +28,7 @@ const Cart: React.FC = () => {
     }
 
     useEffect(() => {
+        setHoveredNav(null)
         getApiEstimatedShippingRate()
     }, [])
 

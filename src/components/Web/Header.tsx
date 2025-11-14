@@ -237,25 +237,10 @@ const HeaderWeb: React.FC = () => {
         }
     };
 
-    const getApiRetrieveCart = async (include: string) => {
-        try {
-            setLoading(true)
-            const response = await RetrieveACart({ include });
-            console.log("Cart created:", response.data);
-            setResCart(response.data)
-        } catch (error: any) {
-            toast.error(`Error creating item cart: ` + error.response.statusText)
-            throw error;
-        } finally {
-            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
-        }
-    }
-
     useEffect(() => {
         getApiStores()
         getApiTaxons(1, 100)
         postApiCart()
-        getApiRetrieveCart("line_items")
     }, [])
 
     const [anchorElCurrency, setAnchorElCurrency] = useState<null | HTMLElement>(null);
@@ -412,7 +397,7 @@ const HeaderWeb: React.FC = () => {
                         <button className='p-2 css-icon' aria-label='cart'
                             onClick={() => router.push('/cart')}
                         >
-                            <Badge badgeContent={resCart?.data.relationships.line_items.data.length} sx={sxBadge}>
+                            <Badge badgeContent={0} sx={sxBadge}>
                                 <span className='text-black text-2xl max-md:text-xl svgWrapper'>
                                     <MdOutlineShoppingCart className="mx-auto" />
                                 </span>
