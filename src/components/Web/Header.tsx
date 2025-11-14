@@ -397,7 +397,7 @@ const HeaderWeb: React.FC = () => {
                         <button className='p-2 css-icon' aria-label='cart'
                             onClick={() => router.push('/cart')}
                         >
-                            <Badge badgeContent={0} sx={sxBadge}>
+                            <Badge badgeContent={Number(localStorage.getItem("cart_number")) || 0} sx={sxBadge}>
                                 <span className='text-black text-2xl max-md:text-xl svgWrapper'>
                                     <MdOutlineShoppingCart className="mx-auto" />
                                 </span>
