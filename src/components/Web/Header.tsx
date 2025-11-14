@@ -473,7 +473,7 @@ const HeaderWeb: React.FC = () => {
                             </Menu>
                         }
                         {/*  */}
-                        <button className='px-2 border-l-[2px] border-l-gray-200 items-center text-lg flex gap-1'
+                        {/* <button className='px-2 border-l-[2px] border-l-gray-200 items-center text-lg flex gap-1'
                             onClick={handleClickCurrency}
                         >
                             {resStores?.data.attributes.default_currency} ({isCurrency === 'USD' ? <PiCurrencyDollar /> : <PiCurrencyEur />})
@@ -495,7 +495,7 @@ const HeaderWeb: React.FC = () => {
                             >
                                 Euro (EUR)
                             </MenuItem>
-                        </Menu>
+                        </Menu> */}
                     </div>
                     {isSearch &&
                         <Backdrop
