@@ -21,7 +21,7 @@ const Posts: React.FC = () => {
             const res = await ListAllPost()
             setResPosts_List(res.data)
         } catch (error: any) {
-            toast.error(`Posts: ` + error.response.error)
+            toast.error(`Posts: `  + error.response || error.message)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu

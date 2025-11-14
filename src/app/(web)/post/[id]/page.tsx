@@ -23,7 +23,7 @@ const PostDetail: React.FC = () => {
             const res = await RetrieveAPost(id, { include })
             setResPosts_Retrieve(res.data)
         } catch (error: any) {
-            toast.error(`Posts: ` + error.response.error)
+            toast.error(`Posts: `  + error.response || error.message)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
@@ -36,7 +36,7 @@ const PostDetail: React.FC = () => {
             const res = await ListAllPost()
             setResPosts_List(res.data)
         } catch (error: any) {
-            toast.error(`Posts: ` + error.response.error)
+            toast.error(`Posts: `  + error.response || error.message)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu

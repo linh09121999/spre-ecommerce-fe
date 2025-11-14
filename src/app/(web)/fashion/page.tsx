@@ -25,7 +25,7 @@ const Fashion: React.FC = () => {
             const res = await RetrieveATaxon(taxon_permalink)
             setResTaxons_Retrieve(res.data)
         } catch (error: any) {
-            toast.error(`Stores: ` + error.response.error)
+            toast.error(`Stores: `  + error.response || error.message)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu

@@ -14,6 +14,10 @@ api.interceptors.request.use(
     if (orderToken) {
       config.headers["X-Spree-Order-Token"] = orderToken;
     }
+
+    if (config.method?.toLowerCase() === "post") {
+      config.headers["Content-Type"] = "application/vnd.api+json";
+    }
     return config;
   },
   (error) => Promise.reject(error)

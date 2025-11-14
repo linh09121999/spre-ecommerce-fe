@@ -32,3 +32,22 @@ export async function GET(req: NextRequest, context: { params: any }) {
         return NextResponse.json({ error: err.message }, { status: err.response?.status || 500 });
     }
 }
+
+export async function POST(req: NextRequest, context: { params: any }) {
+    const params = await context.params;
+    const pathArray: string[] = Array.isArray(params.path) ? params.path : [];
+    const url = `${API_BASE}/${pathArray.join("/")}`;
+
+    try {
+        const body = await req.json(); // lấy body JSON
+        const response = await axios.post(url, body, {
+            headers: {
+                "Content-Type": "application/vnd.api+json",
+            },
+        });
+        return NextResponse.json(response.data);
+    } catch (err: any) {
+        console.error("Spree API POST error:", err.response?.data || err.message);
+        return NextResponse.json({ error: err.message }, { status: err.response?.status || 500 });
+    }
+}

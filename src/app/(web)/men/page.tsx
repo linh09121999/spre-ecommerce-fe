@@ -25,7 +25,7 @@ const Men: React.FC = () => {
       const res = await RetrieveATaxon(taxon_permalink)
       setResTaxons_Retrieve(res.data)
     } catch (error: any) {
-      toast.error(`Stores: ` + error.response.error)
+      toast.error(`Stores: `  + error.response || error.message)
     }
     finally {
       setLoading(false); // 👈 tắt loading sau khi có dữ liệu
@@ -49,7 +49,7 @@ const Men: React.FC = () => {
         setResDataIcludes_List((prev) => [...prev, ...res.data.included])
       }
     } catch (error: any) {
-      toast.error(`Products: ` + error.response.error)
+      toast.error(`Products: `  + error.response || error.message)
       setResDataProduct_List([])
       setResDataIcludes_List([])
       setCurrentPage(0)

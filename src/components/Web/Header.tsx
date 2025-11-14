@@ -21,6 +21,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { ListAllTaxons } from '@/service/storefront/taxons';
 import { GrFormNextLink } from 'react-icons/gr';
 import { useRouter } from "next/navigation";
+import { Cart } from '@/interface/sendData/interfaceStorefront';
+import { CreateACart } from '@/service/storefront/cart';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     width: '35px',
@@ -178,29 +180,58 @@ const HeaderWeb: React.FC = () => {
             const res = await ReturnTheCurrentStore()
             setResStores(res.data)
         } catch (error: any) {
-            toast.error(`Stores: ` + error.response.error)
+            toast.error(`Stores: `  + error.response || error.message)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
         }
     }
 
-    const getApiTaxons = async (page: number, per_page:number) => {
+    const getApiTaxons = async (page: number, per_page: number) => {
         try {
             setLoading(true);
-            const res = await ListAllTaxons({page, per_page})
+            const res = await ListAllTaxons({ page, per_page })
             setResTaxons_List(res.data)
         } catch (error: any) {
-            toast.error(`Taxons: ` + error.response.error)
+            toast.error(`Taxons: `  + error.response || error.message)
         }
         finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
         }
     }
+
+    const postApiCart = async () => {
+        const data: Cart = {
+            public_metadata: {
+                total_weight: 3250,
+            },
+            private_metadata: {
+                had_same_cart_items: true,
+            },
+        };
+
+        try {
+            const response = await CreateACart(data);
+            console.log("Cart created:", response.data);
+
+            // Nếu API trả về order_token thì lưu vào localStorage
+            const orderToken = response.data.data?.attributes?.token
+            if (orderToken) {
+                localStorage.setItem("order_token", orderToken);
+            }
+
+            return response.data; // trả về dữ liệu nếu cần
+        } catch (error: any) {
+            toast.error(`Error creating cart: ` + error.response || error.message)
+            throw error;
+        }
+    };
+
 
     useEffect(() => {
         getApiStores()
-        getApiTaxons(1,100)
+        getApiTaxons(1, 100)
+        postApiCart()
     }, [])
 
     const [anchorElCurrency, setAnchorElCurrency] = useState<null | HTMLElement>(null);

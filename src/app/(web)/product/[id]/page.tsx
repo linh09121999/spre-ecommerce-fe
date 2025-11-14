@@ -45,7 +45,7 @@ const ProductDetail: React.FC = () => {
       }
 
     } catch (error: any) {
-      toast.error(`Products: ` + error.response.error)
+      toast.error(`Products: `  + error.response || error.message)
       setResDataProducts_Related([])
       setResDataIcludes_Related([])
       setCurrentPage(0)
@@ -78,7 +78,7 @@ const ProductDetail: React.FC = () => {
       getApiProducts(String(maxId), 1, 10, "default_variant,variants,option_types,product_properties,taxons,images,primary_variant")
 
     } catch (error: any) {
-      toast.error(`Products: ` + error.response.error)
+      toast.error(`Products: `  + error.response || error.message)
     }
     finally {
       setLoading(false); // 👈 tắt loading sau khi có dữ liệu
