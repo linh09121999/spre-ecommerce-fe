@@ -8,8 +8,10 @@ import { toast, ToastContainer } from "react-toastify";
 import { ListAllProducts } from "@/service/storefront/products";
 import ListProductCard from "@/components/cardListProduct";
 import { MdNavigateNext } from "react-icons/md";
-import { FiHeart, FiLayers, FiShoppingBag, FiStar, FiTag } from "react-icons/fi";
+import { FiHeart, FiLayers, FiShoppingBag, FiStar, FiTag, FiUser, FiUsers } from "react-icons/fi";
 import { ListAllPost } from "@/service/storefront/posts";
+import { GiAppleCore, GiBrain, GiMeditation } from "react-icons/gi";
+import { PiBarbell } from "react-icons/pi";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -80,168 +82,143 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <section className="relative w-full h-[480px] overflow-hidden">
+      <section className="relative w-full h-[580px] md:h-[650px] overflow-hidden rounded-b-[60px] shadow-2xl">
         <img
           src="https://cdn.vendo.dev/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MjQ3OSwicHVyIjoiYmxvYl9pZCJ9fQ==--2ea59e9a7f3e0127203fa19260ee4f0c827a725d/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJ3ZWJwIiwic2F2ZXIiOnsic3RyaXAiOnRydWUsInF1YWxpdHkiOjc1LCJsb3NzbGVzcyI6ZmFsc2UsImFscGhhX3EiOjg1LCJyZWR1Y3Rpb25fZWZmb3J0Ijo2LCJzbWFydF9zdWJzYW1wbGUiOnRydWV9LCJyZXNpemVfdG9fbGltaXQiOls2NDAsbnVsbF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--d96e3e5279c093271eeb921db9065be22fee62e4/Image%20banner.jpg"
           alt="banner"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-out hover:scale-125"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent"></div>
-        <div className="relative z-10 flex flex-col justify-center items-start max-w-[1100px] mx-auto px-10 h-full text-white space-y-4" data-aos="fade-up">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-wide uppercase drop-shadow-lg">
-            Welcome to this Spree Commerce demo website
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+
+        {/* Soft color tint */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+
+        {/* Noise  */}
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
+
+        {/* Content */}
+        <div
+          className="relative z-10 flex flex-col justify-center h-full max-w-[1250px] mx-auto px-6 md:px-12"
+          data-aos="fade-up"
+        >
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight text-white drop-shadow-2xl">
+            Explore Your Style With <span className="text-green-300">Spree Commerce</span>
           </h1>
-          <p className="text-lg text-white/80 max-w-lg">
-            Spree is an open-source eCommerce platform that you can customize, self-host and fully control. Its Enterprise Edition features multi-vendor marketplace, multi-tenant and B2B eCommerce capabilities. Learn more at spreecommerce.org
+
+          <p className="text-lg md:text-xl text-white/80 max-w-xl mt-5 leading-relaxed">
+            Build fully customizable eCommerce experiences with Spree’s powerful open-source platform.
           </p>
+
           <button
-            onClick={() => {
-              router.push('/all-product')
-            }}
-            className="mt-4 bg-white/90 hover:bg-white text-green-700 px-6 py-3 rounded-lg shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg font-semibold">
+            onClick={() => router.push('/all-product')}
+            className="mt-8 w-fit bg-white text-green-700 font-semibold px-8 py-3.5 rounded-xl shadow-lg hover:bg-green-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+          >
             Shop Now
           </button>
         </div>
       </section>
       <div className="max-w-[1535px] mx-auto flex flex-col gap-15 px-5 py-10">
-        <div className="flex flex-wrap justify-center gap-8 py-10">
+        <div className="flex flex-nowrap md:flex-wrap gap-6 justify-center overflow-x-auto pb-10 no-scrollbar">
           {[
-            { title: "Men", icon: <FiTag size={28} /> },
-            { title: "Women", icon: <FiLayers size={28} /> },
-            { title: "Accessories", icon: <FiHeart size={28} /> },
-            { title: "Fitness", icon: <FiHeart size={28} /> },
-            { title: "Relaxation", icon: <FiHeart size={28} /> },
-            { title: "Mental Stimulation", icon: <FiHeart size={28} /> },
-            { title: "Nutrition", icon: <FiHeart size={28} /> },
+            { title: "Men", icon: <FiUser size={28} /> },                // biểu tượng người (nam)
+            { title: "Women", icon: <FiUsers size={28} /> },            // biểu tượng group/khác biệt nhẹ cho nữ
+            { title: "Accessories", icon: <FiShoppingBag size={28} /> },// túi/phụ kiện mua sắm
+            { title: "Fitness", icon: <PiBarbell size={28} /> },        // tạ cho thể thao/fitness
+            { title: "Relaxation", icon: <GiMeditation size={28} /> }, // thiền/relax
+            { title: "Mental Stimulation", icon: <GiBrain size={28} /> }, // não / kích thích tinh thần
+            { title: "Nutrition", icon: <GiAppleCore size={28} /> },
           ].map(({ title, icon }) => (
             <button
               key={title}
+              onClick={() => router.push(`/${toPath(title)}`)}
               className="
-    relative h-36 w-36 rounded-full flex flex-col items-center justify-center
-    bg-gradient-to-br from-white/90 to-green-50/60 backdrop-blur-xl
-    border border-white/50
-    shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(34,197,94,0.4)]
-    hover:scale-110 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-    overflow-hidden group
-  "
-              onClick={() => {
-                router.push(`/${toPath(title)}`)
-              }}
+          relative h-32 w-32 md:h-36 md:w-36 shrink-0
+          rounded-xl flex flex-col items-center justify-center
+          bg-white/40 backdrop-blur-xl
+          border border-white/50
+          shadow-lg hover:shadow-xl hover:scale-110
+          transition-all duration-500 ease-out
+          overflow-hidden group
+        "
             >
-              {/* Vầng sáng chuyển động mạnh hơn */}
-              <div
-                className="
-      absolute inset-0 rounded-full opacity-0 group-hover:opacity-100
-      bg-[conic-gradient(from_180deg_at_50%_50%,#22c55e33_0deg,transparent_120deg,#22c55e33_240deg,transparent_360deg)]
-      animate-spin-slower blur-md
-      transition-opacity duration-700
-    "
-              ></div>
+              {/* Shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-green-200/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
-              {/* Hiệu ứng sáng nền trung tâm */}
-              <div
-                className="
-      absolute inset-0 rounded-full opacity-60
-      bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.25),transparent_70%)]
-      group-hover:opacity-90 transition-all duration-700
-    "
-              ></div>
-
-              {/* Icon */}
-              <div
-                className="
-      relative z-10 mb-2 text-4xl text-green-600 
-      transition-all duration-700 group-hover:text-green-700 
-      group-hover:scale-125 group-hover:-translate-y-1
-      drop-shadow-[0_2px_8px_rgba(34,197,94,0.6)]
-    "
-              >
+              <div className="text-green-600 group-hover:text-green-800 transition-all duration-500 text-4xl">
                 {icon}
               </div>
 
-              {/* Title */}
-              <span
-                className="
-      relative z-10 uppercase text-sm font-semibold tracking-wider
-      text-gray-800 group-hover:text-green-900 transition-all duration-700
-    "
-              >
+              <span className="mt-2 text-sm font-semibold uppercase tracking-wide group-hover:text-green-900">
                 {title}
               </span>
-
-              {/* Vòng sáng ngoài mỏng, lan tỏa */}
-              <span
-                className="
-      absolute inset-0 rounded-full border border-green-300/40
-      opacity-0 group-hover:opacity-100 group-hover:scale-125
-      transition-all duration-700
-      shadow-[0_0_35px_8px_rgba(34,197,94,0.35)]
-    "
-              ></span>
             </button>
-
-
           ))}
         </div>
 
         <div className="grid grid-cols-2 gap-5">
-          {resTaxons_List?.data.map((res, id) => (
-            <>
-              {(res.attributes.permalink === 'categories/fashion/men' || res.attributes.permalink === 'categories/fashion/women') &&
-                <button key={res.id} className="relative group overflow-hidden rounded-md shadow-xl"
-                  onClick={() => {
-                    router.push(`/${res.attributes.name.toLocaleLowerCase()}`)
-                  }}
-                >
-                  <img
-                    src={res.attributes.header_url}
-                    alt={res.attributes.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <h2 className="absolute bottom-6 left-6 text-white text-3xl font-bold uppercase tracking-wider drop-shadow-md">
-                    {res.attributes.name}
-                  </h2>
-                </button>
-              }
-            </>
-          ))}
+          {resTaxons_List?.data
+            .filter(({ attributes }) =>
+              ["categories/fashion/men", "categories/fashion/women"].includes(
+                attributes.permalink
+              )
+            )
+            .map((res) => (
+              <button
+                key={res.id}
+                className="relative group overflow-hidden rounded-xl shadow-xl"
+                onClick={() => router.push(`/${res.attributes.name.toLowerCase()}`)}
+              >
+                <img
+                  src={res.attributes.header_url} alt={res.attributes.name.toLowerCase()}
+                  className="w-full h-full object-cover duration-700 group-hover:scale-110"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+                <h3 className="absolute bottom-6 left-6 text-white text-3xl font-bold uppercase tracking-wider drop-shadow-lg">
+                  {res.attributes.name}
+                </h3>
+              </button>
+            ))}
         </div>
-        <div className='flex-grow gap-5 flex flex-col '>
-          <div className="flex justify-center css-next items-center w-full transition-all duration-300 ease">
-            <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">Sale</h3>
+        <section className="relative py-14 px-4">
+          <div className="flex justify-center items-center">
+            <h3 className="text-2xl uppercase font-semibold tracking-wide">Sale</h3>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mt-6">
             <ListProductCard products={resDataProducts_SaleList ?? []} included={resDataIcludes_SaleList ?? []} />
           </div>
-          <div className="flex justify-center">
+
+          <div className="flex justify-center mt-6">
             <button
-              onClick={() => {
-                router.push(`/sale`)
-              }}
-              className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-md shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              onClick={() => router.push(`/sale`)}
+              className="flex items-center gap-2 px-5 py-2 h-fit bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-md shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+
               View all <MdNavigateNext size={22} />
             </button>
           </div>
-        </div>
-        <div className='flex-grow gap-5 flex flex-col '>
-          <div className="flex justify-center css-next items-center w-full transition-all duration-300 ease">
-            <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">New Arrivals</h3>
+        </section>
 
+        <section className="relative py-14 px-4 bg-gradient-to-r from-green-50 to-green-100">
+          <div className="flex justify-center items-center">
+            <h3 className="text-2xl uppercase font-semibold tracking-wide">New Arrivals</h3>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mt-6">
             <ListProductCard products={resDataProducts_NewList ?? []} included={resDataIcludes_NewList ?? []} />
           </div>
-          <div className="flex justify-center">
+
+          <div className="flex justify-center mt-6">
             <button
-              onClick={() => {
-                router.push(`/new-arrivals`)
-              }}
-              className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-md shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              onClick={() => router.push(`/new-arrivals`)}
+              className="flex items-center gap-2 px-5 py-2 h-fit bg-gradient-to-r from-green-100 to-green-200 text-green-800 rounded-md shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+
               View all <MdNavigateNext size={22} />
             </button>
           </div>
-        </div>
+        </section>
+
         <div className='flex-grow gap-5 flex flex-col '>
           <div className="flex justify-center css-next items-center w-full transition-all duration-300 ease">
             <h3 className="text-xl uppercase font-semibold  bg-clip-text tracking-wide">Latest Posts</h3>

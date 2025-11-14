@@ -128,14 +128,22 @@ const FooterWeb: React.FC = () => {
 
     return (
         <>
-            <section className='p-5 flex flex-col gap-5 bg-gray-200 text-black'>
-                <div className='max-w-[800px] mx-auto flex flex-col gap-5 py-5'>
-                    <h3 className='text-2xl text-center uppercase font-semibold  bg-clip-text tracking-wide'>Subscribe to our newsletter</h3>
-                    <p className='text-black/70 text-xl text-center'>This section lets you capture newsletter sign-ups, with all submissions conveniently recorded in the customer management area of your admin dashboard for easy access and follow-up.</p>
-                    <div className='flex gap-2'>
+            <section className="px-5 py-16 bg-gradient-to-b from-gray-100 to-gray-200 text-black">
+                <div className="max-w-[900px] mx-auto flex flex-col gap-6 items-center text-center">
+                    <h3 className="text-3xl uppercase font-bold tracking-wide 
+      bg-gradient-to-r from-green-500 to-green-700 text-transparent bg-clip-text">
+                        Subscribe to our newsletter
+                    </h3>
+
+                    <p className="text-black/60 text-lg max-w-[700px] leading-relaxed">
+                        Stay updated with our latest products, offers and exclusive deals.
+                        Every subscription goes directly to your customer dashboard for easy management.
+                    </p>
+
+                    <div className="flex w-full max-w-[600px]">
                         <TextField
                             aria-label="input email"
-                            placeholder="Enter your email.."
+                            placeholder="Enter your email..."
                             name="email"
                             sx={sxText}
                             value={yourMail}
@@ -143,24 +151,22 @@ const FooterWeb: React.FC = () => {
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
-                                        <IconButton className=" w-full group backdrop-blur-[4px] place-self-end flex z-10  inline-flex shadow-md transition-transform duration-300 ease-in-out"
+                                        <IconButton
+                                            className="group transition-all duration-300 hover:scale-105"
                                             href={`https://mail.google.com/mail/?view=cm&fs=1&to=${resStores?.data.attributes.customer_support_email}&su=${encodeURIComponent(textSubject + yourMail)}&body=${body}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             sx={sxButton}
                                         >
-                                            <div className="relative flex items-center gap-2 svgWrapper">
+                                            <div className="relative flex items-center">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24"
                                                     width="24"
                                                     height="24"
+                                                    className="text-green-600 group-hover:text-green-700 transition"
                                                 >
-                                                    <path fill="none" d="M0 0h24v24H0z"></path>
-                                                    <path
-                                                        fill="currentColor"
-                                                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                                                    ></path>
+                                                    <path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
                                                 </svg>
                                             </div>
                                         </IconButton>
@@ -171,102 +177,122 @@ const FooterWeb: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <footer className='p-5 flex flex-col gap-5 bg-white text-black'>
-                <div className='max-w-[1500px] mx-auto flex gap-0 md:gap-10 md:flex-row  flex-col items-start py-5 border-b border-b-gray-300'>
-                    <div className='flex justify-center gap-4 flex-col border-b md:border-none'>
-                        <a onClick={() => {
-                            router.push('/')
-                        }}>
-                            <img className="w-40 custom-desktop-height "
+
+            <footer className="px-5 py-14 bg-white text-black border-t border-gray-300">
+                <div className="max-w-[1500px] mx-auto grid gap-10 md:grid-cols-[2fr_3fr]">
+
+                    {/* Logo + Des */}
+                    <div className="flex flex-col gap-4">
+                        <a onClick={() => router.push('/')} className="cursor-pointer">
+                            <img
+                                className="w-44"
                                 alt="Spree Commerce DEMO logo"
-                                src="../../LogoFullBlack.webp" />
+                                src="../../LogoFullBlack.webp"
+                            />
                         </a>
-
-                        <div className='text-black/70'>{resStores?.data.attributes.meta_description}</div>
-
+                        <p className="text-black/60 leading-relaxed">
+                            {resStores?.data.attributes.meta_description}
+                        </p>
                     </div>
-                    <div className='grid grid-cols-1 lg:grid-cols-3 grow w-full'>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-xl font-semibold'>Shop</h3>
-                            <ul className='grid gap-4'>
+
+                    <div className='grid md:grid-cols-3 gap-5'>
+                        {/* Shop */}
+                        <div className="flex flex-col gap-4">
+                            <h3 className="text-xl font-semibold tracking-wide">Shop</h3>
+                            <ul className="flex flex-col gap-3">
                                 {pages?.map((page, index) => (
-                                    <a key={index}
+                                    <a
+                                        key={index}
                                         onClick={() => {
                                             setSelectNav(index)
                                             router.push(page.path)
                                         }}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        className="cursor-pointer hover:text-green-600 transition flex items-center gap-2 group"
                                     >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                            {page.title}
-                                        </div>
+                                        <span className="group-hover:translate-x-1 transition">{page.title}</span>
                                     </a>
                                 ))}
                             </ul>
                         </div>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-xl font-semibold'>Account</h3>
-                            <ul className='grid gap-4 uppercase'>
-                                {/* account */}
+
+                        {/* Account */}
+                        <div className="flex flex-col gap-4">
+                            <h3 className="text-xl font-semibold tracking-wide">Account</h3>
+                            <ul className="flex flex-col gap-3 uppercase text-sm">
                                 <li>
-                                    <a
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'> My Account</div>
+                                    <a className="cursor-pointer hover:text-green-600 transition flex items-center gap-2 group">
+                                        <span className="group-hover:translate-x-1 transition">My Account</span>
                                     </a>
                                 </li>
-                                {/* account/wishlist */}
+
                                 <li>
-                                    <a
-                                        // onClick={}
-                                        className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                    >
-                                        <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'> Favorites</div>
+                                    <a className="cursor-pointer hover:text-green-600 transition flex items-center gap-2 group">
+                                        <span className="group-hover:translate-x-1 transition">Favorites</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <div className='flex-grow gap-4 flex flex-col '>
-                            <h3 className='text-xl font-semibold'>Contact</h3>
-                            {resStores?.data.attributes.facebook &&
-                                <div className='flex gap-3 items-center'>
-                                    <a
-                                        className='css-icon backdrop-blur-[4px] text-green-500 bg-green-400/15 min-h-[55px] min-w-[55px] rounded-full justify-items-center content-center transition-all duration-500 ease hover:bg-green-400 hover:text-black'
-                                        href={resStores?.data.attributes.facebook}>
-                                        <FaFacebookF className='mx-auto' />
-                                    </a>
-                                    <p>Facebook</p>
-                                </div>
-                            }
-                            {resStores?.data.attributes.twitter &&
-                                <div className='flex gap-3 items-center'>
-                                    <a
-                                        className='css-icon backdrop-blur-[4px] text-green-500 bg-green-400/15 min-h-[55px] min-w-[55px] rounded-full justify-items-center content-center transition-all duration-500 ease hover:bg-green-400 hover:text-black'
-                                        href={resStores?.data.attributes.twitter}>
-                                        <BsTwitterX className='mx-auto' />
-                                    </a>
-                                    <p>Twitter</p>
-                                </div>
-                            }
-                            {resStores?.data.attributes.instagram &&
-                                <div className='flex gap-3 items-center'>
-                                    <a
-                                        className='css-icon backdrop-blur-[4px] text-green-500 bg-green-400/15 min-h-[55px] min-w-[55px] rounded-full justify-items-center content-center transition-all duration-500 ease hover:bg-green-400 hover:text-black'
-                                        href={resStores?.data.attributes.instagram}>
-                                        <FaInstagram className='mx-auto' />
-                                    </a>
-                                    <p>Instagram</p>
-                                </div>
 
-                            }
+                        {/* Contact */}
+                        <div className="flex flex-col gap-4">
+                            <h3 className="text-xl font-semibold tracking-wide">Contact</h3>
+
+                            {resStores?.data.attributes.facebook && (
+                                <div className="flex gap-3 items-center">
+                                    <a
+                                        href={resStores?.data.attributes.facebook}
+                                        className="h-12 w-12 rounded-full bg-green-400/15 text-green-600 
+              flex items-center justify-center backdrop-blur-sm
+              hover:bg-green-500 hover:text-black transition-all duration-300 shadow-md"
+                                    >
+                                        <FaFacebookF />
+                                    </a>
+                                    <span className="text-black/70">Facebook</span>
+                                </div>
+                            )}
+
+                            {resStores?.data.attributes.twitter && (
+                                <div className="flex gap-3 items-center">
+                                    <a
+                                        href={resStores?.data.attributes.twitter}
+                                        className="h-12 w-12 rounded-full bg-green-400/15 text-green-600 
+              flex items-center justify-center backdrop-blur-sm
+              hover:bg-green-500 hover:text-black transition-all duration-300 shadow-md"
+                                    >
+                                        <BsTwitterX />
+                                    </a>
+                                    <span className="text-black/70">Twitter</span>
+                                </div>
+                            )}
+
+                            {resStores?.data.attributes.instagram && (
+                                <div className="flex gap-3 items-center">
+                                    <a
+                                        href={resStores?.data.attributes.instagram}
+                                        className="h-12 w-12 rounded-full bg-green-400/15 text-green-600 
+              flex items-center justify-center backdrop-blur-sm
+              hover:bg-green-500 hover:text-black transition-all duration-300 shadow-md"
+                                    >
+                                        <FaInstagram />
+                                    </a>
+                                    <span className="text-black/70">Instagram</span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
-                <div className="mx-auto flex flex-col gap-4">
-                    <p className='text-center'>&copy; {year} Spree Commerce DEMO. All Rights Reserved. Provided by <a className='' href="https://spreecommerce.org/docs/api-reference"><strong className='font-'>Spre Ecommerce</strong></a></p>
+
+                <div className="mt-10 text-center text-black/60 text-sm">
+                    © {year} Spree Commerce DEMO. All Rights Reserved. Provided by{" "}
+                    <a
+                        href="https://spreecommerce.org/docs/api-reference"
+                        className="font-semibold hover:text-green-600 transition"
+                    >
+                        Spree Ecommerce
+                    </a>
                 </div>
-            </footer >
+            </footer>
+
         </>
 
     )
