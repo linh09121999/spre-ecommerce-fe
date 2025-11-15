@@ -2094,16 +2094,11 @@ const ListProduct: React.FC<ListProduct> = ({ products, included, taxonsRetrieve
                                     </div>
                                 )}
                             </div>
-                            <div className="grid grid-cols-2 gap-5 items-center">
-                                <button className="h-10 bg-green-600 justify-center text-white items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                                    Apply
-                                </button>
-                                <button className=" h-10 border border-gray-100 justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                                    onClick={handleClearAllFilters}
-                                >
-                                    Clear All Filters
-                                </button>
-                            </div>
+                            <button className=" h-10 border border-gray-100 justify-center items-center gap-1.5 shrink-0 rounded-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                                onClick={handleClearAllFilters}
+                            >
+                                Clear All Filters
+                            </button>
                         </aside >
                         <section className="flex flex-col gap-4 md:gap-6">
                             <div className="items-center h-[50px] border-b-[2px] border-b-gray-200 flex justify-between ">

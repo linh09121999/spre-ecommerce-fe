@@ -282,7 +282,6 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                     {/* Price + Discount */}
                     {data && data.attributes && (
                         <div className="flex items-center gap-4" >
-
                             <div className="flex items-end gap-2">
                                 <span className="text-4xl font-bold text-green-700">
                                     ${data.attributes.price}

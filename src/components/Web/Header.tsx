@@ -397,83 +397,85 @@ const HeaderWeb: React.FC = () => {
                         <button className='p-2 css-icon' aria-label='cart'
                             onClick={() => router.push('/cart')}
                         >
-                            <Badge badgeContent={Number(localStorage.getItem("cart_number")) || 0} sx={sxBadge}>
-                                <span className='text-black text-2xl max-md:text-xl svgWrapper'>
-                                    <MdOutlineShoppingCart className="mx-auto" />
-                                </span>
-                            </Badge >
-                        </button>
-                        <button className='p-2 css-icon' aria-label='heart'>
-                            <Badge badgeContent={heartNumber} sx={sxBadge}>
-                                <span className='text-black text-2xl max-md:text-xl svgWrapper'>
-                                    <FaRegHeart className="mx-auto" />
-                                </span>
-                            </Badge >
-                        </button>
-                        {/* user */}
-                        <button className='p-2 css-icon' aria-label='user'
-                            onClick={handleClickAccount}
-                        >
-                            <Stack direction="row" spacing={2}>
-                                <StyledBadge
-                                    overlap="circular"
-                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                                    variant="dot"
-                                >
-                                    <Avatar
-                                        sx={sxAvata}
-                                    >
-                                        {resAccount?.data.attributes.first_name.toUpperCase() ?? <FaRegUser className="mx-auto" />}
-                                    </Avatar>
-                                </StyledBadge >
-                            </Stack>
-                        </button>
-                        {resAccount?.data.attributes.email &&
-                            <Menu
-                                anchorEl={anchorElAccount}
-                                open={openAccount}
-                                onClose={handleCloseAccount}
-                                PaperProps={PaperProps}
-                                MenuListProps={MenuListProps}
+                            <Badge badgeContent={typeof window !== "undefined"
+                                ? Number(localStorage.getItem("cart_number")) || 0
+                                : 0} sx={sxBadge}>
+                            <span className='text-black text-2xl max-md:text-xl svgWrapper'>
+                                <MdOutlineShoppingCart className="mx-auto" />
+                            </span>
+                        </Badge >
+                    </button>
+                    <button className='p-2 css-icon' aria-label='heart'>
+                        <Badge badgeContent={heartNumber} sx={sxBadge}>
+                            <span className='text-black text-2xl max-md:text-xl svgWrapper'>
+                                <FaRegHeart className="mx-auto" />
+                            </span>
+                        </Badge >
+                    </button>
+                    {/* user */}
+                    <button className='p-2 css-icon' aria-label='user'
+                        onClick={handleClickAccount}
+                    >
+                        <Stack direction="row" spacing={2}>
+                            <StyledBadge
+                                overlap="circular"
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                variant="dot"
                             >
-                                <MenuItem sx={sxMenuItem}
-                                // onClick={handleClickUSD}
+                                <Avatar
+                                    sx={sxAvata}
                                 >
-                                    <div className='bg-green-50 p-2 flex gap-3'>
-                                        <Stack direction="row" spacing={2}>
-                                            <StyledBadge
-                                                overlap="circular"
-                                                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                                                variant="dot"
+                                    {resAccount?.data.attributes.first_name.toUpperCase() ?? <FaRegUser className="mx-auto" />}
+                                </Avatar>
+                            </StyledBadge >
+                        </Stack>
+                    </button>
+                    {resAccount?.data.attributes.email &&
+                        <Menu
+                            anchorEl={anchorElAccount}
+                            open={openAccount}
+                            onClose={handleCloseAccount}
+                            PaperProps={PaperProps}
+                            MenuListProps={MenuListProps}
+                        >
+                            <MenuItem sx={sxMenuItem}
+                            // onClick={handleClickUSD}
+                            >
+                                <div className='bg-green-50 p-2 flex gap-3'>
+                                    <Stack direction="row" spacing={2}>
+                                        <StyledBadge
+                                            overlap="circular"
+                                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                            variant="dot"
+                                        >
+                                            <Avatar
+                                                sx={sxAvata}
                                             >
-                                                <Avatar
-                                                    sx={sxAvata}
-                                                >
-                                                    {resAccount?.data.attributes.first_name.toUpperCase() ?? <FaRegUser className="mx-auto" />}
-                                                </Avatar>
-                                            </StyledBadge >
-                                        </Stack>
-                                        <div className='flex flex-col gap-3'>
-                                            <p className='flex gap-1'>{resAccount?.data.attributes.first_name} {resAccount?.data.attributes.last_name}</p>
-                                            <p>{resAccount?.data.attributes.email}</p>
-                                        </div>
+                                                {resAccount?.data.attributes.first_name.toUpperCase() ?? <FaRegUser className="mx-auto" />}
+                                            </Avatar>
+                                        </StyledBadge >
+                                    </Stack>
+                                    <div className='flex flex-col gap-3'>
+                                        <p className='flex gap-1'>{resAccount?.data.attributes.first_name} {resAccount?.data.attributes.last_name}</p>
+                                        <p>{resAccount?.data.attributes.email}</p>
                                     </div>
-                                </MenuItem>
-                                <MenuItem sx={sxMenuItem}
-                                // onClick={handleClickUSD}
-                                >
-                                    Dashboard
-                                </MenuItem>
-                                <MenuItem sx={sxMenuItem}
-                                // onClick={handleClickEUR}
-                                >
-                                    <span className='text-2xl rotate-[180deg]'><IoLogOut /></span>
-                                    <span className={` text-xl transition-all duration-300 ease-in-out`}>Logout</span>
-                                </MenuItem>
-                            </Menu>
-                        }
-                        {/*  */}
-                        {/* <button className='px-2 border-l-[2px] border-l-gray-200 items-center text-lg flex gap-1'
+                                </div>
+                            </MenuItem>
+                            <MenuItem sx={sxMenuItem}
+                            // onClick={handleClickUSD}
+                            >
+                                Dashboard
+                            </MenuItem>
+                            <MenuItem sx={sxMenuItem}
+                            // onClick={handleClickEUR}
+                            >
+                                <span className='text-2xl rotate-[180deg]'><IoLogOut /></span>
+                                <span className={` text-xl transition-all duration-300 ease-in-out`}>Logout</span>
+                            </MenuItem>
+                        </Menu>
+                    }
+                    {/*  */}
+                    {/* <button className='px-2 border-l-[2px] border-l-gray-200 items-center text-lg flex gap-1'
                             onClick={handleClickCurrency}
                         >
                             {resStores?.data.attributes.default_currency} ({isCurrency === 'USD' ? <PiCurrencyDollar /> : <PiCurrencyEur />})
@@ -496,177 +498,177 @@ const HeaderWeb: React.FC = () => {
                                 Euro (EUR)
                             </MenuItem>
                         </Menu> */}
-                    </div>
-                    {isSearch &&
-                        <Backdrop
-                            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-                            open={isSearch}
-                        >
-                            <>
-                                <div className="w-full md:w-[600px] sm:w-auto ">
-                                    <TextField
-                                        type="search"
-                                        placeholder="Search..."
-                                        sx={sxTextField}
-                                        // onChange={(e) => setInputValueSources(e.target.value)}
-                                        // value={inputValueSources}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        sx={{
-                                                            ...sxButton,
-                                                            background: "rgba(74, 222, 128, 0.1)",
-                                                            border: '1px solid rgba(74, 222, 128, 0.2)',
-                                                            color: 'var(--color-green-500)',
-                                                            borderRadius: '25px',
-                                                            fontWeight: '600',
-                                                            fontSize: 'var(--text-xl)',
-                                                            position: "relative",
-                                                            overflow: "hidden",
-                                                            textTransform: "none",
-                                                            "&::before": {
-                                                                content: '""',
-                                                                position: "absolute",
-                                                                top: 0,
-                                                                left: "50%",
-                                                                height: "100%",
-                                                                width: 0,
-                                                                background: "var(--color-green-400)",
-                                                                opacity: 0,
-                                                                transition: "all 0.5s ease",
-                                                                zIndex: -1,
-                                                            },
-                                                            "&:hover::before": {
-                                                                border: 'none',
-                                                                left: 0,
-                                                                width: "100%",
-                                                                opacity: 1,
-                                                            },
-                                                        }}
-                                                    >
-                                                        <div className="relative flex items-center gap-2 svgWrapper">
-                                                            <IoMdSearch className="mx-auto" />
-                                                        </div>
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
+                </div>
+                {isSearch &&
+                    <Backdrop
+                        sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+                        open={isSearch}
+                    >
+                        <>
+                            <div className="w-full md:w-[600px] sm:w-auto ">
+                                <TextField
+                                    type="search"
+                                    placeholder="Search..."
+                                    sx={sxTextField}
+                                    // onChange={(e) => setInputValueSources(e.target.value)}
+                                    // value={inputValueSources}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    sx={{
+                                                        ...sxButton,
+                                                        background: "rgba(74, 222, 128, 0.1)",
+                                                        border: '1px solid rgba(74, 222, 128, 0.2)',
+                                                        color: 'var(--color-green-500)',
+                                                        borderRadius: '25px',
+                                                        fontWeight: '600',
+                                                        fontSize: 'var(--text-xl)',
+                                                        position: "relative",
+                                                        overflow: "hidden",
+                                                        textTransform: "none",
+                                                        "&::before": {
+                                                            content: '""',
+                                                            position: "absolute",
+                                                            top: 0,
+                                                            left: "50%",
+                                                            height: "100%",
+                                                            width: 0,
+                                                            background: "var(--color-green-400)",
+                                                            opacity: 0,
+                                                            transition: "all 0.5s ease",
+                                                            zIndex: -1,
+                                                        },
+                                                        "&:hover::before": {
+                                                            border: 'none',
+                                                            left: 0,
+                                                            width: "100%",
+                                                            opacity: 1,
+                                                        },
+                                                    }}
+                                                >
+                                                    <div className="relative flex items-center gap-2 svgWrapper">
+                                                        <IoMdSearch className="mx-auto" />
+                                                    </div>
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </div>
+                            < IconButton
+                                sx={sxButton}
+                                onClick={() => setIsSearch(false)}>
+                                <IoClose className=" mx-auto" />
+                            </IconButton>
+                        </>
+                    </Backdrop>
+                }
+            </div>
+            {(hoveredNav === 1 || hoveredNav === 2) &&
+                <div
+                    onMouseEnter={() => setHoveredNav(hoveredNav)} // Giữ hiển thị khi rê qua div này
+                    onMouseLeave={() => setHoveredNav(null)} // Ẩn khi rời ra ngoài
+                    className="absolute left-0 top-full w-full bg-white shadow-lg p-6 z-40 transition-all duration-300"
+                >
+                    {hoveredNav === 1 &&
+                        // fashion
+                        <div className='max-w-[1535px] mx-auto grid grid-cols-4 '>
+                            {[
+                                { filter: filterFashionMen, title: "Men" },
+                                { filter: filterFashionWomen, title: "Women" },
+                                { filter: filterFashionAccessories, title: "Accessories" },
+                            ].map(({ filter, title }) => (
+                                <div className='flex-grow gap-4 flex flex-col '>
+                                    <h3 className='text-lg font-semibold uppercase'>{title}</h3>
+                                    <ul className='grid gap-4'>
+                                        {filter?.map((data, id) => (
+                                            <a key={id}
+                                                onClick={() => {
+                                                    router.push(`/${toPath(data.attributes.name)}`)
+                                                }}
+                                                className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                            >
+                                                <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                    {data.attributes.name}
+                                                </div>
+                                            </a>
+                                        ))}
+                                        <a
+                                            onClick={() => {
+                                                router.push(`/${toPath(title)}`)
+                                            }}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                View All
+                                                <GrFormNextLink />
+                                            </div>
+                                        </a>
+                                    </ul>
                                 </div>
-                                < IconButton
-                                    sx={sxButton}
-                                    onClick={() => setIsSearch(false)}>
-                                    <IoClose className=" mx-auto" />
-                                </IconButton>
-                            </>
-                        </Backdrop>
+                            ))}
+                            {filteredFashionImg?.map((data, id) => (
+                                <div key={id} className='flex-grow gap-4 flex flex-col '>
+                                    <img src={data.attributes.header_url} alt={data.attributes.name} className='rounded-md' />
+                                </div>
+                            ))}
+                        </div>
+                    }
+                    {/* wellness */}
+                    {hoveredNav === 2 &&
+                        <div className='max-w-[1535px] mx-auto grid grid-cols-4'>
+                            {[
+                                { filter: filterWellnessFitness, title: "Fitness" },
+                                { filter: filterWellnessRelaxation, title: "Relaxation" },
+                                { filter: filterWellnessMentalStimulation, title: "Mental Stimulation" },
+                                { filter: filterWellnessNutrition, title: "Nutrition" },
+                            ].map(({ filter, title }) => (
+                                <div className='flex-grow gap-4 flex flex-col '>
+                                    <h3 className='text-lg font-semibold uppercase'>{title}</h3>
+                                    <ul className='grid gap-4'>
+                                        {filter?.map((data, id) => (
+                                            <a key={id}
+                                                onClick={() => {
+                                                    router.push(`/${toPath(data.attributes.name)}`)
+                                                }}
+                                                className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                            >
+                                                <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                    {data.attributes.name}
+                                                </div>
+                                            </a>
+                                        ))}
+                                        <a
+                                            onClick={() => {
+                                                router.push(`/${toPath(title)}`)
+                                            }}
+                                            className='cursor-pointer transiton-all duration-300 hover:text-green-400'
+                                        >
+                                            <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
+                                                View All
+                                                <GrFormNextLink />
+                                            </div>
+                                        </a>
+                                    </ul>
+                                </div>
+                            ))}
+
+                            {filteredWellnessImg?.map((data, id) => (
+                                <>
+                                    {data.attributes.header_url &&
+                                        <div key={id} className='flex-grow gap-4 flex flex-col '>
+                                            <img src={data.attributes.header_url} alt={data.attributes.name} />
+                                        </div>
+                                    }
+                                </>
+
+                            ))}
+                        </div>
                     }
                 </div>
-                {(hoveredNav === 1 || hoveredNav === 2) &&
-                    <div
-                        onMouseEnter={() => setHoveredNav(hoveredNav)} // Giữ hiển thị khi rê qua div này
-                        onMouseLeave={() => setHoveredNav(null)} // Ẩn khi rời ra ngoài
-                        className="absolute left-0 top-full w-full bg-white shadow-lg p-6 z-40 transition-all duration-300"
-                    >
-                        {hoveredNav === 1 &&
-                            // fashion
-                            <div className='max-w-[1535px] mx-auto grid grid-cols-4 '>
-                                {[
-                                    { filter: filterFashionMen, title: "Men" },
-                                    { filter: filterFashionWomen, title: "Women" },
-                                    { filter: filterFashionAccessories, title: "Accessories" },
-                                ].map(({ filter, title }) => (
-                                    <div className='flex-grow gap-4 flex flex-col '>
-                                        <h3 className='text-lg font-semibold uppercase'>{title}</h3>
-                                        <ul className='grid gap-4'>
-                                            {filter?.map((data, id) => (
-                                                <a key={id}
-                                                    onClick={() => {
-                                                        router.push(`/${toPath(data.attributes.name)}`)
-                                                    }}
-                                                    className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                                >
-                                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                                        {data.attributes.name}
-                                                    </div>
-                                                </a>
-                                            ))}
-                                            <a
-                                                onClick={() => {
-                                                    router.push(`/${toPath(title)}`)
-                                                }}
-                                                className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                            >
-                                                <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                                    View All
-                                                    <GrFormNextLink />
-                                                </div>
-                                            </a>
-                                        </ul>
-                                    </div>
-                                ))}
-                                {filteredFashionImg?.map((data, id) => (
-                                    <div key={id} className='flex-grow gap-4 flex flex-col '>
-                                        <img src={data.attributes.header_url} alt={data.attributes.name} className='rounded-md' />
-                                    </div>
-                                ))}
-                            </div>
-                        }
-                        {/* wellness */}
-                        {hoveredNav === 2 &&
-                            <div className='max-w-[1535px] mx-auto grid grid-cols-4'>
-                                {[
-                                    { filter: filterWellnessFitness, title: "Fitness" },
-                                    { filter: filterWellnessRelaxation, title: "Relaxation" },
-                                    { filter: filterWellnessMentalStimulation, title: "Mental Stimulation" },
-                                    { filter: filterWellnessNutrition, title: "Nutrition" },
-                                ].map(({ filter, title }) => (
-                                    <div className='flex-grow gap-4 flex flex-col '>
-                                        <h3 className='text-lg font-semibold uppercase'>{title}</h3>
-                                        <ul className='grid gap-4'>
-                                            {filter?.map((data, id) => (
-                                                <a key={id}
-                                                    onClick={() => {
-                                                        router.push(`/${toPath(data.attributes.name)}`)
-                                                    }}
-                                                    className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                                >
-                                                    <div className='flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                                        {data.attributes.name}
-                                                    </div>
-                                                </a>
-                                            ))}
-                                            <a
-                                                onClick={() => {
-                                                    router.push(`/${toPath(title)}`)
-                                                }}
-                                                className='cursor-pointer transiton-all duration-300 hover:text-green-400'
-                                            >
-                                                <div className='uppercase flex gap-3 items-center transiton-all duration-300 transform hover:translate-x-2'>
-                                                    View All
-                                                    <GrFormNextLink />
-                                                </div>
-                                            </a>
-                                        </ul>
-                                    </div>
-                                ))}
-
-                                {filteredWellnessImg?.map((data, id) => (
-                                    <>
-                                        {data.attributes.header_url &&
-                                            <div key={id} className='flex-grow gap-4 flex flex-col '>
-                                                <img src={data.attributes.header_url} alt={data.attributes.name} />
-                                            </div>
-                                        }
-                                    </>
-
-                                ))}
-                            </div>
-                        }
-                    </div>
-                }
-            </header >
+            }
+        </header >
 
             <ToastContainer position="top-right" autoClose={3000} />
         </>
