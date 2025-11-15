@@ -1,6 +1,6 @@
 "use client"
-import { LineItemUpdate } from "@/interface/sendData/interfaceStorefront";
-import { RetrieveACart } from "@/service/storefront/cart";
+import { Cart, LineItemUpdate } from "@/interface/sendData/interfaceStorefront";
+import { CreateACart, DeleteACart, RetrieveACart } from "@/service/storefront/cart";
 import { RemoveAnItemToCart, SetLineItemQuantity } from "@/service/storefront/cartLineItems";
 import { EmptyTheCart, ListEstimatedShippingRates } from "@/service/storefront/cartOther";
 import { useStateGeneral } from "@/useState/useStateGeneral";
@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { FaArrowLeft, FaRegHeart, FaShieldAlt, FaShippingFast, FaTrashAlt, FaUndo } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 
-const Cart: React.FC = () => {
+const ViewCart: React.FC = () => {
     const sxRadio: SxProps<Theme> = {
         width: "100%",
         alignItems: "flex-start",
@@ -96,13 +96,54 @@ const Cart: React.FC = () => {
         }
     }
 
-    const emptyCart = () => {
-        const items = resCart?.included ?? []
-        if (items.length === 0) return;
-        for (const item of items) {
-            deleteApiLineItem(item.id)
-        }
-    }
+    // const postApiCart = async () => {
+    //     const existingToken = localStorage.getItem("order_token");
+    //     if (existingToken) {
+    //         setLoading(false);
+    //         return;
+    //     }
+
+    //     const data: Cart = {
+    //         public_metadata: {
+    //             total_weight: 3250,
+    //         },
+    //         private_metadata: {
+    //             had_same_cart_items: true,
+    //         },
+    //     };
+
+    //     try {
+    //         setLoading(true)
+    //         const response = await CreateACart(data);
+    //         console.log("Cart created:", response.data);
+
+    //         const orderToken = response.data.data?.attributes?.token
+    //         if (orderToken) {
+    //             localStorage.setItem("order_token", orderToken);
+    //         }
+
+    //         return response.data; 
+    //     } catch (error: any) {
+    //         toast.error(`Error creating cart: ` + error.response || error.message)
+    //         throw error;
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const deleteCart = async () => {
+    //     try {
+    //         setLoading(true)
+    //         const response = await DeleteACart();
+    //         localStorage.removeItem("order_token")
+    //     } catch (error: any) {
+    //         toast.error(`Error detele cart: ` + error.response.statusText)
+    //         throw error;
+    //     } finally {
+    //         setLoading(false);
+    //         getApiRetrieveCart("line_items")
+    //     }
+    // }
 
     useEffect(() => {
         setHoveredNav(null)
@@ -134,8 +175,22 @@ const Cart: React.FC = () => {
 
     }
 
-    const handleRemoveAllItem = () => {
-        emptyCart()
+    const handleRemoveAllItem = async () => {
+        const items = resCart?.included ?? []
+        if (items.length === 0) return;
+
+        for (const item of items) {
+            try {
+                setLoading(true)
+                const response = await RemoveAnItemToCart(item.id);
+            } catch (error: any) {
+                toast.error(`Error detele item cart ${item.id}: ` + error.response.statusText)
+                throw error;
+            } finally {
+                setLoading(false);
+                getApiRetrieveCart("line_items")
+            }
+        }
     }
 
     const [valueShippingFee, setValueShippingFee] = useState("0");
@@ -350,4 +405,4 @@ const Cart: React.FC = () => {
     )
 }
 
-export default Cart
+export default ViewCart
