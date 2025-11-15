@@ -96,16 +96,11 @@ const Cart: React.FC = () => {
         }
     }
 
-    const emptyCart = async () => {
-        try {
-            setLoading(true)
-            const response = await EmptyTheCart();
-        } catch (error: any) {
-            toast.error(`Error empty cart: ` + error.response.statusText)
-            throw error;
-        } finally {
-            setLoading(false);
-            getApiRetrieveCart("line_items")
+    const emptyCart = () => {
+        const items = resCart?.included ?? []
+        if (items.length === 0) return;
+        for (const item of items) {
+            deleteApiLineItem(item.id)
         }
     }
 
