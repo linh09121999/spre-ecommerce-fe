@@ -217,7 +217,7 @@ const ViewCart: React.FC = () => {
             <div className="max-w-[1535px] mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 px-5 py-5">
                 <div className="flex flex-col  self-start rounded-md bg-white p-5 flex-1 shadow-lg">
                     <div className="flex items-center justify-between pb-4 border-b border-gray-200">
-                        <h3 className="text-xl uppercase tracking-wide text-gray-800 font-semibold">
+                        <h3 className="text-xl uppercase tracking-wide text-gray-800 ">
                             Cart Items
                         </h3>
 
@@ -303,9 +303,9 @@ const ViewCart: React.FC = () => {
                     }
                 </div>
                 <aside className="flex flex-col gap-5 self-start  ">
-                    <div className="flex flex-col gap-5 rounded-md bg-white p-5 flex-1 shadow-lg">
+                    {/* <div className="flex flex-col gap-5 rounded-md bg-white p-5 flex-1 shadow-lg">
                         <div className="items-center h-[50px] border-b-[2px] border-b-gray-200">
-                            <h3 className="text-xl uppercase tracking-wide text-black/70">Shipping Options</h3>
+                            <h3 className="text-xl uppercase tracking-wide text-black/70">Estimated Shipping Rates</h3>
                         </div>
                         <FormControl>
                             <RadioGroup
@@ -345,7 +345,7 @@ const ViewCart: React.FC = () => {
                         <div className="items-center h-[50px] border-b-[2px] border-b-gray-200">
                             <h3 className="text-xl uppercase tracking-wide text-black/70">Discount code</h3>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex flex-col gap-5 rounded-md bg-white p-5 flex-1 shadow-lg">
                         <div className="items-center h-[50px] border-b-[2px] border-b-gray-200">
                             <h3 className="text-xl uppercase tracking-wide text-black/70">Order summary</h3>
@@ -355,25 +355,26 @@ const ViewCart: React.FC = () => {
                                 <span className="text-gray-600">Temporary estimate ({resCart?.data.attributes.item_count} products)</span>
                                 <span className="font-medium">{resCart?.data.attributes.display_item_total}</span>
                             </div>
-                            <div className="flex justify-between">
+                            {/* <div className="flex justify-between">
                                 <span className="text-gray-600">Shipping fee</span>
                                 <span className="font-medium">${valueShippingFee ?? 0}</span>
-                            </div>
+                            </div> */}
                             <div className="flex justify-between">
                                 <span className="text-gray-600">Tax</span>
                                 <span className="font-medium">{resCart?.data.attributes.display_tax_total ?? 0}</span>
                             </div>
-                            <div className="flex justify-between">
+                            {/* <div className="flex justify-between">
                                 <span className="text-gray-600">Discount</span>
                                 <span className="font-medium">{resCart?.data.attributes.display_promo_total ?? 0}</span>
-                            </div>
+                            </div> */}
                             <div className="flex justify-between text-lg font-bold pt-4 border-t border-gray-200 ">
                                 <span>Total</span>
-                                <span id="total-cost">${Number(resCart?.data.attributes.total_minus_store_credits ?? 0) + Number(valueShippingFee ?? 0)}</span>
+                                <span id="total-cost">${resCart?.data.attributes.total_minus_store_credits ?? 0}</span>
                             </div>
                             <button
-                                className={`px-16 h-[50px] rounded-md bg-green-600 text-white font-semibold transition-transform hover:bg-green-700 hover:scale-105 `}
-                            >Complete payment</button>
+                                onClick={() => router.push('/checkout')}
+                                className={`px-16 uppercase h-[50px] rounded-md bg-green-600 text-white font-semibold transition-transform hover:bg-green-700 hover:scale-105 `}
+                            >Checkout</button>
                         </div>
                         <div className="flex flex-wrap md:grid md:grid-cols-3 gap-4 pt-4 border-t border-gray-200">
                             <div className="flex flex-col justify-center items-center gap-2 ">
