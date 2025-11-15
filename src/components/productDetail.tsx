@@ -150,6 +150,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
         }
 
         try {
+            setLoading(true)
             const response = await AddAnItemToCart(data);
             console.log("Cart created:", response.data);
 
@@ -157,6 +158,10 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
         } catch (error: any) {
             toast.error(`Error creating item cart: ` + error.response.statusText)
             throw error;
+        }
+        finally {
+            setLoading(false);
+            getApiRetrieveCart("line_items")
         }
     }
 
@@ -169,7 +174,6 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
                 options: selectedOptions
             });
             addItemToCart(selectedVariant.id, quantity)
-            getApiRetrieveCart("line_items")
         }
     }
 
@@ -180,9 +184,7 @@ const ProductDetailCompoment: React.FC<ResProduct_Retrieve> = ({ data, included 
             setLoading(true)
             const response = await RetrieveACart({ include });
             const cartNumber = response.data.data?.relationships.line_items.data
-            if (cartNumber) {
-                localStorage.setItem("cart_number", cartNumber.length);
-            }
+            localStorage.setItem("cart_number", cartNumber.length);
 
             setResCart(response.data)
         } catch (error: any) {

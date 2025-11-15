@@ -1,6 +1,8 @@
 "use client"
+import { LineItemUpdate } from "@/interface/sendData/interfaceStorefront";
 import { RetrieveACart } from "@/service/storefront/cart";
-import { ListEstimatedShippingRates } from "@/service/storefront/cartOther";
+import { RemoveAnItemToCart, SetLineItemQuantity } from "@/service/storefront/cartLineItems";
+import { EmptyTheCart, ListEstimatedShippingRates } from "@/service/storefront/cartOther";
 import { useStateGeneral } from "@/useState/useStateGeneral";
 import { useState_ResCart, useState_ResCartOther } from "@/useState/useStatestorefront";
 import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
@@ -54,11 +56,56 @@ const Cart: React.FC = () => {
             setLoading(true)
             const response = await RetrieveACart({ include });
             setResCart(response.data)
+            const cartNumber = response.data.data?.relationships.line_items.data
+            localStorage.setItem("cart_number", cartNumber.length);
         } catch (error: any) {
             toast.error(`Error creating item cart: ` + error.response.statusText)
             throw error;
         } finally {
             setLoading(false); // 👈 tắt loading sau khi có dữ liệu
+        }
+    }
+
+    const deleteApiLineItem = async (id: string) => {
+        try {
+            setLoading(true)
+            const response = await RemoveAnItemToCart(id);
+        } catch (error: any) {
+            toast.error(`Error detele item cart ${id}: ` + error.response.statusText)
+            throw error;
+        } finally {
+            setLoading(false);
+            getApiRetrieveCart("line_items")
+        }
+    }
+
+    const setApiLineItem = async (line_item_id: string, quantity: number) => {
+        const data: LineItemUpdate = {
+            line_item_id: line_item_id,
+            quantity: quantity
+        }
+        try {
+            setLoading(true)
+            const response = await SetLineItemQuantity(data);
+        } catch (error: any) {
+            toast.error(`Error set item cart ${line_item_id}: ` + error.response.statusText)
+            throw error;
+        } finally {
+            setLoading(false);
+            getApiRetrieveCart("line_items")
+        }
+    }
+
+    const emptyCart = async () => {
+        try {
+            setLoading(true)
+            const response = await EmptyTheCart();
+        } catch (error: any) {
+            toast.error(`Error empty cart: ` + error.response.statusText)
+            throw error;
+        } finally {
+            setLoading(false);
+            getApiRetrieveCart("line_items")
         }
     }
 
@@ -68,14 +115,19 @@ const Cart: React.FC = () => {
         getApiRetrieveCart("line_items")
     }, [])
 
+
     const priceInfo = (price: string, comparePrice: string | null) => {
         return comparePrice && comparePrice > price
             ? Math.round(((parseFloat(comparePrice) - parseFloat(price)) / parseFloat(comparePrice)) * 100)
             : 0;
     }
 
-    const handleQuantityChange = (newQuantity: number) => {
-
+    const handleQuantityChange = (id: string, newQuantity: number) => {
+        if (newQuantity === 0) {
+            handleRemoveItem(id)
+        } else {
+            setApiLineItem(id, newQuantity)
+        }
     };
 
     const handleSaveForLater = (id: string) => {
@@ -83,7 +135,12 @@ const Cart: React.FC = () => {
     }
 
     const handleRemoveItem = (id: string) => {
+        deleteApiLineItem(id)
 
+    }
+
+    const handleRemoveAllItem = () => {
+        emptyCart()
     }
 
     const [valueShippingFee, setValueShippingFee] = useState("0");
@@ -109,8 +166,21 @@ const Cart: React.FC = () => {
             </div>
             <div className="max-w-[1535px] mx-auto grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 px-5 py-5">
                 <div className="flex flex-col  self-start rounded-md bg-white p-5 flex-1 shadow-lg">
-                    <div className="items-center h-[50px] border-b-[2px] border-b-gray-200">
-                        <h3 className="text-xl uppercase tracking-wide text-black/70">Cart Items</h3>
+                    <div className="flex items-center justify-between pb-4 border-b border-gray-200">
+                        <h3 className="text-xl uppercase tracking-wide text-gray-800 font-semibold">
+                            Cart Items
+                        </h3>
+
+                        {/* Delete All */}
+                        {resCart && resCart?.data.relationships.line_items.data.length > 0 && (
+                            <button
+                                onClick={handleRemoveAllItem}
+                                className="flex items-center gap-2 text-red-500 hover:text-red-600 text-sm font-medium transition"
+                            >
+                                <FaTrashAlt className="text-red-500" />
+                                Clear All
+                            </button>
+                        )}
                     </div>
                     {(resCart && resCart?.data.relationships.line_items.data.length === 0) ?
                         <img src="../../no-items-in-cart.png" alt="no items in cart" />
@@ -147,15 +217,14 @@ const Cart: React.FC = () => {
                                             <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
                                                 <button
                                                     className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors"
-                                                    onClick={() => handleQuantityChange(item.attributes.quantity - 1)}
-                                                    disabled={item.attributes.quantity <= 1}
+                                                    onClick={() => handleQuantityChange(item.id, item.attributes.quantity - 1)}
                                                 >
                                                     −
                                                 </button>
                                                 <span className={`px-5 py-2 bg-white text-center font-semibold `}>{item.attributes.quantity}</span>
                                                 <button
                                                     className="px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 transition-colors"
-                                                    onClick={() => handleQuantityChange(item.attributes.quantity + 1)}
+                                                    onClick={() => handleQuantityChange(item.id, item.attributes.quantity + 1)}
                                                 >
                                                     +
                                                 </button>
@@ -238,23 +307,23 @@ const Cart: React.FC = () => {
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-gray-600">Shipping fee</span>
-                                <span className="font-medium">${valueShippingFee}</span>
+                                <span className="font-medium">${valueShippingFee ?? 0}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-gray-600">Tax</span>
-                                <span className="font-medium">{resCart?.data.attributes.display_tax_total}</span>
+                                <span className="font-medium">{resCart?.data.attributes.display_tax_total ?? 0}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-gray-600">Discount</span>
-                                <span className="font-medium">{resCart?.data.attributes.display_promo_total}</span>
+                                <span className="font-medium">{resCart?.data.attributes.display_promo_total ?? 0}</span>
                             </div>
                             <div className="flex justify-between text-lg font-bold pt-4 border-t border-gray-200 ">
                                 <span>Total</span>
-                                <span id="total-cost">${Number(resCart?.data.attributes.total_minus_store_credits) + Number(valueShippingFee)}</span>
+                                <span id="total-cost">${Number(resCart?.data.attributes.total_minus_store_credits ?? 0) + Number(valueShippingFee ?? 0)}</span>
                             </div>
                             <button
                                 className={`px-16 h-[50px] rounded-md bg-green-600 text-white font-semibold transition-transform hover:bg-green-700 hover:scale-105 `}
-                            >Discount code</button>
+                            >Complete payment</button>
                         </div>
                         <div className="flex flex-wrap md:grid md:grid-cols-3 gap-4 pt-4 border-t border-gray-200">
                             <div className="flex flex-col justify-center items-center gap-2 ">

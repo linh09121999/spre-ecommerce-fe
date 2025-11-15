@@ -19,7 +19,7 @@ export const AddAnItemToCart = (
             },
         })
 }
-export const RemoveAnItemToCart = (id: number): Promise<AxiosResponse> => {
+export const RemoveAnItemToCart = (id: string): Promise<AxiosResponse> => {
     return api.delete(`/storefront/cart/remove_line_item/${id}`)
 }
 export const SetLineItemQuantity = (

@@ -39,11 +39,13 @@ export interface Address {
 }
 
 export interface LineItemUpdate {
-    variant_id: string;
+    line_item_id: string;
     quantity: number;
 }
 
-export interface LineItem extends LineItemUpdate {
+export interface LineItem {
+    variant_id:string;
+    quantity: number;
     public_metadata: {
         first_item_order: boolean
     };
