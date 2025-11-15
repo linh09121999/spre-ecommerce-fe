@@ -38,18 +38,18 @@ const ViewCart: React.FC = () => {
     const { resCartOther_List, setResCartOther_List } = useState_ResCartOther()
     const { resCart, setResCart } = useState_ResCart()
 
-    const getApiEstimatedShippingRate = async () => {
-        try {
-            setLoading(true)
-            const response = await ListEstimatedShippingRates()
-            setResCartOther_List(response.data)
-        } catch (error: any) {
-            toast.error(`Error shipping rate: ` + error.response.statusText)
-            throw error;
-        } finally {
-            setLoading(false); // 👈 tắt loading sau khi có dữ liệu
-        }
-    }
+    // const getApiEstimatedShippingRate = async () => {
+    //     try {
+    //         setLoading(true)
+    //         const response = await ListEstimatedShippingRates()
+    //         setResCartOther_List(response.data)
+    //     } catch (error: any) {
+    //         toast.error(`Error shipping rate: ` + error.response.statusText)
+    //         throw error;
+    //     } finally {
+    //         setLoading(false); // 👈 tắt loading sau khi có dữ liệu
+    //     }
+    // }
 
     const getApiRetrieveCart = async (include: string) => {
         try {
@@ -147,7 +147,7 @@ const ViewCart: React.FC = () => {
 
     useEffect(() => {
         setHoveredNav(null)
-        getApiEstimatedShippingRate()
+        // getApiEstimatedShippingRate()
         getApiRetrieveCart("line_items")
     }, [])
 
